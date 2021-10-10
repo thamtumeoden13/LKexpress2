@@ -1,0 +1,39 @@
+{
+  "presets": [
+    [
+      "module:metro-react-native-babel-preset"
+    ]
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "cwd": "babelrc",
+        "root": [
+          "./src/"
+        ],
+        "alias": {
+          "@actions": "./src/actions",
+          "@assets": "./src/assets",
+          "@common": "./src/common",
+          "@components": "./src/components",
+          "@componentsCommon": "./src/components/common",
+          "@componentsCarousel": "./src/components/carousel",
+          "@constants": "./src/constants",
+          "@navigators": "./src/navigators",
+          "@reducers": "./src/reducers",
+          "@screens": "./src/screens",
+          "@store": "./src/store",
+          "@utils": "./src/utils",
+          "@srcState": "./src/state",
+          "@stateRedux": "./src/state/redux",
+          "@stateUtils": "./src/state/utils",
+        }
+      }
+    ],
+    [
+      "@babel/plugin-transform-runtime"
+    ],
+    ["react-native-reanimated/plugin"],
+  ]
+}
