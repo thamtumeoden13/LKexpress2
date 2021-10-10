@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Image, FlatList, Dimensions, TouchableOpacity, Animated } from 'react-native'
 import AntDesignIcon from 'react-native-vector-icons/AntDesign'
 import { formatMoney } from 'utils/function'
 
 import { AuthContext } from '../../utils'
+import BackIcon from 'components/common/icon/BackIcon';
+import HeaderTitle from 'components/common/Header/HeaderTitle';
 
 const { width, height } = Dimensions.get('screen')
 const SPACING = 20
 const IMAGE_SIZE = 64
 const ITEM_SIZE = IMAGE_SIZE + SPACING * 3
 
-const ShoppingCartScreen = () => {
+const ShoppingCartScreen = (props) => {
+
+    useEffect(() => {
+        if (props.navigation) {
+            props.navigation.setOptions({
+                headerTitle: () => <HeaderTitle title={`Giỏ Hàng`} />,
+            });
+        }
+    }, [props.navigation])
 
     const scrollY = React.useRef(new Animated.Value(0)).current
 

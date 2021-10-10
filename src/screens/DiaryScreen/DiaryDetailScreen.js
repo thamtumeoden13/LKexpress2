@@ -4,6 +4,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import { Comment, Content, Header } from 'components/dirary/diaryDetail'
+import BackIcon from 'components/common/icon/BackIcon';
+import HeaderTitle from 'components/common/Header/HeaderTitle';
 
 const DiaryDetail = (props) => {
     const db = firestore()
@@ -42,6 +44,14 @@ const DiaryDetail = (props) => {
         setState(prev => { return { ...prev, userID, userName } })
     }, [])
 
+    useEffect(() => {
+        if (props.navigation) {
+            props.navigation.setOptions({
+                headerTitle: () => <HeaderTitle title={`Giỏ Hàng`} />,
+            });
+        }
+    }, [props.navigation])
+
     const addDiaryComment = (textComment) => {
         entityRef.doc(`${state.docRef}`).collection('comments').add({
             content: textComment,
@@ -54,7 +64,7 @@ const DiaryDetail = (props) => {
             console.log("Error adding document image: ", error);
         })
     }
-    console.log('state', state)
+
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

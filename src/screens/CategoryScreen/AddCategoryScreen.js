@@ -9,10 +9,6 @@ import {
     Alert,
     Keyboard
 } from 'react-native';
-import { ListItem, Avatar, Badge } from 'react-native-elements';
-import TouchableScale from 'react-native-touchable-scale';
-import LinearGradient from 'react-native-linear-gradient';
-import { StackActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firestore from '@react-native-firebase/firestore';
 
@@ -20,6 +16,8 @@ import { calcWidth, moderateScale, scale, verticalScale } from 'utils/scaleSize'
 import { getRandomColor } from 'utils/function'
 
 import AddCategoryCom from 'components/category/AddCategory'
+import BackIcon from 'components/common/icon/BackIcon';
+import HeaderTitle from 'components/common/Header/HeaderTitle';
 
 const db = firestore()
 const entityRef = db.collection('categories')
@@ -48,6 +46,14 @@ const AddCategoryScreen = (props) => {
         })
         getRealtimeCollection()
     }, [])
+
+    useEffect(() => {
+        if (props.navigation) {
+            props.navigation.setOptions({
+                headerTitle: () => <HeaderTitle title={`Thêm Danh Mục`} />,
+            });
+        }
+    }, [props.navigation])
 
 
     const getRealtimeCollection = async () => {

@@ -13,7 +13,7 @@ import firestore from '@react-native-firebase/firestore';
 
 import { Comment, Content, Header } from 'components/dirary'
 import AddIcon from 'components/common/icon/AddIcon'
-import ButtonOutlineBottom from 'components/common/button/ButtonOutlineBottom';
+import BackIcon from 'components/common/icon/BackIcon';
 
 import { calcHeight, calcWidth, verticalScale, moderateScale, scale } from 'utils/scaleSize'
 
@@ -72,6 +72,8 @@ const DiaryScreen = (props) => {
     useEffect(() => {
         if (state.level == 1) {
             props.navigation.setOptions({
+                // headerLeft: () => <BackIcon navigation={props.navigation} onOpen={() => showAddNewDiary()} />,
+                headerTitle: 'Nhật ký',
                 headerRight: () => <AddIcon navigation={props.navigation} onOpen={() => showAddNewDiary()} />,
             });
         }

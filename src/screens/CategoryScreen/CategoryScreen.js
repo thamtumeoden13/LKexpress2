@@ -25,6 +25,7 @@ import { ModalCenterAlert } from "components/common/modal/ModalCenterAlert";
 import { AddCategory } from 'components/category/modalInputForm'
 import HeaderSearchInput from 'components/common/Header/SearchInput'
 import AccordionMenu from 'components/common/listCommon/AccordionMenu'
+import BackIcon from 'components/common/icon/BackIcon';
 
 const db = firestore()
 const entityRef = db.collection('categories')
@@ -73,7 +74,7 @@ const CategoryScreen = (props) => {
     }, [])
 
     useEffect(() => {
-        if (!!state.level && state.level == 1) {
+        if (props.navigation && !!state.level && state.level == 1) {
             props.navigation.setOptions({
                 headerLeft: () => <AddIcon onOpen={() => showAddCategory()} />,
                 headerTitle: () =>

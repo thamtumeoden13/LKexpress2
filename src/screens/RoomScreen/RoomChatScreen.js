@@ -20,6 +20,7 @@ import { notificationManager } from 'utils/NotificationManager'
 import { scale } from 'utils/scaleSize';
 
 import styles from './styles';
+import BackIcon from 'components/common/icon/BackIcon';
 
 function Difference(arr = [], oarr = []) {
     return arr.reduce((t, v) => oarr.find(e => { return e.id == v.id }) ? t : [...t, v], []);
@@ -85,6 +86,7 @@ const RoomChatScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         navigation.setOptions({
+            headerLeft: () => <BackIcon navigation={navigation} />,
             headerTitle: () => <HeaderTitle title={`${state.roomID}`} />,
             headerRight: () => null,
         });

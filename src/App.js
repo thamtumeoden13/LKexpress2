@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState, useReducer, useRef, useMemo } from 'react'
-import { Alert,YellowBox, LogBox, AppState, Platform, Keyboard, View, Text } from 'react-native'
+import { Alert, YellowBox, LogBox, AppState, Platform, Keyboard, View, Text } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { decode, encode } from 'base-64'
 import codePush from "react-native-code-push";
@@ -24,9 +24,9 @@ import { moderateScale, verticalScale, scale, calcHeight, calcWidth } from 'util
 if (!global.btoa) { global.btoa = encode }
 if (!global.atob) { global.atob = decode }
 
-LogBox.ignoreAllLogs()
-
-YellowBox.ignoreWarnings(['Animated', 'Battery state', 'GeolocationService::onError - ERROR - ']);
+LogBox.ignoreLogs(['VirtualizedLists', 'Warning:...'])
+LogBox.ignoreAllLogs(true)
+console.error = (error) => error.apply
 
 const toastConfig = {
     success_custom: (internalState) => (
@@ -417,7 +417,7 @@ const App = (props) => {
                     return {
                         ...prev,
                         locationPermissionDenied: response1 !== 'granted' ? true : false,
-                        notificationPermissionDenied: response2 !== 'granted' ? true : false,
+                        // notificationPermissionDenied: response2 !== 'granted' ? true : false,
                     }
                 })
                 preOpenSettingPermission()

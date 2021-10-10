@@ -18,6 +18,7 @@ import ActionSheetIcon from 'components/common/icon/ActionSheetIcon'
 import styles from './styles';
 import { scale } from 'utils/scaleSize';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import BackIcon from 'components/common/icon/BackIcon';
 
 const RoomChatScreen = ({ route, navigation }) => {
 
@@ -88,8 +89,7 @@ const RoomChatScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         navigation.setOptions({
-            headerTitle: () => null,// <HeaderTitle title={`${state.connectID}`} />,
-            headerRight: () => null // <ActionSheetIcon navigation={navigation} onOpen={() => actionSheetRef.current?.show()} />,
+            headerLeft: () => <BackIcon navigation={navigation} />,
         });
     }, [navigation])
 

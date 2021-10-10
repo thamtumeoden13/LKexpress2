@@ -55,10 +55,10 @@ export default withNavigation(SearchInput);
 
 const styles = StyleSheet.create({
     searchBar: {
-        flex: 1,
+        width: calcWidth(70),
         flexDirection: 'column',
         justifyContent: 'center',
-        width: calcWidth(80),
+        alignItems: 'center',
     },
     inputContainer: {
         paddingLeft: scale(8),
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
         height: verticalScale(32),
     },
     inputStyle: {
-        flex: 1,
         marginLeft: moderateScale(10),
         color: '#000',
         fontSize: scale(14),

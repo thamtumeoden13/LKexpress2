@@ -16,6 +16,8 @@ import HeaderSearchInput from 'components/common/Header/SearchInput'
 import { notificationManager } from 'utils/NotificationManager'
 
 import styles from './styles';
+import AddIcon from 'components/common/icon/AddIcon';
+import BackIcon from 'components/common/icon/BackIcon';
 
 const RoomScreen = (props) => {
     const db = firestore()
@@ -70,7 +72,7 @@ const RoomScreen = (props) => {
 
     useEffect(() => {
         props.navigation.setOptions({
-            headerTitle: () =>
+                headerTitle: () =>
                 <HeaderSearchInput
                     placeholder={'Tìm tin nhắn, bạn bè'}
                     handerSearchInput={(value) => onHanderSearchInput(value)}

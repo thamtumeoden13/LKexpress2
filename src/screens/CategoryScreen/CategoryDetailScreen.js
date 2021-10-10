@@ -10,13 +10,6 @@ import {
     Keyboard
 } from 'react-native';
 import { StackActions } from '@react-navigation/native';
-
-import {
-    CarouselMainLayout,
-    CarouselStackLayout,
-} from 'components/carousel/layout';
-import { ENTRIES1, ENTRIES2 } from 'constants/entries';
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import ShoppingCartIcon from 'components/common/icon/ShoppingCartIcon'
@@ -25,6 +18,7 @@ import HeadPhoneCarousel from 'components/common/listCommon/HeadPhoneCarousel'
 
 import { AuthContext } from '../../utils'
 import { calcWidth, moderateScale, scale, verticalScale } from 'utils/scaleSize';
+import BackIcon from 'components/common/icon/BackIcon';
 
 const db = firestore()
 const entityRef = db.collection('categories')
@@ -54,7 +48,7 @@ const CategoryDetailScreen = (props) => {
     }, [])
 
     useEffect(() => {
-        if (!!state.categoryID) {
+        if (props.navigation && state.categoryID) {
             props.navigation.setOptions({
                 headerTitle: () => <HeaderTitle title={`${state.categoryName}`} />,
                 headerRight: () => <ShoppingCartIcon onOpen={() => onOpenShoppingCart()} />,

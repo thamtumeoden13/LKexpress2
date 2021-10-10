@@ -21,6 +21,7 @@ import AddRoomCom from 'components/room/AddRoom'
 import HeaderTitle from 'components/common/Header/HeaderTitle'
 
 import { calcWidth, moderateScale, scale, verticalScale } from 'utils/scaleSize';
+import BackIcon from 'components/common/icon/BackIcon';
 
 const db = firestore()
 const entityRef = db.collection('rooms')
@@ -66,9 +67,11 @@ const AddRoomScreen = (props) => {
 
 
     useEffect(() => {
-        props.navigation.setOptions({
-            headerTitle: () => <HeaderTitle title={`Thêm mới`} />,
-        });
+        if (props.navigation) {
+            props.navigation.setOptions({
+                headerTitle: () => <HeaderTitle title={`Thêm mới`} />,
+            });
+        }
     }, [props.navigation])
 
     const getRealtimeCollectionUserList = async (querySnapshot) => {

@@ -9,8 +9,9 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import ButtonOutline from 'components/common/button/ButtonOutline';
+import BackIcon from 'components/common/icon/BackIcon';
+import HeaderTitle from 'components/common/Header/HeaderTitle';
 
-import { listDataElement } from '../../constants/dataTest'
 import { scale, verticalScale, calcHeight, calcWidth } from 'utils/scaleSize'
 
 import styles from './styles';
@@ -27,7 +28,7 @@ const UpdateProfileScreen = (props) => {
 
     useEffect(() => {
         const focusListener = props.navigation.addListener('focus', async () => {
-            setState(prev => { return { ...prev, isLoading: true } })
+            // setState(prev => { return { ...prev, isLoading: true } })
             const userToken = await AsyncStorage.getItem('User');
             const user = JSON.parse(userToken)
             getUsersInfo(user.id)
@@ -36,6 +37,14 @@ const UpdateProfileScreen = (props) => {
             focusListener
         }
     }, [])
+
+    useEffect(() => {
+        if (props.navigation) {
+            props.navigation.setOptions({
+                headerTitle: () => <HeaderTitle title={`Cập nhật thông tin`} />,
+            });
+        }
+    }, [props.navigation])
 
     const getUsersInfo = async (userID) => {
         const querySnapshot = await entityUserRef.where("id", "==", userID).get()

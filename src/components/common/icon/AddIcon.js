@@ -14,7 +14,8 @@ const AddIcon = (props) => {
 
     return (
         <View style={{
-            width: moderateScale(44), height: moderateScale(44), marginRight: moderateScale(10),
+            width: moderateScale(44), height: moderateScale(44),
+            //  marginRight: moderateScale(10),
             justifyContent: 'center', alignItems: 'center'
         }}>
             {/* <Icon
@@ -25,7 +26,7 @@ const AddIcon = (props) => {
             /> */}
             <TouchableScale
                 onPress={openBag}
-                activeScale={2}
+                activeScale={0.8}
             >
                 <LottieView
                     source={require('@assets/animations/add-new.json')}

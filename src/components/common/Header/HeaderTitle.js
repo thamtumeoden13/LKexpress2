@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { withNavigation } from '@react-navigation/compat'
+import React from 'react';
 import { View, Text } from 'react-native'
+import { withNavigation } from '@react-navigation/compat'
 import { scale } from 'utils/scaleSize';
 
 const HeaderTitle = (props) => {
     return (
         <View style={{
-            flex: 1, height: '100%',
+            height: '100%',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
         }}>
             <Text style={{
                 fontSize: scale(16),
-                textAlign: 'center'
+                textAlign: 'center',
             }}>{props.title}</Text>
         </View>
     )

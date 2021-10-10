@@ -13,7 +13,8 @@ const ActionSheetIcon = (props) => {
 
     return (
         <View style={{
-            width: moderateScale(44), height: moderateScale(44), marginRight: moderateScale(10),
+            width: moderateScale(44), height: moderateScale(44),
+            //  marginRight: moderateScale(10),
             justifyContent: 'center', alignItems: 'center'
         }}>
             <AntDesignIcons
