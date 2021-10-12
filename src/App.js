@@ -3,7 +3,7 @@ import React, { useEffect, useState, useReducer, useRef, useMemo } from 'react'
 import { Alert, YellowBox, LogBox, AppState, Platform, Keyboard, View, Text } from 'react-native'
 import { Icon } from 'react-native-elements'
 import { decode, encode } from 'base-64'
-import codePush from "react-native-code-push";
+import CodePush from "react-native-code-push";
 import { PERMISSIONS, request, openSettings, checkNotifications } from 'react-native-permissions';
 import RNExitApp from 'react-native-exit-app';
 import Toast from 'react-native-toast-message';
@@ -353,7 +353,7 @@ const App = (props) => {
             }
         };
         bootstrapAsync();
-        checkForUpdate();
+        getAppVersion();
         return () => {
             appStateChange
         };
@@ -525,6 +525,23 @@ const App = (props) => {
             });
         }
     }
+    const getAppVersion = async () => {
+        const [config, update] = await Promise.all([
+            CodePush.getConfiguration(),
+            CodePush.getUpdateMetadata()
+        ]);
+        let version = ''
+        console.log('config, update',config, update)
+        if (!update) {
+            version = config.appVersion;
+        }
+        else {
+            version = `${config.appVersion} build ${update.label}`
+        }
+        checkForUpdate();
+        console.log('version-init', version)
+        await AsyncStorage.setItem('appVersion', version);
+    }
 
     const checkForUpdate = async () => {
         // setState(prev => { return { ...prev, isFetched: false } })
@@ -607,5 +624,5 @@ const App = (props) => {
 }
 
 // export default App
-let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME };
-export default codePush(codePushOptions)(App)
+let codePushOptions = { checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME };
+export default CodePush(codePushOptions)(App)

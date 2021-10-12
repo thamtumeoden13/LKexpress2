@@ -1,6 +1,7 @@
 import React, { useContext, } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import SplashScreen from 'react-native-splash-screen'
 
 import AppStack from './AppStack'
 import AuthStack from './AuthStack'
@@ -11,8 +12,11 @@ const Stack = createStackNavigator();
 
 export default () => {
     const { appContext } = useContext(AuthContext);
+    const onReady = () => {
+        SplashScreen.hide();
+    }
     return (
-        <NavigationContainer>
+        <NavigationContainer onReady={onReady}>
             <Stack.Navigator
                 screenOptions={{ headerShown: false }}
             // drawerContent={props => <DrawerContentComponents {...props} />}

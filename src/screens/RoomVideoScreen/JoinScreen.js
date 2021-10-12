@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, Button, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
+import InCallManager from 'react-native-incall-manager';
 
 import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription } from 'react-native-webrtc';
 import { db } from '../../utils/firebase';
@@ -83,6 +84,11 @@ export default function JoinScreen({ route }) {
     };
 
     const joinCall = async id => {
+
+        InCallManager.start({media: 'video'})
+        // InCallManager.setForceSpeakerphoneOn(true);
+        // InCallManager.setSpeakerphoneOn(true);
+
         setState(prev => { return { ...prev, startCallComplete: true } })
         const roomRef = await db.collection('videorooms').doc(id);
         const roomSnapshot = await roomRef.get();

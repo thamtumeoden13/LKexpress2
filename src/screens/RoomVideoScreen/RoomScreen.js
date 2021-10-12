@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, Button, View, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const screens = {
     ROOM: 'JOIN_ROOM',
@@ -8,9 +9,15 @@ const screens = {
     JOIN: 'JOIN',
 }
 export default function RoomScreen() {
-
+    const [state, setState] = useState({
+        appVersion: ''
+    })
     const [roomId, setRoomId] = useState('');
     const navigation = useNavigation()
+
+    useEffect(() => {
+        getAppVersion()
+    }, [])
 
     const onCallOrJoin = (screen) => {
         if (roomId.length > 0) {
@@ -27,6 +34,12 @@ export default function RoomScreen() {
         }
     }
 
+    const getAppVersion = async () => {
+        let version = await AsyncStorage.getItem('appVersion');
+        console.log('version', version)
+        setState(prev => { return { ...prev, appVersion: version } })
+    }
+
     return (
         <>
             <Text style={styles.heading} >Chọn Phòng</Text>
@@ -36,6 +49,9 @@ export default function RoomScreen() {
             </View>
             <View style={styles.buttonContainer} >
                 <Button title="Call Screen" onPress={() => onCallOrJoin(screens.CALL)} />
+            </View>
+            <View >
+                <Text style={{ width: '100%', height: 48, textAlign: 'center' }}>{state.appVersion}</Text>
             </View>
         </>
     )
