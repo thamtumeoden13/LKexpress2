@@ -1,10 +1,15 @@
 import LoginScreen from './LoginScreen/LoginScreen'
 
-import HomeScreen from './HomeScreen/HomeScreen'
-
 import RegistrationScreen from './RegistrationScreen/RegistrationScreen'
 
 import AuthLoadingScreen from './AuthLoadingScreen/AuthLoadingScreen'
+
+
+import HomeScreen from './HomeScreen/HomeScreen'
+
+import VideoRoomScreen from './RoomVideoScreen/RoomScreen'
+import VideoCallScreen from './RoomVideoScreen/CallScreen'
+import VideoJoinScreen from './RoomVideoScreen/JoinScreen'
 
 import RoomScreen from './RoomScreen/RoomScreen'
 import RoomChatScreen from './RoomScreen/RoomChatScreen'
@@ -29,7 +34,9 @@ import UpdateProfileScreen from './ProfileScreen/UpdateProfileScreen'
 
 export {
     LoginScreen, RegistrationScreen, AuthLoadingScreen,
-    HomeScreen, RoomScreen, RoomChatScreen, AddRoomScreen,
+    HomeScreen,
+    VideoRoomScreen, VideoCallScreen, VideoJoinScreen,
+    RoomScreen, RoomChatScreen, AddRoomScreen,
     ChatScreen, ChatDetailScreen,
     PhoneBookScreen, ProfileScreen, UpdateProfileScreen,
     CategoryScreen, CategoryDetailScreen, AddCategoryScreen, ShoppingCartScreen,

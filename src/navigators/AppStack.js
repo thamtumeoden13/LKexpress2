@@ -13,6 +13,7 @@ import DrawerContentComponents from './DrawerContentComponents'
 import HomeTabs from './BottomTabStack'
 
 import {
+    VideoCallScreen, VideoJoinScreen,
     ChatDetailScreen, RoomChatScreen, AddRoomScreen,
     CategoryDetailScreen, AddCategoryScreen, ShoppingCartScreen,
     DiaryDetailScreen, AddDiaryScreen, UpdateProfileScreen
@@ -33,6 +34,26 @@ const MainStack = () => {
             }}
         >
             <Stack.Screen name="HomeTabs" component={HomeTabs} options={{ title: 'Phòng chat', }} />
+            <Stack.Screen name="VideoCall" component={VideoCallScreen}
+                options={{
+                    headerLeft: () => <BackIcon navigation={navigation} />,
+                    // headerTitle: () => <HeaderTitle title={`Phòng chat 111`} />,
+                    // headerRight: () => <BagIcon navigation={navigation} />,
+                    // headerBackTitleVisible: false,
+                    // headerBackVisible: false,
+                    headerShown: true,
+                }}
+            />
+            <Stack.Screen name="VideoJoin" component={VideoJoinScreen}
+                options={{
+                    headerLeft: () => <BackIcon navigation={navigation} />,
+                    // headerTitle: () => <HeaderTitle title={`Phòng chat 111`} />,
+                    // headerRight: () => <BagIcon navigation={navigation} />,
+                    // headerBackTitleVisible: false,
+                    // headerBackVisible: false,
+                    headerShown: true,
+                }}
+            />
             <Stack.Screen name="ChatDetail" component={ChatDetailScreen}
                 options={{
                     headerLeft: () => <BackIcon navigation={navigation} />,

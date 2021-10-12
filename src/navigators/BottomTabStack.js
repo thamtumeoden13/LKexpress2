@@ -21,6 +21,7 @@ import {
     PhoneBookScreen, ProfileScreen,
     CategoryScreen,
     DiaryScreen,
+    VideoRoomScreen
 } from '../screens'
 import { useNavigation } from '@react-navigation/native';
 
@@ -41,7 +42,7 @@ const MainStack = () => {
                 // tabBarLabelPosition: 'beside-icon'
             }}
         >
-            {/* <Tab.Screen name="Home" component={HomeStackScreen}
+            <Tab.Screen name="Home" component={VideoRoomScreen}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
@@ -63,7 +64,7 @@ const MainStack = () => {
                         </View>
                     )
                 }}
-            /> */}
+            />
             <Tab.Screen name="Chat" component={ChatScreen}
                 options={{
                     tabBarLabel: 'Tin nhắn',
