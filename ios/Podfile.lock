@@ -349,9 +349,6 @@ PODS:
   - BVLinearGradient (2.5.6):
     - React
   - CocoaAsyncSocket (7.6.5)
-  - CocoaLumberjack (3.7.2):
-    - CocoaLumberjack/Core (= 3.7.2)
-  - CocoaLumberjack/Core (3.7.2)
   - CodePush (7.0.3):
     - Base64 (~> 1.1)
     - JWT (~> 3.0.0-beta.12)
@@ -852,6 +849,8 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
+  - react-native-splash-screen (3.2.0):
+    - React
   - react-native-webrtc (1.92.2):
     - React-Core
   - React-perflogger (0.66.0)
@@ -921,11 +920,6 @@ PODS:
     - React-perflogger (= 0.66.0)
   - ReactNativeIncallManager (3.3.0):
     - React
-  - RNBackgroundFetch (4.0.3):
-    - React-Core
-  - RNBackgroundGeolocation (4.3.0):
-    - CocoaLumberjack (~> 3.7.2)
-    - React-Core
   - RNCallKeep (4.2.0):
     - React
   - RNCAsyncStorage (1.12.1):
@@ -1096,6 +1090,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-image-resizer (from `../node_modules/react-native-image-resizer`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-webrtc (from `../node_modules/react-native-webrtc`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -1110,8 +1105,6 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeIncallManager (from `../node_modules/react-native-incall-manager`)
-  - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
-  - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
   - RNCallKeep (from `../node_modules/react-native-callkeep`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
@@ -1142,7 +1135,6 @@ SPEC REPOS:
     - Base64
     - BoringSSL-GRPC
     - CocoaAsyncSocket
-    - CocoaLumberjack
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -1273,6 +1265,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-resizer"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-splash-screen:
+    :path: "../node_modules/react-native-splash-screen"
   react-native-webrtc:
     :path: "../node_modules/react-native-webrtc"
   React-perflogger:
@@ -1301,10 +1295,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeIncallManager:
     :path: "../node_modules/react-native-incall-manager"
-  RNBackgroundFetch:
-    :path: "../node_modules/react-native-background-fetch"
-  RNBackgroundGeolocation:
-    :path: "../node_modules/react-native-background-geolocation"
   RNCallKeep:
     :path: "../node_modules/react-native-callkeep"
   RNCAsyncStorage:
@@ -1359,7 +1349,6 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  CocoaLumberjack: b7e05132ff94f6ae4dfa9d5bce9141893a21d9da
   CodePush: f509246638a5ebe5209b08351e48a95093d1f307
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: 6816ca39e1cc8beffd2a96783f518296789d1c48
@@ -1437,6 +1426,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: 92f51a85a62c2d829dcbd0dda5af99e6f988a113
   react-native-image-resizer: d9fb629a867335bdc13230ac2a58702bb8c8828f
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-webrtc: 41526e4060dac373c18676f866962d4180ee47b9
   React-perflogger: 1f554c2b684e2f484f9edcdfdaeedab039fbaca8
   React-RCTActionSheet: 610d5a5d71ab4808734782c8bca6a12ec3563672
@@ -1451,8 +1441,6 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 4bb657a97aa74568d9ed634c8bd478299bb8a3a6
   ReactCommon: eb059748e842a1a86025ebbd4ac9d99e74492f88
   ReactNativeIncallManager: a840ef75640518065742a893e6c6ff98ee820039
-  RNBackgroundFetch: 182d0ff90747bacbb3d4e168ecc2194442d0a2d3
-  RNBackgroundGeolocation: 58f32f1cc6527843a324e07bf931208f794d4e48
   RNCallKeep: 8cbaafb72c4a1738f4a6e70fdaf041a14083ce5b
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
@@ -1480,6 +1468,6 @@ SPEC CHECKSUMS:
   Yoga: c11abbf5809216c91fcd62f5571078b83d9b6720
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 603e9858798fc8398788f03ecc7a0d22be62a9f4
+PODFILE CHECKSUM: 90338169491736130cbc9b6ca49ac0d01be88c37
 
 COCOAPODS: 1.11.0

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1089649462423",
+    "firebase_url": "https://video-call-lk-express-default-rtdb.firebaseio.com",
+    "project_id": "video-call-lk-express",
+    "storage_bucket": "video-call-lk-express.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089649462423:android:17700069ec243c436eedd2",
+        "android_client_info": {
+          "package_name": "com.tgdd.tmsdelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089649462423-p792ef41638nre2hvnbc15duf0g5s0kn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIT7WhPypZOD6Fh1geaWt6NLCSdIh_Zc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089649462423-p792ef41638nre2hvnbc15duf0g5s0kn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1089649462423-lu5gujj66lh3s8dkejg9pj82456244oh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tgdd.entmsdelivery"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

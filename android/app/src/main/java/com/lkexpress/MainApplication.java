@@ -11,6 +11,13 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import com.microsoft.codepush.react.CodePush;
+import com.airbnb.android.react.lottie.LottiePackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.zxcpoiu.incallmanager.InCallManagerPackage;
+import com.facebook.react.bridge.JSIModulePackage;
+import com.swmansion.reanimated.ReanimatedJSIModulePackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -26,12 +33,24 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+          packages.add(new LottiePackage());
           return packages;
         }
 
         @Override
         protected String getJSMainModuleName() {
           return "index";
+        }
+        
+        @Override
+        protected JSIModulePackage getJSIModulePackage() {
+          return new ReanimatedJSIModulePackage(); // <- add
+        }
+
+        // bundle location from on each app start
+        @Override
+        protected String getJSBundleFile() {
+          return CodePush.getJSBundleFile();
         }
       };
 

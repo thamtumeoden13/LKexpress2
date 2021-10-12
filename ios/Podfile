@@ -73,6 +73,8 @@ target 'LKexpress' do
 
   pod 'ReactNativeIncallManager', :path => '../node_modules/react-native-incall-manager'
 
+  # pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   post_install do |installer|
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)

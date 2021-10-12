@@ -1,4 +1,4 @@
-apply plugin: "com.android.application"
+apply plugin: 'com.android.application'
 
 import com.android.build.OutputFile
 
@@ -81,7 +81,31 @@ project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]
 
-apply from: "../../node_modules/react-native/react.gradle"
+project.ext.vectoricons = [
+    iconFontNames: [
+    'AntDesign.ttf',
+    'Entypo.ttf',
+    'EvilIcons.ttf' ,
+    'Feather.ttf',
+    'FontAwesome.ttf',
+    'FontAwesome5_Brands.ttf',
+    'FontAwesome5_Regular.ttf',
+    'FontAwesome5_Solid.ttf',
+    'Fontisto.ttf',
+    'Foundation.ttf',
+    'Ionicons.ttf',
+    'MaterialCommunityIcons.ttf',
+    'Octicons.ttf',
+    'PathwayGothicOne-Regular.ttf',
+    'SimpleLineIcons.ttf',
+    'Zocial.ttf',
+    'MaterialIcons.ttf',
+    ]
+]
+
+apply from: '../../node_modules/react-native/react.gradle'
+apply from: '../../node_modules/react-native-code-push/android/codepush.gradle'
+apply from: '../../node_modules/react-native-vector-icons/fonts.gradle'
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -118,12 +142,12 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
-def enableHermes = project.ext.react.get("enableHermes", false);
+def enableHermes = project.ext.react.get('enableHermes', false)
 
 /**
  * Architectures to build native code for in debug.
  */
-def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
+def nativeArchitectures = project.getProperties().get('reactNativeDebugArchitectures')
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -131,18 +155,21 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.lkexpress"
+        applicationId 'com.tgdd.tmsdelivery'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName '1.0.3'
+        multiDexEnabled true
+        resValue 'string', 'build_config_package', 'YOUR_PACKAGE_NAME_IN_ANDROIDMANIFEST.XML'
+        vectorDrawables.useSupportLibrary = true
     }
     splits {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+            include 'armeabi-v7a', 'x86', 'arm64-v8a', 'x86_64'
         }
     }
     signingConfigs {
@@ -152,22 +179,50 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
+        }
+        stagingrelease {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            manifestPlaceholders = [usesCleartextTraffic:'true']
             if (nativeArchitectures) {
                 ndk {
                     abiFilters nativeArchitectures.split(',')
                 }
             }
+            resValue 'string', 'CodePushDeploymentKey', 'QY5ucVakjRcMvm0xVb8xHNuAp9qighM60z3QW'
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [usesCleartextTraffic:'false']
+            resValue 'string', 'CodePushDeploymentKey', 'QY5ucVakjRcMvm0xVb8xHNuAp9qighM60z3QW'
+        }
+        releaseStaging {
+            matchingFallbacks = ['release']
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [usesCleartextTraffic:'false']
+            resValue 'string', 'CodePushDeploymentKey', 'QY5ucVakjRcMvm0xVb8xHNuAp9qighM60z3QW'
         }
     }
 
@@ -177,23 +232,41 @@ android {
             // For each separate APK per architecture, set a unique version code as described here:
             // https://developer.android.com/studio/build/configure-apk-splits.html
             // Example: versionCode 1 will generate 1001 for armeabi-v7a, 1002 for x86, etc.
-            def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
+            def versionCodes = ['armeabi-v7a': 1, 'x86': 2, 'arm64-v8a': 3, 'x86_64': 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
                         defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
-
         }
+    }
+    packagingOptions {
+        pickFirst 'lib/x86/libc++_shared.so'
+        pickFirst 'lib/x86_64/libjsc.so'
+        pickFirst 'lib/arm64-v8a/libjsc.so'
+        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+        pickFirst 'lib/x86_64/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
     }
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    // implementation "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
     //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.facebook.react:react-native:+'  // From node_modules
+    implementation project(':lottie-react-native')
 
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
+
+    // add the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
@@ -209,9 +282,9 @@ dependencies {
     }
 
     if (enableHermes) {
-        def hermesPath = "../../node_modules/hermes-engine/android/";
-        debugImplementation files(hermesPath + "hermes-debug.aar")
-        releaseImplementation files(hermesPath + "hermes-release.aar")
+        def hermesPath = '../../node_modules/hermes-engine/android/'
+        debugImplementation files(hermesPath + 'hermes-debug.aar')
+        releaseImplementation files(hermesPath + 'hermes-release.aar')
     } else {
         implementation jscFlavor
     }
@@ -224,4 +297,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply from: file('../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle'); applyNativeModulesAppBuildGradle(project)
+apply plugin: 'com.google.gms.google-services'
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true

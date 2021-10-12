@@ -8,7 +8,6 @@
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
 #import <CodePush/CodePush.h>
-#import <TSBackgroundFetch/TSBackgroundFetch.h>
 #import "RNVoipPushNotificationManager.h"
 #import "RNCallKeep.h"
 
@@ -62,8 +61,6 @@ static void InitializeFlipper(UIApplication *application) {
   // Define UNUserNotificationCenter
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
-  // [REQUIRED] Register BackgroundFetch
-  [[TSBackgroundFetch sharedInstance] didFinishLaunching];
   return YES;
 }
 
