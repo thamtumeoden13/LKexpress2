@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, Button, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import InCallManager from 'react-native-incall-manager';
+import { Button } from 'react-native-elements'
 
 import { RTCPeerConnection, RTCView, mediaDevices, RTCIceCandidate, RTCSessionDescription } from 'react-native-webrtc';
 import { db } from '../../utils/firebase';
@@ -34,6 +35,7 @@ export default function CallScreen({ route }) {
         setLocalStream();
         setRemoteStream();
         setCachedLocalPC();
+        InCallManager.stop();
         // cleanup
         navigation.goBack()
     }
@@ -43,6 +45,7 @@ export default function CallScreen({ route }) {
     const [cachedLocalPC, setCachedLocalPC] = useState();
 
     const [isMuted, setIsMuted] = useState(false);
+    const [isVideo, setIsVideo] = useState(false);
 
     useEffect(() => {
         const roomId = route.params.roomId
@@ -69,11 +72,11 @@ export default function CallScreen({ route }) {
         const constraints = {
             audio: true,
             video: {
-                mandatory: {
-                    minWidth: 500, // Provide your own width, height and frame rate here
-                    minHeight: 300,
-                    minFrameRate: 30,
-                },
+                // mandatory: {
+                //     minWidth: 375, // Provide your own width, height and frame rate here
+                //     minHeight: 812,
+                //     minFrameRate: 30,
+                // },
                 facingMode,
                 optional: videoSourceId ? [{ sourceId: videoSourceId }] : [],
             },
@@ -84,10 +87,10 @@ export default function CallScreen({ route }) {
     };
 
     const startCall = async id => {
-        InCallManager.start({media: 'video'})
+        InCallManager.start({ media: 'video' })
         // InCallManager.setForceSpeakerphoneOn(true);
         // InCallManager.setSpeakerphoneOn(true);
-        
+
         setState(prev => { return { ...prev, startCallComplete: true } })
         const localPC = new RTCPeerConnection(configuration);
         localPC.addStream(localStream);
@@ -151,13 +154,25 @@ export default function CallScreen({ route }) {
         });
     };
 
+    // Mutes the local's outgoing audio
+    const toggleVideo = () => {
+        if (!remoteStream) {
+            return;
+        }
+        setIsVideo(!isVideo);
+    };
 
     return (
-        <>
+        <View style={{ flex: 1, }} >
             <View style={{ flex: 1, }} >
                 <View style={styles.rtcview}>
                     {remoteStream ?
-                        <RTCView mirror style={styles.rtc} streamURL={remoteStream && remoteStream.toURL()} />
+                        <RTCView
+                            mirror={true}
+                            objectFit='cover'
+                            style={styles.rtc}
+                            streamURL={remoteStream && remoteStream.toURL()}
+                        />
                         :
                         <ActivityIndicator size="large" color="#fff" />
                     }
@@ -168,32 +183,77 @@ export default function CallScreen({ route }) {
                     justifyContent: 'center', alignItems: 'center'
                 }}>
                     {localStream ?
-                        <RTCView mirror style={styles.rtc} streamURL={localStream && localStream.toURL()} />
+                        <RTCView
+                            mirror={true}
+                            objectFit='cover'
+                            style={styles.rtc}
+                            streamURL={localStream && localStream.toURL()}
+                        />
                         :
                         <ActivityIndicator size="small" color="#fff" />
                     }
                 </View>
             </View>
-
             <View style={styles.callButtons} >
-                <FontAwesome5Icon name={'phone-slash'} size={30} color={'#f00'} onPress={onBackPress} />
                 {localStream && !state.startCallComplete &&
-                    <FontAwesome5Icon
-                        name={'phone'} size={30} color={'#fff'}
-                        onPress={() => startCall(state.roomId)} disabled={!!remoteStream}
-                    />
+                    <View style={{
+                        width: 48, height: 48, borderRadius: 24, backgroundColor: '#fff',
+                        alignItems: 'center', justifyContent: 'center',
+                    }}>
+                        <FontAwesome5Icon
+                            name={'phone'} size={20} color={'#00f'}
+                            onPress={() => startCall(state.roomId)} disabled={!!remoteStream}
+                        />
+                    </View>
                 }
                 {localStream &&
-                    <>
+                    <View style={{
+                        width: 48, height: 48, borderRadius: 24, backgroundColor: `${remoteStream ? '#fff' : '#0001'}`,
+                        alignItems: 'center', justifyContent: 'center',
+                    }}>
+                        <FontAwesome5Icon name={`${!isMuted ? 'video' : 'video-slash'}`}
+                            size={20} color={`${remoteStream ? '#000' : '#6a6a6a'}`}
+                            onPress={toggleVideo} disabled={!remoteStream}
+                        />
+                    </View>
+                }
+                {localStream &&
+                    <View style={{
+                        width: 48, height: 48, borderRadius: 24, backgroundColor: `${remoteStream ? '#fff' : '#0001'}`,
+                        alignItems: 'center', justifyContent: 'center',
+                    }}>
                         <FontAwesome5Icon name={`${!isMuted ? 'microphone' : 'microphone-slash'}`}
-                            size={30} color={`${remoteStream ? '#000' : '#6a6a6a'}`}
+                            size={20} color={`${remoteStream ? '#000' : '#6a6a6a'}`}
                             onPress={toggleMute} disabled={!remoteStream}
                         />
-                        <FontAwesome5Icon name={'camera'} size={30} color={'#000'} onPress={switchCamera} />
-                    </>
+                    </View>
+                }
+                {localStream &&
+                    <View style={{
+                        width: 48, height: 48, borderRadius: 24, backgroundColor: '#fff',
+                        alignItems: 'center', justifyContent: 'center',
+                    }}>
+                        <FontAwesome5Icon
+                            name={'camera'} size={20} color={'#000'}
+                            onPress={switchCamera}
+                        />
+                    </View>
                 }
             </View>
-        </>
+            <View style={styles.buttonContainer}>
+                <Button
+                    containerStyle={{ width: '90%', alignItems: 'center', marginVertical: 8 }}
+                    style={{ width: '90%', }}
+                    buttonStyle={{ backgroundColor: 'red', height: 40, borderRadius: 16 }}
+                    icon={
+                        <FontAwesome5Icon
+                            name={'phone-slash'} size={20} color={'#fff'}
+                        />
+                    }
+                    onPress={onBackPress}
+                />
+            </View>
+        </View>
     )
 }
 
@@ -206,7 +266,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#888888',
+        backgroundColor: '#eff1e4',
     },
     rtc: {
         flex: 1,
@@ -219,14 +279,18 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     callButtons: {
-        position: 'absolute',
-        bottom: 48,
-        padding: 10,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-around',
+        position: 'absolute',
+        bottom: 80,
+        padding: 8
     },
     buttonContainer: {
-        margin: 5,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 24,
     }
 });
