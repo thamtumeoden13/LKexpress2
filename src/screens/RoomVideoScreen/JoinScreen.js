@@ -36,8 +36,8 @@ export default function JoinScreen({ route }) {
         setRemoteStream();
         setCachedLocalPC();
         InCallManager.stop();
-        // cleanup
-        navigation.goBack()
+        // cleanup        
+        navigation.navigate('App')
     }
 
     const [localStream, setLocalStream] = useState();
@@ -239,19 +239,25 @@ export default function JoinScreen({ route }) {
                     </View>
                 }
             </View>
-            <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.buttonContainer}
+                onPress={onBackPress}
+            >
                 <Button
-                    containerStyle={{ width: '90%', alignItems: 'center', marginVertical: 8 }}
+                    type='clear'
+                    containerStyle={{
+                        width: '90%', alignItems: 'center',
+                        marginVertical: 8, backgroundColor: '#f00', borderRadius: 16
+                    }}
                     style={{ width: '90%', }}
-                    buttonStyle={{ backgroundColor: 'red', height: 40, borderRadius: 16 }}
+                    buttonStyle={{ height: 40, }}
                     icon={
                         <FontAwesome5Icon
                             name={'phone-slash'} size={20} color={'#fff'}
                         />
                     }
-                    onPress={onBackPress}
+                    disabled={true}
                 />
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }

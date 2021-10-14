@@ -10,6 +10,8 @@
 #import <CodePush/CodePush.h>
 #import "RNVoipPushNotificationManager.h"
 #import "RNCallKeep.h"
+#import "RNFBMessagingModule.h"
+#import "RNSplashScreen.h"
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -37,6 +39,8 @@ static void InitializeFlipper(UIApplication *application) {
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
+
+  NSDictionary *appProperties = [RNFBMessagingModule addCustomPropsToUserProps:nil withLaunchOptions:launchOptions];
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }
@@ -45,7 +49,7 @@ static void InitializeFlipper(UIApplication *application) {
   [RNVoipPushNotificationManager voipRegistration];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"LKexpress"
-                                            initialProperties:nil];
+                                            initialProperties:appProperties];
 
   if (@available(iOS 13.0, *)) {
       rootView.backgroundColor = [UIColor systemBackgroundColor];
@@ -61,6 +65,7 @@ static void InitializeFlipper(UIApplication *application) {
   // Define UNUserNotificationCenter
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
+  [RNSplashScreen show];
   return YES;
 }
 
@@ -148,20 +153,20 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
   [RNVoipPushNotificationManager didReceiveIncomingPushWithPayload:payload forType:(NSString *)type];
 
   // --- You should make sure to report to callkit BEFORE execute `completion()`
-  // [RNCallKeep reportNewIncomingCall:uuid handle:handle handleType:@"generic" hasVideo:false localizedCallerName:callerName fromPushKit: YES payload:nil];
+//  [RNCallKeep reportNewIncomingCall:uuid handle:handle handleType:@"generic" hasVideo:false localizedCallerName:callerName fromPushKit: YES payload:nil];
   
-  // [RNCallKeep reportNewIncomingCall: uuid
-  //                            handle: handle
-  //                        handleType: @"generic"
-  //                          hasVideo: NO
-  //               localizedCallerName: callerName
-  //                   supportsHolding: YES
-  //                      supportsDTMF: YES
-  //                  supportsGrouping: YES
-  //                supportsUngrouping: YES
-  //                       fromPushKit: YES
-  //                           payload: extra
-  //             withCompletionHandler: completion];
+//  [RNCallKeep reportNewIncomingCall: uuid
+//                             handle: handle
+//                         handleType: @"generic"
+//                           hasVideo: NO
+//                localizedCallerName: callerName
+//                    supportsHolding: YES
+//                       supportsDTMF: YES
+//                   supportsGrouping: YES
+//                 supportsUngrouping: YES
+//                        fromPushKit: YES
+//                            payload: extra
+//              withCompletionHandler: completion];
   // --- You don't need to call it if you stored `completion()` and will call it on the js side.
   completion();
 }

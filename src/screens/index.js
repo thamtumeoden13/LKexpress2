@@ -10,6 +10,7 @@ import HomeScreen from './HomeScreen/HomeScreen'
 import VideoRoomScreen from './RoomVideoScreen/RoomScreen'
 import VideoCallScreen from './RoomVideoScreen/CallScreen'
 import VideoJoinScreen from './RoomVideoScreen/JoinScreen'
+import VideoCallModal from './RoomVideoScreen/VideoCallModal'
 
 import RoomScreen from './RoomScreen/RoomScreen'
 import RoomChatScreen from './RoomScreen/RoomChatScreen'
@@ -35,7 +36,7 @@ import UpdateProfileScreen from './ProfileScreen/UpdateProfileScreen'
 export {
     LoginScreen, RegistrationScreen, AuthLoadingScreen,
     HomeScreen,
-    VideoRoomScreen, VideoCallScreen, VideoJoinScreen,
+    VideoRoomScreen, VideoCallScreen, VideoJoinScreen, VideoCallModal,
     RoomScreen, RoomChatScreen, AddRoomScreen,
     ChatScreen, ChatDetailScreen,
     PhoneBookScreen, ProfileScreen, UpdateProfileScreen,

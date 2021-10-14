@@ -13,8 +13,11 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		6AD6F13538903260172521F9 /* libPods-LKexpress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EB4A7B53C00C1FFCAA1FCA /* libPods-LKexpress.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		97AAF1992712014400918ED9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97AAF1982712014400918ED9 /* GoogleService-Info.plist */; };
+		9725C71C2718192400DF063C /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9725C71B2718192400DF063C /* NotificationService.m */; };
+		9725C7202718192400DF063C /* NotifeeNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9725C7182718192400DF063C /* NotifeeNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9739E8382716F70800D7069E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9739E8372716F70800D7069E /* GoogleService-Info.plist */; };
 		97AAF19C2712DBBF00918ED9 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 97AAF19B2712DBBF00918ED9 /* main.jsbundle */; };
+		E8054854B07CAB626773BC82 /* libPods-NotifeeNotificationService.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5606A7EC255959347899302 /* libPods-NotifeeNotificationService.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,7 +28,28 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = LKexpress;
 		};
+		9725C71E2718192400DF063C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9725C7172718192400DF063C;
+			remoteInfo = NotifeeNotificationService;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9725C6F12718106100DF063C /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9725C7202718192400DF063C /* NotifeeNotificationService.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* LKexpressTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LKexpressTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,11 +64,19 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = LKexpress/main.m; sourceTree = "<group>"; };
 		727B08212624873B6E489FB2 /* Pods-LKexpress.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LKexpress.release.xcconfig"; path = "Target Support Files/Pods-LKexpress/Pods-LKexpress.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LKexpress/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		97AAF1982712014400918ED9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "LKexpress/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9725C7182718192400DF063C /* NotifeeNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotifeeNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		9725C71A2718192400DF063C /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
+		9725C71B2718192400DF063C /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
+		9725C71D2718192400DF063C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9739E8372716F70800D7069E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		97AAF19A2712905D00918ED9 /* LKexpress.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LKexpress.entitlements; path = LKexpress/LKexpress.entitlements; sourceTree = "<group>"; };
 		97AAF19B2712DBBF00918ED9 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		9DDB4345A975AB733C51F9A7 /* Pods-NotifeeNotificationService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotifeeNotificationService.debug.xcconfig"; path = "Target Support Files/Pods-NotifeeNotificationService/Pods-NotifeeNotificationService.debug.xcconfig"; sourceTree = "<group>"; };
+		AD10960B87658E2E772A2AA0 /* Pods-NotifeeNotificationService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotifeeNotificationService.release.xcconfig"; path = "Target Support Files/Pods-NotifeeNotificationService/Pods-NotifeeNotificationService.release.xcconfig"; sourceTree = "<group>"; };
+		C90746223B2A445D99846344 /* libPods-LKexpress-NotifeeNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LKexpress-NotifeeNotificationService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7371881F02A50BB23FFB4E /* Pods-LKexpress.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LKexpress.debug.xcconfig"; path = "Target Support Files/Pods-LKexpress/Pods-LKexpress.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F5606A7EC255959347899302 /* libPods-NotifeeNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NotifeeNotificationService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +92,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6AD6F13538903260172521F9 /* libPods-LKexpress.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9725C7152718192400DF063C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8054854B07CAB626773BC82 /* libPods-NotifeeNotificationService.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,9 +126,9 @@
 		13B07FAE1A68108700A75B9A /* LKexpress */ = {
 			isa = PBXGroup;
 			children = (
+				9739E8372716F70800D7069E /* GoogleService-Info.plist */,
 				97AAF19B2712DBBF00918ED9 /* main.jsbundle */,
 				97AAF19A2712905D00918ED9 /* LKexpress.entitlements */,
-				97AAF1982712014400918ED9 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -104,6 +144,8 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				07EB4A7B53C00C1FFCAA1FCA /* libPods-LKexpress.a */,
+				C90746223B2A445D99846344 /* libPods-LKexpress-NotifeeNotificationService.a */,
+				F5606A7EC255959347899302 /* libPods-NotifeeNotificationService.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -121,6 +163,7 @@
 				13B07FAE1A68108700A75B9A /* LKexpress */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* LKexpressTests */,
+				9725C7192718192400DF063C /* NotifeeNotificationService */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				8C16D3D56C83CF40A3FAA1BD /* Pods */,
@@ -135,6 +178,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* LKexpress.app */,
 				00E356EE1AD99517003FC87E /* LKexpressTests.xctest */,
+				9725C7182718192400DF063C /* NotifeeNotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -144,8 +188,20 @@
 			children = (
 				DB7371881F02A50BB23FFB4E /* Pods-LKexpress.debug.xcconfig */,
 				727B08212624873B6E489FB2 /* Pods-LKexpress.release.xcconfig */,
+				9DDB4345A975AB733C51F9A7 /* Pods-NotifeeNotificationService.debug.xcconfig */,
+				AD10960B87658E2E772A2AA0 /* Pods-NotifeeNotificationService.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		9725C7192718192400DF063C /* NotifeeNotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				9725C71A2718192400DF063C /* NotificationService.h */,
+				9725C71B2718192400DF063C /* NotificationService.m */,
+				9725C71D2718192400DF063C /* Info.plist */,
+			);
+			path = NotifeeNotificationService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,15 +238,35 @@
 				601E075584A91F53146CDEB4 /* [CP] Embed Pods Frameworks */,
 				6701495F7BBFA8CD13FD8BAF /* [CP] Copy Pods Resources */,
 				A5DCC75C4E5D7E1A1E167BD7 /* [CP-User] [RNFB] Core Configuration */,
+				9725C6F12718106100DF063C /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9725C71F2718192400DF063C /* PBXTargetDependency */,
 			);
 			name = LKexpress;
 			productName = LKexpress;
 			productReference = 13B07F961A680F5B00A75B9A /* LKexpress.app */;
 			productType = "com.apple.product-type.application";
+		};
+		9725C7172718192400DF063C /* NotifeeNotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9725C7212718192400DF063C /* Build configuration list for PBXNativeTarget "NotifeeNotificationService" */;
+			buildPhases = (
+				1F6BB527F0FB0C364331181D /* [CP] Check Pods Manifest.lock */,
+				9725C7142718192400DF063C /* Sources */,
+				9725C7152718192400DF063C /* Frameworks */,
+				9725C7162718192400DF063C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotifeeNotificationService;
+			productName = NotifeeNotificationService;
+			productReference = 9725C7182718192400DF063C /* NotifeeNotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -198,6 +274,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -206,6 +283,9 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1120;
+					};
+					9725C7172718192400DF063C = {
+						CreatedOnToolsVersion = 13.0;
 					};
 				};
 			};
@@ -224,6 +304,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* LKexpress */,
 				00E356ED1AD99517003FC87E /* LKexpressTests */,
+				9725C7172718192400DF063C /* NotifeeNotificationService */,
 			);
 		};
 /* End PBXProject section */
@@ -241,9 +322,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				9739E8382716F70800D7069E /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				97AAF1992712014400918ED9 /* GoogleService-Info.plist in Resources */,
 				97AAF19C2712DBBF00918ED9 /* main.jsbundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9725C7162718192400DF063C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +351,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		1F6BB527F0FB0C364331181D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NotifeeNotificationService-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		601E075584A91F53146CDEB4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -372,6 +482,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9725C7142718192400DF063C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9725C71C2718192400DF063C /* NotificationService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -379,6 +497,11 @@
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* LKexpress */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+		9725C71F2718192400DF063C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9725C7172718192400DF063C /* NotifeeNotificationService */;
+			targetProxy = 9725C71E2718192400DF063C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -622,6 +745,82 @@
 			};
 			name = Release;
 		};
+		9725C7222718192400DF063C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9DDB4345A975AB733C51F9A7 /* Pods-NotifeeNotificationService.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Y95K4W8YH6;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotifeeNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotifeeNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tgdd.entmsdelivery;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = TMSDELIVERY_PROVISIONING_DISTRIBUTE;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9725C7232718192400DF063C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD10960B87658E2E772A2AA0 /* Pods-NotifeeNotificationService.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Y95K4W8YH6;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotifeeNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotifeeNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tgdd.entmsdelivery;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = TMSDELIVERY_PROVISIONING_DISTRIBUTE;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -648,6 +847,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9725C7212718192400DF063C /* Build configuration list for PBXNativeTarget "NotifeeNotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9725C7222718192400DF063C /* Debug */,
+				9725C7232718192400DF063C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, Button, View, TextInput } from 'react-native';
+import { Text, StyleSheet, Button, View, TextInput, Clipboard, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
+import messaging from '@react-native-firebase/messaging';
+import notifee from '@notifee/react-native';
 
 const screens = {
     ROOM: 'JOIN_ROOM',
@@ -10,13 +12,19 @@ const screens = {
 }
 export default function RoomScreen() {
     const [state, setState] = useState({
-        appVersion: ''
+        appVersion: '',
+        fcmToken: ''
     })
     const [roomId, setRoomId] = useState('');
     const navigation = useNavigation()
 
     useEffect(() => {
         getAppVersion()
+        setTimeout(async () => {
+            const fcmToken = await messaging().getToken();
+            setState(prev => { return { ...prev, fcmToken } })
+            console.log('state.fcmToken', fcmToken)
+        });
     }, [])
 
     const onCallOrJoin = (screen) => {
@@ -40,6 +48,55 @@ export default function RoomScreen() {
         setState(prev => { return { ...prev, appVersion: version } })
     }
 
+    const onPress = async () => {
+        navigation.navigate('VideoCallKeepModal')
+        Clipboard.setString(state.fcmToken)
+        const channelId = await notifee.createChannel({
+            id: 'alarm',
+            name: 'Firing alarms & timers',
+        });
+        await notifee.setNotificationCategories([
+            {
+                id: 'call',
+                actions: [
+                    {
+                        id: 'reject',
+                        title: 'Reject',
+                    },
+                    {
+                        id: 'accept',
+                        title: 'Accept',
+                    },
+                ],
+            },
+        ]);
+        notifee.displayNotification({
+            title: 'New post from John',
+            body: 'Hey everyone! Check out my new blog post on my website.',
+            ios: {
+                id: 'call',
+                actions: { categoryId: 'call', }
+            },
+            android: {
+                channelId: channelId,
+                actions: [
+                    {
+                        title: 'Reject',
+                        pressAction: {
+                            id: 'reject',
+                        },
+                    },
+                    {
+                        title: 'Accept',
+                        pressAction: {
+                            id: 'accept',
+                        },
+                    },
+                ],
+            },
+        });
+    }
+
     return (
         <>
             <Text style={styles.heading} >Chọn Phòng</Text>
@@ -50,9 +107,9 @@ export default function RoomScreen() {
             <View style={styles.buttonContainer} >
                 <Button title="Call Screen" onPress={() => onCallOrJoin(screens.CALL)} />
             </View>
-            <View >
+            <TouchableOpacity onPress={onPress} >
                 <Text style={{ width: '100%', height: 48, textAlign: 'center' }}>{state.appVersion}</Text>
-            </View>
+            </TouchableOpacity>
         </>
     )
 }

@@ -974,6 +974,12 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
+  - RNNotifee (3.0.1):
+    - React-Core
+    - RNNotifeeCore
+  - RNNotifeeCore (3.0.1):
+    - RNNotifeeCore/NotifeeCore (= 3.0.1)
+  - RNNotifeeCore/NotifeeCore (3.0.1)
   - RNPermissions (3.0.5):
     - React-Core
   - RNReanimated (2.3.0-beta.2):
@@ -1121,6 +1127,8 @@ DEPENDENCIES:
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - "RNNotifee (from `../node_modules/@notifee/react-native`)"
+  - "RNNotifeeCore (from `../node_modules/@notifee/react-native/RNNotifeeCore.podspec`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -1327,6 +1335,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
+  RNNotifee:
+    :path: "../node_modules/@notifee/react-native"
+  RNNotifeeCore:
+    :path: "../node_modules/@notifee/react-native/RNNotifeeCore.podspec"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNReanimated:
@@ -1457,6 +1469,8 @@ SPEC CHECKSUMS:
   RNFBStorage: 7c916ae95017ea260791f9e84b5aa0cc6686c741
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 73891a709e6fd8a47d32104d942757971f220aee
+  RNNotifee: 75a313b59cea403d2a25a880ac992357053cbda6
+  RNNotifeeCore: bd34951e85e6b6935b52610d4701d4019b070ab8
   RNPermissions: 7043bacbf928eae25808275cfe73799b8f618911
   RNReanimated: 0a220d11e97e5de1c552e943a9a3f89b06c2cbf2
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
@@ -1468,6 +1482,6 @@ SPEC CHECKSUMS:
   Yoga: c11abbf5809216c91fcd62f5571078b83d9b6720
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 90338169491736130cbc9b6ca49ac0d01be88c37
+PODFILE CHECKSUM: 24e165a1e4c8df393e3ef79686bb267c6fab68b4
 
 COCOAPODS: 1.11.0

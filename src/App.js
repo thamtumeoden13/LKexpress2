@@ -10,6 +10,8 @@ import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-community/async-storage';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import messaging from '@react-native-firebase/messaging';
+import notifee, { EventType, IOSAuthorizationStatus } from '@notifee/react-native';
 
 import AppContainer from './navigators/index'
 
@@ -340,6 +342,7 @@ const App = (props) => {
 
     useEffect(() => {
         // notificationManager.configure(onRegister, onNotification, onOpenNotification)
+        notificationOpenedApp()
         const appStateChange = AppState.addEventListener('change', _handleAppStateChange)
         const bootstrapAsync = async () => {
             let userToken;
@@ -352,10 +355,37 @@ const App = (props) => {
                 // Restoring token failed
             }
         };
+
+        // const unsubscribe = notifee.onForegroundEvent(async ({ type, detail }) => {
+        //     switch (type) {
+        //         case EventType.DISMISSED:
+        //             console.log('User dismissed notification', detail.notification);
+        //             break;
+        //         case EventType.PRESS:
+        //             console.log('User pressed notification onForegroundEvent', detail.notification);
+        //             break;
+        //         case EventType.ACTION_PRESS:
+        //             console.log('User action pressed notification onForegroundEvent', detail.pressAction);
+        //             break;
+        //         case EventType.APP_BLOCKED:
+        //             console.log('User toggled app blocked', detail.blocked);
+        //             break;
+        //     }
+        // });
+
+        const onMessageReceived = async (message) => {
+            // notifee.displayNotification(JSON.parse(message.data.notifee));
+            console.log('JSON.parse(message.data.notifee)-onMessage', JSON.parse(message.data.notifee))
+        }
+
+        const unsubscribe1 = messaging().onMessage(onMessageReceived);
+
         bootstrapAsync();
         getAppVersion();
         return () => {
-            appStateChange
+            appStateChange;
+            unsubscribe;
+            unsubscribe1;
         };
     }, [])
 
@@ -379,13 +409,25 @@ const App = (props) => {
 
         if (appState.current.match(/inactive|background/) && nextAppState === "active") {
             console.log("App has come to the foreground!");
-
             requestLocationPermission()
-            checkMultiPermission()
-
+            requestPermission()
         }
         appState.current = nextAppState;
     };
+
+    const requestPermission = async () => {
+        try {
+            const authStatus = await messaging().requestPermission();
+            const enabled =
+                authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+                authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+            if (enabled) {
+                getToken();
+            }
+        } catch (error) {
+            console.log('permission rejected');
+        }
+    }
 
     const requestLocationPermission = async () => {
         if (Platform.OS === 'ios') {
@@ -408,31 +450,30 @@ const App = (props) => {
         }
     }
 
-    const checkMultiPermission = async () => {
-        if (Platform.OS === 'ios') {
-            const response1 = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-            const response2 = await checkNotifications();
-            if (response1 !== 'granted' || response2.status !== 'granted') {
-                setState(prev => {
-                    return {
-                        ...prev,
-                        locationPermissionDenied: response1 !== 'granted' ? true : false,
-                        // notificationPermissionDenied: response2 !== 'granted' ? true : false,
-                    }
-                })
-                preOpenSettingPermission()
+    const notificationOpenedApp = () => {
+        messaging()
+          .onNotificationOpenedApp(remoteMessage => {
+            console.log(
+              'Notification caused app to open from background state:',
+              remoteMessage.notification,
+            );
+            // navigation.navigate(remoteMessage.data.type);
+          });
+    
+        // Check whether an initial notification is available
+        messaging()
+          .getInitialNotification()
+          .then(remoteMessage => {
+            if (remoteMessage) {
+              console.log(
+                'Notification caused app to open from quit state:',
+                remoteMessage.notification,
+              );
+              // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
             }
-        }
-        else {
-            // checkMultiple([PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION, PERMISSIONS.ANDROID.CAMERA]).then((statuses) => {
-            //     console.log('ACCESS_FINE_LOCATION', statuses[PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION]);
-            //     console.log('CAMERA', statuses[PERMISSIONS.ANDROID.CAMERA]);
-            // });
-            // checkNotifications().then(({ status }) => {
-            //     console.log('NOTIFICATION', status);
-            // });
-        }
-    }
+            // setLoading(false);
+          });
+      }
 
     const preOpenSettingPermission = () => {
         setAlert(prev => {
@@ -531,7 +572,7 @@ const App = (props) => {
             CodePush.getUpdateMetadata()
         ]);
         let version = ''
-        console.log('config, update',config, update)
+        console.log('config, update', config, update)
         if (!update) {
             version = config.appVersion;
         }
@@ -541,6 +582,8 @@ const App = (props) => {
         checkForUpdate();
         console.log('version-init', version)
         await AsyncStorage.setItem('appVersion', version);
+        const fcmToken = await messaging().getToken();
+        console.log('fcmToken', fcmToken)
     }
 
     const checkForUpdate = async () => {

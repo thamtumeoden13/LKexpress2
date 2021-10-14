@@ -3,22 +3,47 @@
  */
 
 import React from 'react'
-import { AppRegistry, LogBox } from 'react-native';
+import { AppRegistry, LogBox, Platform } from 'react-native';
 import App from './src/App';
-import {name as appName} from './app.json';
+import { name as appName } from './app.json';
 import messaging from '@react-native-firebase/messaging';
+import notifee, { EventType, AndroidImportance } from '@notifee/react-native'
 
 LogBox.ignoreAllLogs()
 // import { notificationManager } from './src/utils/NotificationManager'
 
-// Register background handler
-messaging().setBackgroundMessageHandler(async remoteMessage => {
-    console.log('Message handled in the background!', remoteMessage);
-    const { notification, data, messageId } = remoteMessage
-    const { title, body } = notification
-    const { PushMessageTypeID } = data
-});
+//background & quit state: messages listener   
+messaging().setBackgroundMessageHandler(onBackgroundMessageReceived)
 
+async function onBackgroundMessageReceived(message) {
+    console.log('JSON.parse(message.data.notifee) - setBackgroundMessageHandler', JSON.parse(message.data.notifee))
+    // await notifee.displayNotification(JSON.parse(message.data.notifee))
+}
+
+// notifee.onBackgroundEvent(async ({ type, detail }) => {
+//     const { notification, pressAction } = detail;
+//     console.log('type, detail ', type, detail)
+//     switch (type) {
+//         case EventType.DISMISSED:
+//             console.log('User dismissed notification', detail.notification);
+//             break;
+//         case EventType.PRESS:
+//             console.log('User pressed notification onBackgroundEvent', detail.notification);
+//             break;
+//         case EventType.ACTION_PRESS:
+//             if (detail.pressAction.id == 'reject') {
+//                 console.log('reject call with the id: ', detail.pressAction.id);
+//                 await notifee.cancelNotification(detail.notification.id);
+//             }
+//             if (detail.pressAction.id == 'accept') {
+//                 console.log('accept call with the id: ', detail.pressAction.id);
+//             }
+//             break;
+//         case EventType.APP_BLOCKED:
+//             console.log('User toggled app blocked', detail.blocked);
+//             break;
+//     }
+// });
 
 function HeadlessCheck({ isHeadless }) {
     if (isHeadless) {
