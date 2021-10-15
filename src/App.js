@@ -11,14 +11,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
-import notifee, { EventType, IOSAuthorizationStatus } from '@notifee/react-native';
 
 import AppContainer from './navigators/index'
 
 import { ModalCenterAlert } from "./components/common/modal/ModalCenterAlert";
 import OpenSetting from './components/app/modalInputForm/OpenSetting';
-
-import { notificationManager } from './utils/NotificationManager'
 
 import { AuthContext } from './utils'
 import { moderateScale, verticalScale, scale, calcHeight, calcWidth } from 'utils/scaleSize';
@@ -341,9 +338,8 @@ const App = (props) => {
     }), [stateContext])
 
     useEffect(() => {
-        // notificationManager.configure(onRegister, onNotification, onOpenNotification)
-        notificationOpenedApp()
         const appStateChange = AppState.addEventListener('change', _handleAppStateChange)
+        const appLocationState = AppState.addEventListener('change', checkMultiPermission)
         const bootstrapAsync = async () => {
             let userToken;
             try {
@@ -355,37 +351,12 @@ const App = (props) => {
                 // Restoring token failed
             }
         };
-
-        // const unsubscribe = notifee.onForegroundEvent(async ({ type, detail }) => {
-        //     switch (type) {
-        //         case EventType.DISMISSED:
-        //             console.log('User dismissed notification', detail.notification);
-        //             break;
-        //         case EventType.PRESS:
-        //             console.log('User pressed notification onForegroundEvent', detail.notification);
-        //             break;
-        //         case EventType.ACTION_PRESS:
-        //             console.log('User action pressed notification onForegroundEvent', detail.pressAction);
-        //             break;
-        //         case EventType.APP_BLOCKED:
-        //             console.log('User toggled app blocked', detail.blocked);
-        //             break;
-        //     }
-        // });
-
-        const onMessageReceived = async (message) => {
-            // notifee.displayNotification(JSON.parse(message.data.notifee));
-            console.log('JSON.parse(message.data.notifee)-onMessage', JSON.parse(message.data.notifee))
-        }
-
-        const unsubscribe1 = messaging().onMessage(onMessageReceived);
-
         bootstrapAsync();
         getAppVersion();
         return () => {
             appStateChange;
+            appLocationState;
             unsubscribe;
-            unsubscribe1;
         };
     }, [])
 
@@ -450,30 +421,40 @@ const App = (props) => {
         }
     }
 
-    const notificationOpenedApp = () => {
-        messaging()
-          .onNotificationOpenedApp(remoteMessage => {
-            console.log(
-              'Notification caused app to open from background state:',
-              remoteMessage.notification,
-            );
-            // navigation.navigate(remoteMessage.data.type);
-          });
-    
-        // Check whether an initial notification is available
-        messaging()
-          .getInitialNotification()
-          .then(remoteMessage => {
-            if (remoteMessage) {
-              console.log(
-                'Notification caused app to open from quit state:',
-                remoteMessage.notification,
-              );
-              // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+    const checkMultiPermission = async () => {
+        if (Platform.OS === 'ios') {
+            const response1 = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+            const response2 = await checkNotifications();
+            const response3 = await request(PERMISSIONS.IOS.CAMERA);
+            if (response1 !== 'granted' || response2.status !== 'granted' || response3 !== 'granted') {
+                setState(prev => {
+                    return {
+                        ...prev,
+                        locationPermissionDenied: response1 !== 'granted' ? true : false,
+                        notificationPermissionDenied: response2.status !== 'granted' ? true : false,
+                        cameraPermissionDenied: response3 !== 'granted' ? true : false,
+                    }
+                })
+                preOpenSettingPermission()
             }
-            // setLoading(false);
-          });
-      }
+        }
+        else {
+            const response1 = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+            const response2 = await checkNotifications();
+            const response3 = await request(PERMISSIONS.ANDROID.CAMERA);
+            if (response1 !== 'granted' || response2.status !== 'granted' || response3 !== 'granted') {
+                setState(prev => {
+                    return {
+                        ...prev,
+                        locationPermissionDenied: response1 !== 'granted' ? true : false,
+                        notificationPermissionDenied: response2.status !== 'granted' ? true : false,
+                        cameraPermissionDenied: response3 !== 'granted' ? true : false,
+                    }
+                })
+                preOpenSettingPermission()
+            }
+        }
+    }
 
     const preOpenSettingPermission = () => {
         setAlert(prev => {
@@ -580,7 +561,6 @@ const App = (props) => {
             version = `${config.appVersion} build ${update.label}`
         }
         checkForUpdate();
-        console.log('version-init', version)
         await AsyncStorage.setItem('appVersion', version);
         const fcmToken = await messaging().getToken();
         console.log('fcmToken', fcmToken)
@@ -648,12 +628,45 @@ const App = (props) => {
         );
     }
 
+    const preCodePushSync = (status) => {
+        if (!!status) {
+            setState(prev => {
+                return {
+                    ...prev,
+                    syncMessage: "Đã cài đặt bản cập nhật và vui lòng khởi động lại ứng dụng.",
+                }
+            })
+            setAlert(prev => {
+                return {
+                    ...prev,
+                    isVisible: true,
+                    modalAlert: { type: 'info' },
+                    typeModalInputForm: 2,
+                    disabledIcon: true,
+                }
+            })
+        }
+        else {
+            setAlert(prev => {
+                return {
+                    ...prev,
+                    isVisible: true,
+                    modalAlert: {
+                        type: 'warning',
+                        title: 'Lỗi cập nhật ứng dụng',
+                        content: 'Vui lòng kiểm trạng tình trạng mạng',
+                    },
+                }
+            })
+        }
+    }
+
     const { isVisible, disabledIcon, typeModalInputForm, modalAlert } = alert
     return (
         <AuthContext.Provider value={authContext}>
             <AppContainer />
             <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
-            {/* <ModalCenterAlert
+            <ModalCenterAlert
                 isVisible={isVisible}
                 disabledIcon={disabledIcon}
                 typeModal={modalAlert.type}
@@ -661,11 +674,11 @@ const App = (props) => {
                 contentModal={modalAlert.content}
                 childComponent={renderModalInputForm(typeModalInputForm)}
                 onCloseModalAlert={onCloseModalAlert}
-            /> */}
+            />
         </AuthContext.Provider>
     );
 }
 
 // export default App
-let codePushOptions = { checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME };
+let codePushOptions = { checkFrequency: CodePush.CheckFrequency.MANUAL };
 export default CodePush(codePushOptions)(App)

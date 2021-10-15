@@ -36,8 +36,13 @@ export default function CallScreen({ route }) {
         setRemoteStream();
         setCachedLocalPC();
         InCallManager.stop();
-        // cleanup
-        navigation.navigate('App')
+        
+        const parentRoute = navigation.getParent()
+        if(!parentRoute ){
+            navigation.navigate('App')
+        }else{
+            navigation.popToTop()
+        }
     }
 
     const [localStream, setLocalStream] = useState();
@@ -148,7 +153,8 @@ export default function CallScreen({ route }) {
             return;
         }
         localStream.getAudioTracks().forEach(track => {
-            // console.log(track.enabled ? 'muting' : 'unmuting', ' local track', track);
+            console.log('getAudioTracks', track);
+
             track.enabled = !track.enabled;
             setIsMuted(!track.enabled);
         });
@@ -159,7 +165,11 @@ export default function CallScreen({ route }) {
         if (!remoteStream) {
             return;
         }
-        setIsVideo(!isVideo);
+        localStream.getVideoTracks().forEach(track => {
+            console.log('getVideoTracks', track);
+            track.enabled = !track.enabled;
+            setIsVideo(!track.enabled);
+        });
     };
 
     return (
@@ -207,37 +217,43 @@ export default function CallScreen({ route }) {
                     </View>
                 }
                 {localStream &&
-                    <View style={{
+                    <TouchableOpacity style={{
                         width: 48, height: 48, borderRadius: 24, backgroundColor: `${remoteStream ? '#fff' : '#0001'}`,
                         alignItems: 'center', justifyContent: 'center',
-                    }}>
-                        <FontAwesome5Icon name={`${!isMuted ? 'video' : 'video-slash'}`}
+                    }}
+                        onPress={toggleVideo} disabled={!remoteStream}
+                    >
+                        <FontAwesome5Icon name={`${!isVideo ? 'video' : 'video-slash'}`}
                             size={20} color={`${remoteStream ? '#000' : '#6a6a6a'}`}
-                            onPress={toggleVideo} disabled={!remoteStream}
+
                         />
-                    </View>
+                    </TouchableOpacity>
                 }
                 {localStream &&
-                    <View style={{
+                    <TouchableOpacity style={{
                         width: 48, height: 48, borderRadius: 24, backgroundColor: `${remoteStream ? '#fff' : '#0001'}`,
                         alignItems: 'center', justifyContent: 'center',
-                    }}>
+                    }}
+                        onPress={toggleMute} disabled={!remoteStream}
+                    >
                         <FontAwesome5Icon name={`${!isMuted ? 'microphone' : 'microphone-slash'}`}
                             size={20} color={`${remoteStream ? '#000' : '#6a6a6a'}`}
-                            onPress={toggleMute} disabled={!remoteStream}
+
                         />
-                    </View>
+                    </TouchableOpacity>
                 }
                 {localStream &&
-                    <View style={{
+                    <TouchableOpacity style={{
                         width: 48, height: 48, borderRadius: 24, backgroundColor: '#fff',
                         alignItems: 'center', justifyContent: 'center',
-                    }}>
+                    }}
+                        onPress={switchCamera}
+                    >
                         <FontAwesome5Icon
                             name={'camera'} size={20} color={'#000'}
-                            onPress={switchCamera}
+
                         />
-                    </View>
+                    </TouchableOpacity>
                 }
             </View>
             <TouchableOpacity

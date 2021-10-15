@@ -1,8 +1,9 @@
-import React, { useContext, } from 'react'
-import { View, Text, Button, TouchableOpacity } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
+import React, { useContext, useEffect } from 'react'
+import { View, Text, Button, TouchableOpacity, Alert } from 'react-native'
+import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
 import SplashScreen from 'react-native-splash-screen'
+import messaging from '@react-native-firebase/messaging';
 
 import AppStack from './AppStack'
 import AuthStack from './AuthStack'
@@ -15,11 +16,72 @@ const Stack = createStackNavigator();
 
 export default () => {
     const { appContext } = useContext(AuthContext);
+    const navigationRef = useNavigationContainerRef();
+
+    useEffect(() => {
+        notificationOpenedApp()
+
+        const onMessageReceived = async (message) => {
+            console.log('message-onMessageReceived', message)
+            if (Object.keys(message.data).length > 0 && message.data.type == 'video-join' && !!message.data.roomId) {
+                navigationRef.navigate('VideoCallKeepModal', {
+                    roomId: message.data.roomId,
+                    phoneNumber: message.data.phoneNumber,
+                    fullname: message.data.fullname,
+                })
+            }
+        }
+
+        const unsubscribe = messaging().onMessage(onMessageReceived);
+        return () => {
+            unsubscribe;
+        }
+    }, [])
+
+    const notificationOpenedApp = () => {
+        messaging()
+            .onNotificationOpenedApp(remoteMessage => {
+                console.log(
+                    'Notification caused app to open from background state:',
+                    remoteMessage,
+                );
+                if (Object.keys(remoteMessage.data).length > 0 && remoteMessage.data.type == 'video-join' && !!remoteMessage.data.roomId) {
+                    navigationRef.navigate('VideoCallKeepModal', {
+                        roomId: message.data.roomId,
+                        phoneNumber: message.data.phoneNumber,
+                        fullname: message.data.fullname,
+                    })
+                }
+            });
+
+        // Check whether an initial notification is available
+        messaging()
+            .getInitialNotification()
+            .then(remoteMessage => {
+                if (remoteMessage) {
+                    console.log(
+                        'Notification caused app to open from quit state:',
+                        remoteMessage,
+                    );
+                    // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+                    if (Object.keys(remoteMessage.data).length > 0 && remoteMessage.data.type == 'video-join' && !!remoteMessage.data.roomId) {
+                        navigationRef.navigate('VideoCallKeepModal', {
+                            roomId: message.data.roomId,
+                            phoneNumber: message.data.phoneNumber,
+                            fullname: message.data.fullname,
+                        })
+                    }
+                }
+                // setLoading(false);
+            });
+    }
+
     const onReady = () => {
         SplashScreen.hide();
     }
+
     return (
-        <NavigationContainer onReady={onReady}>
+        <NavigationContainer onReady={onReady} ref={navigationRef}>
             <Stack.Navigator
                 screenOptions={{ headerShown: false }}
             >

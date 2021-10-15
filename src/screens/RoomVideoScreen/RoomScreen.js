@@ -49,7 +49,7 @@ export default function RoomScreen() {
     }
 
     const onPress = async () => {
-        navigation.navigate('VideoCallKeepModal')
+        navigation.navigate('VideoCallKeepModal', { roomId: roomId })
         Clipboard.setString(state.fcmToken)
         const channelId = await notifee.createChannel({
             id: 'alarm',
