@@ -20,7 +20,7 @@ import { scale } from 'utils/scaleSize';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import BackIcon from 'components/common/icon/BackIcon';
 
-const RoomChatScreen = ({ route, navigation }) => {
+const ChatDetailScreen = ({ route, navigation }) => {
 
     const db = firestore()
     const entityChatRef = db.collection('chats')
@@ -342,4 +342,4 @@ const RoomChatScreen = ({ route, navigation }) => {
     )
 }
 
-export default RoomChatScreen
+export default ChatDetailScreen

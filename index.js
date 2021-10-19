@@ -7,7 +7,6 @@ import { AppRegistry, LogBox, Platform } from 'react-native';
 import App from './src/App';
 import { name as appName } from './app.json';
 import messaging from '@react-native-firebase/messaging';
-import notifee, { EventType, AndroidImportance } from '@notifee/react-native'
 
 LogBox.ignoreAllLogs()
 // import { notificationManager } from './src/utils/NotificationManager'
@@ -16,7 +15,7 @@ LogBox.ignoreAllLogs()
 messaging().setBackgroundMessageHandler(onBackgroundMessageReceived)
 
 async function onBackgroundMessageReceived(message) {
-    console.log('JSON.parse(message.data.notifee) - setBackgroundMessageHandler', JSON.parse(message.data.notifee))
+    console.log('Message handled in the background!', message);
     // await notifee.displayNotification(JSON.parse(message.data.notifee))
 }
 

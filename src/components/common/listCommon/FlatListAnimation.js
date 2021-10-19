@@ -3,13 +3,14 @@ import {
     View, Text, Image, StyleSheet, Animated, TouchableOpacity, Alert, Linking
 } from 'react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import AntDesignIcons from 'react-native-vector-icons/AntDesign'
 
 const BG_IMG = 'https://images.pexels.com/photos/2033997/pexels-photo-2033997.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
 const SPACING = 20
 const AVATAR_SIZE = 70
 const ITEM_SIZE = AVATAR_SIZE + SPACING * 3
 
-const FlatListAnimation = ({ result }) => {
+const FlatListAnimation = ({ result, onHandlerConnectRoom }) => {
 
     const [data, setData] = useState([])
     const scrollY = useRef(new Animated.Value(0)).current
@@ -44,18 +45,25 @@ const FlatListAnimation = ({ result }) => {
             });
     }
 
+    const handlerChatWithFriend = (item) => {
+        console.log('handlerChatWithFriend', item)
+        onHandlerConnectRoom(item)
+    }
+
     const handlerShowLocation = (location) => {
-        const url = `maps://?q=${location.replace(/ /g, '')}`
-        Linking.canOpenURL(url)
-            .then((supported) => {
-                return Linking.openURL(url)
-                    .then((data) => console.log("then", data))
-                    .catch((err) => { throw err; });
-            })
-            .catch((err) => {
-                // this.onHandlerToast(true, 'error_custom', 'Lỗi gọi điện thoại', 'Không thể gọi điện thoại! vui lòng thao tác bằng tay')
-                console.log('An error occurred url', err)
-            });
+        if (location) {
+            const url = `maps://?q=${location.replace(/ /g, '')}`
+            Linking.canOpenURL(url)
+                .then((supported) => {
+                    return Linking.openURL(url)
+                        .then((data) => console.log("then", data))
+                        .catch((err) => { throw err; });
+                })
+                .catch((err) => {
+                    // this.onHandlerToast(true, 'error_custom', 'Lỗi gọi điện thoại', 'Không thể gọi điện thoại! vui lòng thao tác bằng tay')
+                    console.log('An error occurred url', err)
+                });
+        }
     }
 
     const renderItem = ({ item, index }) => {
@@ -111,11 +119,14 @@ const FlatListAnimation = ({ result }) => {
                     {!!item.email && <Text style={{ fontSize: 14, opacity: 0.8, color: '#00f' }}>{item.email}</Text>}
                     {!!item.address && <Text style={{ fontSize: 12, opacity: 0.8, color: '#000' }}>{item.address}</Text>}
                     <View style={{ paddingVertical: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <TouchableOpacity style={{ alignItems: 'flex-start', width: '50%' }} onPress={() => handlerCallPhone(item.phoneNumber)}>
+                        <TouchableOpacity style={{ alignItems: 'flex-start', width: '30%' }} onPress={() => handlerCallPhone(item.phoneNumber)}>
                             <SimpleLineIcons name='phone' size={20} color={'#000'} />
                         </TouchableOpacity>
+                        <TouchableOpacity style={{ alignItems: 'flex-start', width: '30%' }} onPress={() => handlerChatWithFriend(item)}>
+                            <AntDesignIcons name='message1' size={20} color={'#000'} />
+                        </TouchableOpacity>
                         {item.userType == 1 &&
-                            <TouchableOpacity style={{ alignItems: 'flex-start', width: '50%' }} onPress={() => handlerShowLocation(item.currentUpdateLocation)}>
+                            <TouchableOpacity style={{ alignItems: 'flex-start', width: '30%' }} onPress={() => handlerShowLocation(item.currentUpdateLocation)}>
                                 <SimpleLineIcons name='location-pin' size={20} color={'#000'} />
                             </TouchableOpacity>
                         }

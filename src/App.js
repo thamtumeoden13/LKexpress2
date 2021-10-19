@@ -261,6 +261,13 @@ const App = (props) => {
                     Alert.alert(JSON.stringify(error))
                 })
         },
+        signInWithPhone: async (data) => {
+            dispatch({ type: 'LOADING', isLoading: true })
+            console.log('data', data)
+            await AsyncStorage.setItem('User', JSON.stringify(data))
+            dispatch({ type: 'SIGN_IN', token: JSON.stringify(data) });
+            dispatch({ type: 'LOADING', isLoading: false })
+        },
         signOut: () => {
             dispatch({ type: 'SIGN_OUT' })
             AsyncStorage.removeItem('User')

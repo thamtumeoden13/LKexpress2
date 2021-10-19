@@ -1,6 +1,8 @@
 import LoginScreen from './LoginScreen/LoginScreen'
-
 import RegistrationScreen from './RegistrationScreen/RegistrationScreen'
+
+import LoginScreen2 from './LoginScreen/LoginScreen2'
+import VerifyCode from './LoginScreen/VerifyCode'
 
 import AuthLoadingScreen from './AuthLoadingScreen/AuthLoadingScreen'
 
@@ -34,7 +36,7 @@ import ProfileScreen from './ProfileScreen/ProfileScreen'
 import UpdateProfileScreen from './ProfileScreen/UpdateProfileScreen'
 
 export {
-    LoginScreen, RegistrationScreen, AuthLoadingScreen,
+    LoginScreen, RegistrationScreen, AuthLoadingScreen, LoginScreen2, VerifyCode,
     HomeScreen,
     VideoRoomScreen, VideoCallScreen, VideoJoinScreen, VideoCallModal,
     RoomScreen, RoomChatScreen, AddRoomScreen,

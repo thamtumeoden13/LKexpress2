@@ -154,12 +154,17 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId 'com.tgdd.tmsdelivery'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName '1.0.5'
+        versionName '1.0.6'
         multiDexEnabled true
         resValue 'string', 'build_config_package', 'YOUR_PACKAGE_NAME_IN_ANDROIDMANIFEST.XML'
         vectorDrawables.useSupportLibrary = true

@@ -49,52 +49,8 @@ export default function RoomScreen() {
     }
 
     const onPress = async () => {
-        navigation.navigate('VideoCallKeepModal', { roomId: roomId })
+        // navigation.navigate('VideoCallKeepModal', { roomId: roomId })
         Clipboard.setString(state.fcmToken)
-        const channelId = await notifee.createChannel({
-            id: 'alarm',
-            name: 'Firing alarms & timers',
-        });
-        await notifee.setNotificationCategories([
-            {
-                id: 'call',
-                actions: [
-                    {
-                        id: 'reject',
-                        title: 'Reject',
-                    },
-                    {
-                        id: 'accept',
-                        title: 'Accept',
-                    },
-                ],
-            },
-        ]);
-        notifee.displayNotification({
-            title: 'New post from John',
-            body: 'Hey everyone! Check out my new blog post on my website.',
-            ios: {
-                id: 'call',
-                actions: { categoryId: 'call', }
-            },
-            android: {
-                channelId: channelId,
-                actions: [
-                    {
-                        title: 'Reject',
-                        pressAction: {
-                            id: 'reject',
-                        },
-                    },
-                    {
-                        title: 'Accept',
-                        pressAction: {
-                            id: 'accept',
-                        },
-                    },
-                ],
-            },
-        });
     }
 
     return (

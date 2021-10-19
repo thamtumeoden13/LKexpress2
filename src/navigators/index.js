@@ -47,9 +47,9 @@ export default () => {
                 );
                 if (Object.keys(remoteMessage.data).length > 0 && remoteMessage.data.type == 'video-join' && !!remoteMessage.data.roomId) {
                     navigationRef.navigate('VideoCallKeepModal', {
-                        roomId: message.data.roomId,
-                        phoneNumber: message.data.phoneNumber,
-                        fullname: message.data.fullname,
+                        roomId: remoteMessage.data.roomId,
+                        phoneNumber: remoteMessage.data.phoneNumber,
+                        fullname: remoteMessage.data.fullname,
                     })
                 }
             });
@@ -66,9 +66,9 @@ export default () => {
                     // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
                     if (Object.keys(remoteMessage.data).length > 0 && remoteMessage.data.type == 'video-join' && !!remoteMessage.data.roomId) {
                         navigationRef.navigate('VideoCallKeepModal', {
-                            roomId: message.data.roomId,
-                            phoneNumber: message.data.phoneNumber,
-                            fullname: message.data.fullname,
+                            roomId: remoteMessage.data.roomId,
+                            phoneNumber: remoteMessage.data.phoneNumber,
+                            fullname: remoteMessage.data.fullname,
                         })
                     }
                 }

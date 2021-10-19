@@ -75,7 +75,7 @@ const VideoCallModal = () => {
                         >
                             <MaterialCommunityIcon name={"phone-hangup"} size={40} color={'#fff'} />
                         </TouchableOpacity>
-                        <Text style={{ fontSize: 16, pading: 8, color: '#fff' }}>{`Decline`}</Text>
+                        <Text style={{ fontSize: 16, padding: 8, color: '#fff' }}>{`Decline`}</Text>
                     </View>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
                         <TouchableOpacity
@@ -87,7 +87,7 @@ const VideoCallModal = () => {
                         >
                             <MaterialCommunityIcon name={"phone"} size={40} color={'#fff'} />
                         </TouchableOpacity>
-                        <Text style={{ fontSize: 16, pading: 8, color: '#fff' }}>{`Accept`}</Text>
+                        <Text style={{ fontSize: 16, padding: 8, color: '#fff' }}>{`Accept`}</Text>
                     </View>
                 </View>
             </View>

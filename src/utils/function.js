@@ -208,3 +208,8 @@ export function guidGenerator() {
     };
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 }
+
+export function validatePhoneNumber(phoneNumber) {
+    var re = /^[0-9\+]{9,14}$/;
+    return re.test(phoneNumber);
+}

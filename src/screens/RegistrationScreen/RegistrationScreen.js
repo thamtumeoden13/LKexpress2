@@ -14,7 +14,7 @@ const RegistrationScreen = ({ navigation }) => {
         fullName: '',
         email: '',
         phoneNumber: '',
-        address:'',
+        address: '',
         password: '',
         confirmPassword: '',
         avatarURL: listDataElement[Math.floor(Math.random() * (listDataElement.length - 1))].avatar_url,
@@ -41,13 +41,13 @@ const RegistrationScreen = ({ navigation }) => {
     }
 
     const onRegisterPress = () => {
-        if (state.password !== state.confirmPassword) {
-            alert("Passwords don't match.")
-            return
-        }
-        const { email, password, fullName, avatarURL, phoneNumber, address } = state
-        const result = { email, password, fullName, avatarURL, avatarBase64, phoneNumber, address }
-        signUp(result)
+        // if (state.password !== state.confirmPassword) {
+        //     alert("Passwords don't match.")
+        //     return
+        // }
+        // const { email, password, fullName, avatarURL, avatarBase64, phoneNumber, address } = state
+        // const result = { email, password, fullName, avatarURL, avatarBase64, phoneNumber, address }
+        signUp(state)
     }
 
     return (

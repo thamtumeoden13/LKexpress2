@@ -19,7 +19,7 @@ import styles from './styles';
 import AddIcon from 'components/common/icon/AddIcon';
 import BackIcon from 'components/common/icon/BackIcon';
 
-const RoomScreen = (props) => {
+const ChatScreen = (props) => {
     const db = firestore()
     const entityRef = db.collection('rooms')
     const entityChatRef = db.collection('chats')
@@ -328,4 +328,4 @@ const RoomScreen = (props) => {
     )
 }
 
-export default RoomScreen
+export default ChatScreen

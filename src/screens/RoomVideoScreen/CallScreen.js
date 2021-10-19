@@ -27,24 +27,6 @@ export default function CallScreen({ route }) {
         startCallComplete: false,
     })
 
-    function onBackPress() {
-        if (cachedLocalPC) {
-            cachedLocalPC.removeStream(localStream);
-            cachedLocalPC.close();
-        }
-        setLocalStream();
-        setRemoteStream();
-        setCachedLocalPC();
-        InCallManager.stop();
-        
-        const parentRoute = navigation.getParent()
-        if(!parentRoute ){
-            navigation.navigate('App')
-        }else{
-            navigation.popToTop()
-        }
-    }
-
     const [localStream, setLocalStream] = useState();
     const [remoteStream, setRemoteStream] = useState();
     const [cachedLocalPC, setCachedLocalPC] = useState();
@@ -65,6 +47,84 @@ export default function CallScreen({ route }) {
             startLocalStream()
         }
     }, [state.roomId])
+
+    useEffect(() => {
+
+        if (!!state.roomId) {
+            const roomRef = db.collection('videorooms').doc(state.roomId);
+            if (roomRef) {
+                const unsubscribeDeletedCallee = roomRef.collection('calleeCandidates').onSnapshot((snapshot) => {
+                    if (snapshot) {
+                        snapshot.docChanges().forEach(change => {
+                            if (change.type == 'removed') {
+                                onBackPress()
+                            }
+                        })
+                    }
+                })
+                const unsubscribeDeletedCaller = roomRef.collection('callerCandidates').onSnapshot((snapshot) => {
+                    if (snapshot) {
+                        snapshot.docChanges().forEach(change => {
+                            if (change.type == 'removed') {
+                                onBackPress()
+                            }
+                        })
+                    }
+                })
+                return () => {
+                    unsubscribeDeletedCallee();
+                    unsubscribeDeletedCaller();
+                }
+            }
+        }
+    }, [state.roomId])
+
+    useEffect(() => {
+        if (!!localStream && state.roomId) {
+            startCall(state.roomId)
+        }
+    }, [localStream, state.roomId])
+
+    const onBackPress = async () => {
+        if (cachedLocalPC) {
+            cachedLocalPC.removeStream(localStream);
+            cachedLocalPC.close();
+        }
+
+        if (localStream) {
+            localStream.getTracks().forEach(t => t.stop());
+        }
+
+        setLocalStream();
+        setRemoteStream();
+        setCachedLocalPC();
+        InCallManager.stop();
+
+        const roomRef = await db.collection('videorooms').doc(state.roomId);
+        if (roomRef) {
+            const calleeCandidatesCollection = await roomRef.collection('calleeCandidates').get();
+            if (calleeCandidatesCollection) {
+                calleeCandidatesCollection.forEach(async (candidate) => {
+                    await candidate.ref.delete()
+                });
+            }
+            const callerCandidatesCollection = await roomRef.collection('callerCandidates').get();
+            if (callerCandidatesCollection) {
+                callerCandidatesCollection.forEach(async (candidate) => {
+                    await candidate.ref.delete()
+                });
+            }
+
+            roomRef.delete()
+        }
+
+        const parentRoute = navigation.getParent()
+        if (!parentRoute) {
+            navigation.navigate('App')
+        } else {
+            navigation.popToTop()
+        }
+    }
 
     const startLocalStream = async () => {
         // isFront will determine if the initial camera should face user or environment
@@ -125,7 +185,7 @@ export default function CallScreen({ route }) {
 
         roomRef.onSnapshot(async snapshot => {
             const data = snapshot.data();
-            if (!localPC.currentRemoteDescription && data.answer) {
+            if (!localPC.currentRemoteDescription && data && data.answer) {
                 const rtcSessionDescription = new RTCSessionDescription(data.answer);
                 await localPC.setRemoteDescription(rtcSessionDescription);
             }

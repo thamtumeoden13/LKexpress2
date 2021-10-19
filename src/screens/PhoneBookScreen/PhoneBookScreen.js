@@ -353,10 +353,10 @@ const PhoneBook = (props) => {
                             {!!state.isDataFetchedUserList ?
                                 <>
                                     {item.key == 'user' && !!usersFilter && usersFilter.length > 0 &&
-                                        <FlatListAnimation result={usersFilter} />
+                                        <FlatListAnimation result={usersFilter} onHandlerConnectRoom={onHandlerConnectRoom} />
                                     }
                                     {item.key == 'customer' && !!usersFilterCustomer && usersFilterCustomer.length > 0 &&
-                                        <FlatListAnimation result={usersFilterCustomer} />
+                                        <FlatListAnimation result={usersFilterCustomer} onHandlerConnectRoom={onHandlerConnectRoom} />
                                     }
                                 </>
                                 :
