@@ -18,6 +18,7 @@ import BackIcon from 'components/common/icon/BackIcon';
 import { calcHeight, calcWidth, verticalScale, moderateScale, scale } from 'utils/scaleSize'
 
 import { guidGenerator } from 'utils/function'
+import HeaderTitle from 'components/common/Header/HeaderTitle';
 
 const colors = ['#4a4e4d', '#0e9aa7', '#3da4ab', '#f6cd61', '#fe8a71', '#F08FC0'];
 let _isReachedTop
@@ -73,7 +74,7 @@ const DiaryScreen = (props) => {
         if (state.level == 1) {
             props.navigation.setOptions({
                 // headerLeft: () => <BackIcon navigation={props.navigation} onOpen={() => showAddNewDiary()} />,
-                headerTitle: 'Nhật ký',
+                headerTitle: () => <HeaderTitle title={`Nhật ký`} />,
                 headerRight: () => <AddIcon navigation={props.navigation} onOpen={() => showAddNewDiary()} />,
             });
         }

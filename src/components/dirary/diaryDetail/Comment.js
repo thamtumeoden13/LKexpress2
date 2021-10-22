@@ -15,7 +15,7 @@ import { formatCount, formatDistanceToNowVi, guidGenerator } from 'utils/functio
 let _isReachedTop
 const Commment = ({ fullName, comments, totalLike = 0, totalView = 0, addDiaryComment }) => {
     console.log('comments', comments)
-    const actionSheetRef = useRef<ActionSheet>(null);
+    const actionSheetRef = useRef(null);
     const scrollViewRef = useRef();
     const actionSheetScrollRef = actionSheetRef.current?.scrollViewRef;
 
@@ -217,7 +217,6 @@ const Commment = ({ fullName, comments, totalLike = 0, totalView = 0, addDiaryCo
                                                 </View>
                                             </View>
                                             <View style={{ flexDirection: 'row', width: '100%', padding: scale(5), paddingLeft: moderateScale(56) }}>
-                                                {/* <AntDesignIcon name='user' size={12} style={{ marginRight: scale(5) }} /> */}
                                                 <Text style={{ color: '#6a6a6a', fontSize: scale(10) }}>{`${formatDistanceToNowVi(item.dateCreated)}`}</Text>
                                                 <Text style={{ color: '#6a6a6a', fontSize: scale(10) }}>{` lúc ${getHours(item.dateCreated)}:${getMinutes(item.dateCreated)}`}</Text>
                                             </View>

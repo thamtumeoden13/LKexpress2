@@ -42,7 +42,7 @@ const MainStack = () => {
                 // tabBarLabelPosition: 'beside-icon'
             }}
         >
-            <Tab.Screen name="Home" component={VideoRoomScreen}
+            {/* <Tab.Screen name="Home" component={VideoRoomScreen}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
@@ -64,7 +64,7 @@ const MainStack = () => {
                         </View>
                     )
                 }}
-            />
+            /> */}
             <Tab.Screen name="Chat" component={ChatScreen}
                 options={{
                     tabBarLabel: 'Tin nhắn',

@@ -8,8 +8,7 @@ import BackIcon from 'components/common/icon/BackIcon';
 import HeaderTitle from 'components/common/Header/HeaderTitle';
 
 const DiaryDetail = (props) => {
-    const db = firestore()
-    const entityRef = db.collection('diaries')
+    const entityRef = firestore().collection('diaries')
 
     const [state, setState] = useState({
         userID: '',
@@ -47,7 +46,7 @@ const DiaryDetail = (props) => {
     useEffect(() => {
         if (props.navigation) {
             props.navigation.setOptions({
-                headerTitle: () => <HeaderTitle title={`Giỏ Hàng`} />,
+                headerTitle: () => <HeaderTitle title={`Nhật ký`} />,
             });
         }
     }, [props.navigation])
