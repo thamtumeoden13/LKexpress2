@@ -7,6 +7,7 @@ import { AppRegistry, LogBox, Platform } from 'react-native';
 import App from './src/App';
 import { name as appName } from './app.json';
 import messaging from '@react-native-firebase/messaging';
+import InCallManager from 'react-native-incall-manager';
 
 LogBox.ignoreAllLogs()
 // import { notificationManager } from './src/utils/NotificationManager'
@@ -16,7 +17,9 @@ messaging().setBackgroundMessageHandler(onBackgroundMessageReceived)
 
 async function onBackgroundMessageReceived(message) {
     console.log('Message handled in the background!', message);
-    // await notifee.displayNotification(JSON.parse(message.data.notifee))
+    if (Object.keys(message.data).length > 0 && message.data.type == 'video-join' && !!message.data.roomId) {
+        InCallManager.startRingtone("_BUNDLE_");
+    }
 }
 
 // notifee.onBackgroundEvent(async ({ type, detail }) => {

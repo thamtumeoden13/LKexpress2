@@ -262,7 +262,7 @@ const App = (props) => {
                 })
         },
         signInWithPhone: async (data) => {
-            dispatch({ type: 'LOADING', isLoading: true })
+            // dispatch({ type: 'LOADING', isLoading: true })
             console.log('data', data)
             await AsyncStorage.setItem('User', JSON.stringify(data))
             dispatch({ type: 'SIGN_IN', token: JSON.stringify(data) });

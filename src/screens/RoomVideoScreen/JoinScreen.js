@@ -22,11 +22,11 @@ export default function JoinScreen({ route }) {
 
     const navigation = useNavigation()
     const [state, setState] = useState({
-        roomId: '',
+        roomID: '',
+        displayName: '',
         startLocalComplete: false,
         startCallComplete: false,
     })
-
 
     const [localStream, setLocalStream] = useState();
     const [remoteStream, setRemoteStream] = useState();
@@ -36,23 +36,23 @@ export default function JoinScreen({ route }) {
     const [isVideo, setIsVideo] = useState(false);
 
     useEffect(() => {
-        const roomId = route.params.roomId
-        setState(prev => { return { ...prev, roomId, } })
+        const { roomID, displayName } = route.params
+        setState(prev => { return { ...prev, roomID, displayName } })
         navigation.setOptions({
-            headerTitle: () => <HeaderTitle title={`Join Room : ${roomId}`} />,
+            headerTitle: () => <HeaderTitle title={`Join Room:${displayName}`} />,
         });
     }, [route]);
 
     useEffect(() => {
-        if (!!state.roomId) {
+        if (!!state.roomID) {
             startLocalStream()
         }
-    }, [state.roomId])
+    }, [state.roomID])
 
     useEffect(() => {
 
-        if (!!state.roomId) {
-            const roomRef = db.collection('videorooms').doc(state.roomId);
+        if (!!state.roomID) {
+            const roomRef = db.collection('videorooms').doc(state.roomID);
             if (roomRef) {
                 const unsubscribeDeletedCallee = roomRef.collection('calleeCandidates').onSnapshot((snapshot) => {
                     if (snapshot) {
@@ -79,13 +79,13 @@ export default function JoinScreen({ route }) {
             }
         }
 
-    }, [state.roomId])
+    }, [state.roomID])
 
     useEffect(() => {
-        if (!!localStream && !!state.roomId) {
-            joinCall(state.roomId)
+        if (!!localStream && !!state.roomID) {
+            joinCall(state.roomID)
         }
-    }, [localStream, state.roomId])
+    }, [localStream, state.roomID])
 
     const onBackPress = async () => {
         if (cachedLocalPC) {
@@ -102,7 +102,7 @@ export default function JoinScreen({ route }) {
         setCachedLocalPC();
         InCallManager.stop();
 
-        const roomRef = await db.collection('videorooms').doc(state.roomId);
+        const roomRef = await db.collection('videorooms').doc(state.roomID);
         if (roomRef) {
             const calleeCandidatesCollection = await roomRef.collection('calleeCandidates').get();
             if (calleeCandidatesCollection) {
@@ -151,9 +151,6 @@ export default function JoinScreen({ route }) {
         const newStream = await mediaDevices.getUserMedia(constraints);
         setLocalStream(newStream);
         setState(prev => { return { ...prev, startLocalComplete: true } })
-        // setTimeout(() => {
-        //     joinCall(state.roomId)
-        // }, 3000);
     };
 
     const joinCall = async id => {
@@ -213,9 +210,9 @@ export default function JoinScreen({ route }) {
 
     // Mutes the local's outgoing audio
     const toggleMute = () => {
-        if (!remoteStream) {
-            return;
-        }
+        // if (!remoteStream) {
+        //     return;
+        // }
         localStream.getAudioTracks().forEach(track => {
             // console.log(track.enabled ? 'muting' : 'unmuting', ' local track', track);
             track.enabled = !track.enabled;
@@ -225,9 +222,9 @@ export default function JoinScreen({ route }) {
 
     // Mutes the local's outgoing audio
     const toggleVideo = () => {
-        if (!remoteStream) {
-            return;
-        }
+        // if (!remoteStream) {
+        //     return;
+        // }
         localStream.getVideoTracks().forEach(track => {
             console.log('getVideoTracks', track);
             track.enabled = !track.enabled;
@@ -275,7 +272,7 @@ export default function JoinScreen({ route }) {
                     }}>
                         <FontAwesome5Icon
                             name={'phone'} size={20} color={'#00f'}
-                            onPress={() => joinCall(state.roomId)} disabled={!!remoteStream}
+                            onPress={() => joinCall(state.roomID)} disabled={!!remoteStream}
                         />
                     </View>
                 }

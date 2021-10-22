@@ -22,7 +22,9 @@ export default function CallScreen({ route }) {
 
     const navigation = useNavigation()
     const [state, setState] = useState({
-        roomId: '',
+        roomID: '',
+        roomMasterID: '',
+        displayName: '',
         startLocalComplete: false,
         startCallComplete: false,
     })
@@ -35,23 +37,23 @@ export default function CallScreen({ route }) {
     const [isVideo, setIsVideo] = useState(false);
 
     useEffect(() => {
-        const roomId = route.params.roomId
-        setState(prev => { return { ...prev, roomId, } })
+        const { roomID, roomMasterID, displayName } = route.params
+        setState(prev => { return { ...prev, roomID, roomMasterID, displayName } })
         navigation.setOptions({
-            headerTitle: () => <HeaderTitle title={`Call Room : ${roomId}`} />,
+            headerTitle: () => <HeaderTitle title={`Call Room: ${displayName}`} />,
         });
     }, [route]);
 
     useEffect(() => {
-        if (!!state.roomId) {
+        if (!!state.roomID) {
             startLocalStream()
         }
-    }, [state.roomId])
+    }, [state.roomID])
 
     useEffect(() => {
 
-        if (!!state.roomId) {
-            const roomRef = db.collection('videorooms').doc(state.roomId);
+        if (!!state.roomID) {
+            const roomRef = db.collection('videorooms').doc(state.roomID);
             if (roomRef) {
                 const unsubscribeDeletedCallee = roomRef.collection('calleeCandidates').onSnapshot((snapshot) => {
                     if (snapshot) {
@@ -77,13 +79,13 @@ export default function CallScreen({ route }) {
                 }
             }
         }
-    }, [state.roomId])
+    }, [state.roomID])
 
     useEffect(() => {
-        if (!!localStream && state.roomId) {
-            startCall(state.roomId)
+        if (!!localStream && state.roomID) {
+            startCall(state.roomID)
         }
-    }, [localStream, state.roomId])
+    }, [localStream, state.roomID])
 
     const onBackPress = async () => {
         if (cachedLocalPC) {
@@ -100,7 +102,7 @@ export default function CallScreen({ route }) {
         setCachedLocalPC();
         InCallManager.stop();
 
-        const roomRef = await db.collection('videorooms').doc(state.roomId);
+        const roomRef = await db.collection('videorooms').doc(state.roomID);
         if (roomRef) {
             const calleeCandidatesCollection = await roomRef.collection('calleeCandidates').get();
             if (calleeCandidatesCollection) {
@@ -179,8 +181,11 @@ export default function CallScreen({ route }) {
 
         const offer = await localPC.createOffer();
         await localPC.setLocalDescription(offer);
-
-        const roomWithOffer = { offer };
+        const roomWithOffer = {
+            offer: offer,
+            roomMasterID: state.roomMasterID,
+            displayName: state.displayName,
+        };
         await roomRef.set(roomWithOffer);
 
         roomRef.onSnapshot(async snapshot => {
@@ -209,9 +214,9 @@ export default function CallScreen({ route }) {
 
     // Mutes the local's outgoing audio
     const toggleMute = () => {
-        if (!remoteStream) {
-            return;
-        }
+        // if (!remoteStream) {
+        //     return;
+        // }
         localStream.getAudioTracks().forEach(track => {
             console.log('getAudioTracks', track);
 
@@ -222,9 +227,9 @@ export default function CallScreen({ route }) {
 
     // Mutes the local's outgoing audio
     const toggleVideo = () => {
-        if (!remoteStream) {
-            return;
-        }
+        // if (!remoteStream) {
+        //     return;
+        // }
         localStream.getVideoTracks().forEach(track => {
             console.log('getVideoTracks', track);
             track.enabled = !track.enabled;
@@ -272,7 +277,7 @@ export default function CallScreen({ route }) {
                     }}>
                         <FontAwesome5Icon
                             name={'phone'} size={20} color={'#00f'}
-                            onPress={() => startCall(state.roomId)} disabled={!!remoteStream}
+                            onPress={() => startCall(state.roomID)} disabled={!!remoteStream}
                         />
                     </View>
                 }

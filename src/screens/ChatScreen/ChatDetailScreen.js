@@ -8,7 +8,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Geolocation from 'react-native-geolocation-service';
 import { PERMISSIONS, request } from 'react-native-permissions';
 import ActionSheet from 'react-native-actions-sheet';
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import { notificationManager } from 'utils/NotificationManager'
@@ -16,15 +15,15 @@ import HeaderTitle from 'components/common/Header/HeaderTitle'
 import ActionSheetIcon from 'components/common/icon/ActionSheetIcon'
 
 import styles from './styles';
-import { scale } from 'utils/scaleSize';
-import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import BackIcon from 'components/common/icon/BackIcon';
+import CallIcon from 'components/common/icon/CallIcon';
 
 const ChatDetailScreen = ({ route, navigation }) => {
 
     const db = firestore()
     const entityChatRef = db.collection('chats')
     const entityUserRef = db.collection('users')
+    const entityVideRoomRef = db.collection('videorooms')
 
     const actionSheetRef = useRef();
     const scrollViewRef = useRef();
@@ -98,6 +97,34 @@ const ChatDetailScreen = ({ route, navigation }) => {
             getUsersInfo()
         }
     }, [state.connectID])
+
+    useEffect(() => {
+        if (state.documentID) {
+            navigation.setOptions({
+                headerRight: () => <CallIcon navigation={navigation} onOpen={() => onCallOrJoin(state.documentID, state.userID)} />,
+            });
+        }
+    }, [state.documentID])
+
+    useEffect(() => {
+
+        if (!!state.documentID) {
+            const unsubscribe = entityVideRoomRef.onSnapshot((snapshot) => {
+                if (snapshot) {
+                    snapshot.docChanges().forEach(change => {
+                        const room = change.doc.data()
+                        const roomID = change.doc.id
+                        if (change.type == 'added' && roomID == state.documentID && room.roomMasterID != state.userID) {
+                            handlerOpenVideoCallModal(room.displayName)
+                        }
+                    })
+                }
+            })
+            return () => {
+                unsubscribe();
+            }
+        }
+    }, [state.documentID])
 
     useEffect(() => {
         // let unsubscribe
@@ -269,6 +296,17 @@ const ChatDetailScreen = ({ route, navigation }) => {
         );
     }
 
+    const onCallOrJoin = (documentID, userID) => {
+        console.log('documentID', documentID, userID)
+        navigation.navigate('VideoCall',
+            {
+                roomID: documentID,
+                roomMasterID: userID,
+                displayName: 'Người Gọi...'
+            },
+        )
+    }
+
     const options = [
         'Cancel',
         'Apple',
@@ -276,6 +314,13 @@ const ChatDetailScreen = ({ route, navigation }) => {
         'Watermelon',
         <Text style={{ color: 'red' }}>Durian</Text>
     ]
+
+    const handlerOpenVideoCallModal = async (displayName) => {
+        navigation.navigate('VideoCallKeepModal', {
+            roomID: state.documentID,
+            displayName: displayName,
+        })
+    }
 
     const chat = <GiftedChat
         messages={messages}

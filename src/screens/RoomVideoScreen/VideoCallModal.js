@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import firestore from '@react-native-firebase/firestore';
+import InCallManager from 'react-native-incall-manager';
 
 const BG_IMG = 'https://images.pexels.com/photos/2033997/pexels-photo-2033997.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
 
@@ -11,21 +13,42 @@ const VideoCallModal = () => {
     const route = useRoute()
 
     const [state, setState] = useState({
-        roomId: '',
-        phoneNumber: '',
-        fullname: ''
+        roomID: '',
+        displayName: ''
     });
 
     useEffect(() => {
-        const roomId = route.params.roomId
-        const phoneNumber = route.params.phoneNumber
-        const fullname = route.params.fullname
-        setState({
-            roomId, phoneNumber, fullname
-        })
+        const { roomID, displayName } = route.params
+        setState({ roomID, displayName })
+        isExistsRoom(roomID)
     }, [route])
 
-    const onDecline = () => {
+    const isExistsRoom = async (roomID) => {
+        const roomRef = firestore().collection('videorooms').doc(roomID);
+        const roomData = (await roomRef.get()).data()
+        if (roomData) {
+            const unsubscribeDeleted = roomRef.collection('callerCandidates').onSnapshot((snapshot) => {
+                console.log('unsubscribeDeleted', snapshot)
+                if (snapshot) {
+                    snapshot.docChanges().forEach(change => {
+                        console.log('change', change)
+                        if (change.type == 'removed') {
+                            console.log('removed')
+                            onGoBack()
+                        }
+                    })
+                }
+            })
+            return () => {
+                unsubscribeDeleted()
+            }
+        } else {
+            onGoBack()
+        }
+    }
+
+    const onGoBack = () => {
+        InCallManager.stopRingtone();
         const parentRoute = navigation.getParent()
         if (!parentRoute) {
             navigation.navigate('App')
@@ -34,8 +57,26 @@ const VideoCallModal = () => {
         }
     }
 
+    const onDecline = async () => {
+        const roomRef = await firestore().collection('videorooms').doc(state.roomID);
+        const callerCandidatesCollection = await roomRef.collection('callerCandidates').get();
+        if (callerCandidatesCollection) {
+            callerCandidatesCollection.forEach(async (candidate) => {
+                await candidate.ref.delete()
+            });
+        }
+        roomRef.delete()
+        onGoBack()
+    }
+
     const onAccept = () => {
-        navigation.navigate('VideoJoinModal', { roomId: state.roomId })
+        InCallManager.stopRingtone();
+        navigation.navigate('VideoJoinModal',
+            {
+                roomID: state.roomID,
+                displayName: state.displayName
+            },
+        )
     }
 
     return (
@@ -53,8 +94,8 @@ const VideoCallModal = () => {
                 flex: 1, alignItems: 'center', justifyContent: 'flex-start',
                 width: '100%',
             }}>
-                <Text style={{ fontSize: 30 }}>{state.phoneNumber}</Text>
-                <Text style={{ fontSize: 20 }}>{state.fullname}</Text>
+                <Text style={{ fontSize: 30 }}>{`LKExpress Calling....`}</Text>
+                <Text style={{ fontSize: 20 }}>{state.displayName}</Text>
             </View>
             <View style={{
                 flex: 1,

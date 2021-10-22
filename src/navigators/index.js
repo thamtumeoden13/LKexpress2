@@ -4,6 +4,7 @@ import { NavigationContainer, useNavigationContainerRef } from '@react-navigatio
 import { createStackNavigator } from '@react-navigation/stack'
 import SplashScreen from 'react-native-splash-screen'
 import messaging from '@react-native-firebase/messaging';
+import InCallManager from 'react-native-incall-manager';
 
 import AppStack from './AppStack'
 import AuthStack from './AuthStack'
@@ -23,11 +24,11 @@ export default () => {
 
         const onMessageReceived = async (message) => {
             console.log('message-onMessageReceived', message)
-            if (Object.keys(message.data).length > 0 && message.data.type == 'video-join' && !!message.data.roomId) {
+            if (Object.keys(message.data).length > 0 && message.data.type == 'video-join' && !!message.data.roomID) {
+                InCallManager.startRingtone("_BUNDLE_");
                 navigationRef.navigate('VideoCallKeepModal', {
-                    roomId: message.data.roomId,
-                    phoneNumber: message.data.phoneNumber,
-                    fullname: message.data.fullname,
+                    roomID: message.data.roomID,
+                    displayName: message.data.displayName,
                 })
             }
         }
@@ -45,11 +46,10 @@ export default () => {
                     'Notification caused app to open from background state:',
                     remoteMessage,
                 );
-                if (Object.keys(remoteMessage.data).length > 0 && remoteMessage.data.type == 'video-join' && !!remoteMessage.data.roomId) {
+                if (Object.keys(remoteMessage.data).length > 0 && remoteMessage.data.type == 'video-join' && !!remoteMessage.data.roomID) {
                     navigationRef.navigate('VideoCallKeepModal', {
-                        roomId: remoteMessage.data.roomId,
-                        phoneNumber: remoteMessage.data.phoneNumber,
-                        fullname: remoteMessage.data.fullname,
+                        roomID: remoteMessage.data.roomID,
+                        displayName: remoteMessage.data.displayName,
                     })
                 }
             });
@@ -64,11 +64,10 @@ export default () => {
                         remoteMessage,
                     );
                     // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-                    if (Object.keys(remoteMessage.data).length > 0 && remoteMessage.data.type == 'video-join' && !!remoteMessage.data.roomId) {
+                    if (Object.keys(remoteMessage.data).length > 0 && remoteMessage.data.type == 'video-join' && !!remoteMessage.data.roomID) {
                         navigationRef.navigate('VideoCallKeepModal', {
-                            roomId: remoteMessage.data.roomId,
-                            phoneNumber: remoteMessage.data.phoneNumber,
-                            fullname: remoteMessage.data.fullname,
+                            roomID: remoteMessage.data.roomID,
+                            displayName: remoteMessage.data.displayName,
                         })
                     }
                 }

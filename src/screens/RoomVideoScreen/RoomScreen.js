@@ -15,7 +15,7 @@ export default function RoomScreen() {
         appVersion: '',
         fcmToken: ''
     })
-    const [roomId, setRoomId] = useState('');
+    const [roomID, setRoomId] = useState('');
     const navigation = useNavigation()
 
     useEffect(() => {
@@ -28,14 +28,14 @@ export default function RoomScreen() {
     }, [])
 
     const onCallOrJoin = (screen) => {
-        if (roomId.length > 0) {
+        if (roomID.length > 0) {
             switch (screen) {
                 case screens.CALL:
-                    navigation.navigate('VideoCall', { roomId: roomId })
+                    navigation.navigate('VideoCall', { roomID: roomID })
                     break;
 
                 case screens.JOIN:
-                    navigation.navigate('VideoJoin', { roomId: roomId })
+                    navigation.navigate('VideoJoin', { roomID: roomID })
                     break;
             }
             return;
@@ -49,14 +49,14 @@ export default function RoomScreen() {
     }
 
     const onPress = async () => {
-        // navigation.navigate('VideoCallKeepModal', { roomId: roomId })
+        // navigation.navigate('VideoCallKeepModal', { roomID: roomID })
         Clipboard.setString(state.fcmToken)
     }
 
     return (
         <>
             <Text style={styles.heading} >Chọn Phòng</Text>
-            <TextInput style={styles.input} value={roomId} onChangeText={setRoomId} />
+            <TextInput style={styles.input} value={roomID} onChangeText={setRoomId} />
             <View style={styles.buttonContainer} >
                 <Button title="Join Screen" onPress={() => onCallOrJoin(screens.JOIN)} />
             </View>
