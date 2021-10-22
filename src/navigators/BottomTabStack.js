@@ -163,7 +163,8 @@ const MainStack = () => {
                         </View>
                     ),
                     // tabBarBadge: 5,
-                    tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' }
+                    tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' },
+                    headerTitle: () => <HeaderTitle title={`Danh Mục Sản Phẩm`} />,
                 }}
             />
             <Tab.Screen name="Diary" component={DiaryScreen}
@@ -186,7 +187,8 @@ const MainStack = () => {
                             />
                         </View>
                     ),
-                    tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' }
+                    tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' },
+                    headerTitle: () => <HeaderTitle title={`Nhật Ký`} />,
                 }}
             />
             <Tab.Screen name="Profile" component={ProfileScreen}
@@ -210,6 +212,7 @@ const MainStack = () => {
                             />
                         </View>
                     ),
+                    headerTitle: () => <HeaderTitle title={`Thông Tin Cá Nhân`} />,
                 }}
             />
         </Tab.Navigator>
