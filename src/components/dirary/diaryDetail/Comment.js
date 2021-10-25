@@ -166,6 +166,9 @@ const Commment = ({ fullName, comments, totalLike = 0, totalView = 0, addDiaryCo
                             onScroll={onScroll}
                             onTouchEnd={onScrollEnd}
                             onMomentumScrollEnd={onScrollEnd}
+                            onScrollEndDrag={onScrollEnd}
+                            onScrollAnimationEnd={onScrollEnd}
+                            onMomentumScrollEnd={onScrollEnd}
                             scrollEventThrottle={2}
                             style={styles.scrollview}
                         >

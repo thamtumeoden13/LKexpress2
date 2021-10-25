@@ -190,13 +190,13 @@ const ChatDetailScreen = ({ route, navigation }) => {
             playSound: true,
             vibrate: true
         }
-        notificationManager.showNotification(
-            Math.random(),
-            `${userConnect.fullName}`,
-            `${message.text}`,
-            {}, // data
-            options //options
-        )
+        // notificationManager.showNotification(
+        //     Math.random(),
+        //     `${userConnect.fullName}`,
+        //     `${message.text}`,
+        //     {}, // data
+        //     options //options
+        // )
     }
 
     const onSend = (messages = []) => {
@@ -298,7 +298,7 @@ const ChatDetailScreen = ({ route, navigation }) => {
 
     const onCallOrJoin = (documentID, userID) => {
         console.log('documentID', documentID, userID)
-        navigation.navigate('VideoCall',
+        navigation.navigate('VideoCallModal',
             {
                 roomID: documentID,
                 roomMasterID: userID,

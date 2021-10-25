@@ -13,7 +13,7 @@ import DrawerContentComponents from './DrawerContentComponents'
 import HomeTabs from './BottomTabStack'
 
 import {
-    VideoCallScreen, VideoJoinScreen,
+    VideoCallScreen, VideoJoinScreen, VideoCallKeepModal,
     ChatDetailScreen, RoomChatScreen, AddRoomScreen,
     CategoryDetailScreen, AddCategoryScreen, ShoppingCartScreen,
     DiaryDetailScreen, AddDiaryScreen, UpdateProfileScreen
@@ -34,24 +34,34 @@ const MainStack = () => {
             }}
         >
             <Stack.Screen name="HomeTabs" component={HomeTabs} options={{ title: 'Phòng chat', }} />
-            <Stack.Screen name="VideoCall" component={VideoCallScreen}
+            <Stack.Screen name="VideoCallKeepModal" component={VideoCallKeepModal}
                 options={{
-                    headerLeft: () => <BackIcon navigation={navigation} />,
+                    // headerLeft: () => <BackIcon navigation={navigation} />,
                     // headerTitle: () => <HeaderTitle title={`Phòng chat 111`} />,
                     // headerRight: () => <BagIcon navigation={navigation} />,
                     // headerBackTitleVisible: false,
                     // headerBackVisible: false,
-                    headerShown: true,
+                    headerShown: false,
                 }}
             />
-            <Stack.Screen name="VideoJoin" component={VideoJoinScreen}
+            <Stack.Screen name="VideoCallModal" component={VideoCallScreen}
                 options={{
-                    headerLeft: () => <BackIcon navigation={navigation} />,
+                    // headerLeft: () => <BackIcon navigation={navigation} />,
                     // headerTitle: () => <HeaderTitle title={`Phòng chat 111`} />,
                     // headerRight: () => <BagIcon navigation={navigation} />,
                     // headerBackTitleVisible: false,
                     // headerBackVisible: false,
-                    headerShown: true,
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen name="VideoJoinModal" component={VideoJoinScreen}
+                options={{
+                    // headerLeft: () => <BackIcon navigation={navigation} />,
+                    // headerTitle: () => <HeaderTitle title={`Phòng chat 111`} />,
+                    // headerRight: () => <BagIcon navigation={navigation} />,
+                    // headerBackTitleVisible: false,
+                    // headerBackVisible: false,
+                    headerShown: false,
                 }}
             />
             <Stack.Screen name="ChatDetail" component={ChatDetailScreen}

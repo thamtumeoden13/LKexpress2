@@ -9,7 +9,7 @@ import InCallManager from 'react-native-incall-manager';
 import AppStack from './AppStack'
 import AuthStack from './AuthStack'
 
-import { VideoCallScreen, VideoJoinScreen, VideoCallModal } from '../screens'
+import { VideoCallScreen, VideoJoinScreen, VideoCallKeepModal } from '../screens'
 
 import { AuthContext } from '../utils'
 
@@ -91,11 +91,11 @@ export default () => {
                         <Stack.Screen name="App" component={AppStack} />
                     }
                 </Stack.Group>
-                <Stack.Group screenOptions={{ presentation: 'modal' }}>
-                    <Stack.Screen name="VideoCallKeepModal" component={VideoCallModal} />
+                {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
+                    <Stack.Screen name="VideoCallKeepModal" component={VideoCallKeepModal} />
                     <Stack.Screen name="VideoCallModal" component={VideoCallScreen} />
                     <Stack.Screen name="VideoJoinModal" component={VideoJoinScreen} />
-                </Stack.Group>
+                </Stack.Group> */}
             </Stack.Navigator>
         </NavigationContainer >
     )

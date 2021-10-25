@@ -31,11 +31,11 @@ export default function RoomScreen() {
         if (roomID.length > 0) {
             switch (screen) {
                 case screens.CALL:
-                    navigation.navigate('VideoCall', { roomID: roomID })
+                    navigation.navigate('VideoCallModal', { roomID: roomID })
                     break;
 
                 case screens.JOIN:
-                    navigation.navigate('VideoJoin', { roomID: roomID })
+                    navigation.navigate('VideoJoinModal', { roomID: roomID })
                     break;
             }
             return;

@@ -27,6 +27,7 @@ function Difference(arr = [], oarr = []) {
 }
 
 const RoomChatScreen = ({ route, navigation }) => {
+    let _isReachedTop
 
     const db = firestore()
     const entityRef = db.collection('rooms')
@@ -133,13 +134,6 @@ const RoomChatScreen = ({ route, navigation }) => {
         setState(prev => { return { ...prev, actionSheetType: 1 } })
     }
 
-    const onHasReachedTop = hasReachedTop => {
-        if (hasReachedTop)
-            scrollViewRef.current?.setNativeProps({
-                scrollEnabled: hasReachedTop,
-            });
-    };
-
     const onClose = () => {
         scrollViewRef.current?.setNativeProps({
             scrollEnabled: false,
@@ -214,13 +208,13 @@ const RoomChatScreen = ({ route, navigation }) => {
             playSound: true,
             vibrate: true
         }
-        notificationManager.showNotification(
-            Math.random(),
-            `${roomID}`,
-            `${message.text}`,
-            {}, // data
-            options //options
-        )
+        // notificationManager.showNotification(
+        //     Math.random(),
+        //     `${roomID}`,
+        //     `${message.text}`,
+        //     {}, // data
+        //     options //options
+        // )
     }
 
     const onSend = (messages = []) => {
@@ -358,6 +352,50 @@ const RoomChatScreen = ({ route, navigation }) => {
         'Watermelon',
         <Text style={{ color: 'red' }}>Durian</Text>
     ]
+
+    const changeScrollEnabled = (parent) => {
+        // We only need this on Android, iOS works great with Child Scroll Views.
+        if (Platform.OS !== 'android') return;
+        actionSheetScrollRef?.current?.setNativeProps({
+            scrollEnabled: parent,
+        });
+    }
+
+    const onScroll = () => {
+        changeScrollEnabled(false);
+    };
+
+    /**
+     * If the ActionSheet has not reached top,
+     * we want to keep the parent scroll enabled
+     */
+    const onHasReachedTop = hasReachedTop => {
+
+        if (!hasReachedTop) {
+            _isReachedTop = false;
+            changeScrollEnabled(!hasReachedTop);
+            return;
+        }
+        _isReachedTop = true;
+    };
+
+    /**
+     * If the user has touched the ScrollView Area, disable scroll on ActionSheet
+     * so that child scrollviews can scroll.
+     * @returns
+     */
+    const onMoveShouldSetResponderCapture = () => {
+        if (!_isReachedTop) return;
+        changeScrollEnabled(false);
+        return false;
+    };
+    /**
+     * Whenever the scroll ends we want to enable scrolling for ActionSheet.
+     */
+     const onScrollEnd = () => {
+        // changeScrollEnabled(true);
+        actionSheetRef.current?.handleChildScrollEnd();
+    };
 
     const chat = <GiftedChat
         messages={messages}
@@ -503,15 +541,12 @@ const RoomChatScreen = ({ route, navigation }) => {
         <ScrollView
             ref={scrollViewRef}
             nestedScrollEnabled={true}
-            onScrollEndDrag={() =>
-                actionSheetRef.current?.handleChildScrollEnd()
-            }
-            onScrollAnimationEnd={() =>
-                actionSheetRef.current?.handleChildScrollEnd()
-            }
-            onMomentumScrollEnd={() =>
-                actionSheetRef.current?.handleChildScrollEnd()
-            }
+            onScroll={onScroll}
+            onTouchEnd={onScrollEnd}
+            onMomentumScrollEnd={onScrollEnd}
+            onScrollEndDrag={onScrollEnd}
+            onScrollAnimationEnd={onScrollEnd}
+            onMomentumScrollEnd={onScrollEnd}
             style={styles.scrollview}
         >
             {state.actionSheetType == 1 && listUser}

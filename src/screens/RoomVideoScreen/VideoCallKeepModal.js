@@ -7,7 +7,7 @@ import InCallManager from 'react-native-incall-manager';
 
 const BG_IMG = 'https://images.pexels.com/photos/2033997/pexels-photo-2033997.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
 
-const VideoCallModal = () => {
+const VideoCallKeepModal = () => {
 
     const navigation = useNavigation()
     const route = useRoute()
@@ -16,6 +16,13 @@ const VideoCallModal = () => {
         roomID: '',
         displayName: ''
     });
+
+    useEffect(() => {
+        InCallManager.startRingtone("_BUNDLE_");
+        return () => {
+            InCallManager.stopRingtone();
+        }
+    }, [])
 
     useEffect(() => {
         const { roomID, displayName } = route.params
@@ -136,4 +143,4 @@ const VideoCallModal = () => {
     );
 }
 
-export default VideoCallModal
+export default VideoCallKeepModal

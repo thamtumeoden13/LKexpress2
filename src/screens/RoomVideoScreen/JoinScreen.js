@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, ActivityIndicator, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5'
 import InCallManager from 'react-native-incall-manager';
@@ -118,14 +118,14 @@ export default function JoinScreen({ route }) {
             }
             roomRef.delete()
         }
+        // navigation.goBack()
 
         const parentRoute = navigation.getParent()
         if (!parentRoute) {
             navigation.navigate('App')
         } else {
-            navigation.popToTop()
+            navigation.goBack()
         }
-
     }
 
     const startLocalStream = async () => {
@@ -233,108 +233,110 @@ export default function JoinScreen({ route }) {
     };
 
     return (
-        <View style={{ flex: 1, }} >
-            <View style={{ flex: 1, }} >
-                <View style={styles.rtcview}>
-                    {remoteStream ?
-                        <RTCView
-                            mirror={true}
-                            objectFit='cover'
-                            style={styles.rtc}
-                            streamURL={remoteStream && remoteStream.toURL()}
-                        />
-                        :
-                        <ActivityIndicator size="large" color="#fff" />
-                    }
-                </View>
-                <View style={{
-                    position: 'absolute', right: 10, top: 10,
-                    width: 120, height: 160, backgroundColor: '#000',
-                    justifyContent: 'center', alignItems: 'center'
-                }}>
-                    {localStream ?
-                        <RTCView
-                            mirror={true}
-                            objectFit='cover'
-                            style={styles.rtc}
-                            streamURL={localStream && localStream.toURL()}
-                        />
-                        :
-                        <ActivityIndicator size="small" color="#fff" />
-                    }
-                </View>
-            </View>
-            <View style={styles.callButtons} >
-                {localStream && !state.startCallComplete &&
-                    <View style={{
-                        width: 48, height: 48, borderRadius: 24, backgroundColor: '#fff',
-                        alignItems: 'center', justifyContent: 'center',
-                    }}>
-                        <FontAwesome5Icon
-                            name={'phone'} size={20} color={'#00f'}
-                            onPress={() => joinCall(state.roomID)} disabled={!!remoteStream}
-                        />
+        <View style={{ flex: 1, backgroundColor: '#eff1e4', }} >
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#eff1e4', }} >
+                <View style={{ flex: 1, }} >
+                    <View style={styles.rtcview}>
+                        {remoteStream ?
+                            <RTCView
+                                mirror={true}
+                                objectFit='cover'
+                                style={styles.rtc}
+                                streamURL={remoteStream && remoteStream.toURL()}
+                            />
+                            :
+                            <ActivityIndicator size="large" color="#fff" />
+                        }
                     </View>
-                }
-                {localStream &&
-                    <TouchableOpacity style={{
-                        width: 48, height: 48, borderRadius: 24, backgroundColor: `${remoteStream ? '#fff' : '#0001'}`,
-                        alignItems: 'center', justifyContent: 'center',
-                    }}
-                        onPress={toggleVideo} disabled={!remoteStream}
-                    >
-                        <FontAwesome5Icon name={`${!isVideo ? 'video' : 'video-slash'}`}
-                            size={20} color={`${remoteStream ? '#000' : '#6a6a6a'}`}
-
-                        />
-                    </TouchableOpacity>
-                }
-                {localStream &&
-                    <TouchableOpacity style={{
-                        width: 48, height: 48, borderRadius: 24, backgroundColor: `${remoteStream ? '#fff' : '#0001'}`,
-                        alignItems: 'center', justifyContent: 'center',
-                    }}
-                        onPress={toggleMute} disabled={!remoteStream}
-                    >
-                        <FontAwesome5Icon name={`${!isMuted ? 'microphone' : 'microphone-slash'}`}
-                            size={20} color={`${remoteStream ? '#000' : '#6a6a6a'}`}
-
-                        />
-                    </TouchableOpacity>
-                }
-                {localStream &&
-                    <TouchableOpacity style={{
-                        width: 48, height: 48, borderRadius: 24, backgroundColor: '#fff',
-                        alignItems: 'center', justifyContent: 'center',
-                    }}
-                        onPress={switchCamera}
-                    >
-                        <FontAwesome5Icon
-                            name={'camera'} size={20} color={'#000'}
-
-                        />
-                    </TouchableOpacity>
-                }
-            </View>
-            <TouchableOpacity style={styles.buttonContainer}
-                onPress={onBackPress}
-            >
-                <Button
-                    type='clear'
-                    containerStyle={{
-                        width: '90%', alignItems: 'center',
-                        marginVertical: 8, backgroundColor: '#f00', borderRadius: 16
-                    }}
-                    style={{ width: '90%', }}
-                    buttonStyle={{ height: 40, }}
-                    icon={
-                        <FontAwesome5Icon
-                            name={'phone-slash'} size={20} color={'#fff'}
-                        />
+                    <View style={{
+                        position: 'absolute', right: 10, top: 10,
+                        width: 120, height: 160, backgroundColor: '#000',
+                        justifyContent: 'center', alignItems: 'center'
+                    }}>
+                        {localStream ?
+                            <RTCView
+                                mirror={true}
+                                objectFit='cover'
+                                style={styles.rtc}
+                                streamURL={localStream && localStream.toURL()}
+                            />
+                            :
+                            <ActivityIndicator size="small" color="#fff" />
+                        }
+                    </View>
+                </View>
+                <View style={styles.callButtons} >
+                    {localStream && !state.startCallComplete &&
+                        <View style={{
+                            width: 48, height: 48, borderRadius: 24, backgroundColor: '#fff',
+                            alignItems: 'center', justifyContent: 'center',
+                        }}>
+                            <FontAwesome5Icon
+                                name={'phone'} size={20} color={'#00f'}
+                                onPress={() => joinCall(state.roomID)} disabled={!!remoteStream}
+                            />
+                        </View>
                     }
-                    disabled={true}
-                />
-            </TouchableOpacity>
+                    {localStream &&
+                        <TouchableOpacity style={{
+                            width: 48, height: 48, borderRadius: 24, backgroundColor: `${remoteStream ? '#fff' : '#0001'}`,
+                            alignItems: 'center', justifyContent: 'center',
+                        }}
+                            onPress={toggleVideo} disabled={!remoteStream}
+                        >
+                            <FontAwesome5Icon name={`${!isVideo ? 'video' : 'video-slash'}`}
+                                size={20} color={`${remoteStream ? '#000' : '#6a6a6a'}`}
+
+                            />
+                        </TouchableOpacity>
+                    }
+                    {localStream &&
+                        <TouchableOpacity style={{
+                            width: 48, height: 48, borderRadius: 24, backgroundColor: `${remoteStream ? '#fff' : '#0001'}`,
+                            alignItems: 'center', justifyContent: 'center',
+                        }}
+                            onPress={toggleMute} disabled={!remoteStream}
+                        >
+                            <FontAwesome5Icon name={`${!isMuted ? 'microphone' : 'microphone-slash'}`}
+                                size={20} color={`${remoteStream ? '#000' : '#6a6a6a'}`}
+
+                            />
+                        </TouchableOpacity>
+                    }
+                    {localStream &&
+                        <TouchableOpacity style={{
+                            width: 48, height: 48, borderRadius: 24, backgroundColor: '#fff',
+                            alignItems: 'center', justifyContent: 'center',
+                        }}
+                            onPress={switchCamera}
+                        >
+                            <FontAwesome5Icon
+                                name={'camera'} size={20} color={'#000'}
+
+                            />
+                        </TouchableOpacity>
+                    }
+                </View>
+                <TouchableOpacity style={styles.buttonContainer}
+                    onPress={onBackPress}
+                >
+                    <Button
+                        type='clear'
+                        containerStyle={{
+                            width: '90%', alignItems: 'center',
+                            marginVertical: 8, backgroundColor: '#f00', borderRadius: 16
+                        }}
+                        style={{ width: '90%', }}
+                        buttonStyle={{ height: 40, }}
+                        icon={
+                            <FontAwesome5Icon
+                                name={'phone-slash'} size={20} color={'#fff'}
+                            />
+                        }
+                        disabled={true}
+                    />
+                </TouchableOpacity>
+            </SafeAreaView>
         </View>
     )
 }
