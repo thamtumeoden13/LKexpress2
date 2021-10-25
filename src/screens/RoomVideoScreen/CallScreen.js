@@ -53,30 +53,18 @@ export default function CallScreen({ route }) {
     useEffect(() => {
 
         if (!!state.roomID) {
-            const roomRef = db.collection('videorooms').doc(state.roomID);
-            if (roomRef) {
-                const unsubscribeDeletedCallee = roomRef.collection('calleeCandidates').onSnapshot((snapshot) => {
-                    if (snapshot) {
-                        snapshot.docChanges().forEach(change => {
-                            if (change.type == 'removed') {
-                                onBackPress()
-                            }
-                        })
-                    }
-                })
-                const unsubscribeDeletedCaller = roomRef.collection('callerCandidates').onSnapshot((snapshot) => {
-                    if (snapshot) {
-                        snapshot.docChanges().forEach(change => {
-                            if (change.type == 'removed') {
-                                onBackPress()
-                            }
-                        })
-                    }
-                })
-                return () => {
-                    unsubscribeDeletedCallee();
-                    unsubscribeDeletedCaller();
+            const unsubscribe = db.collection('videorooms').onSnapshot((snapshot) => {
+                if (snapshot) {
+                    snapshot.docChanges().forEach(change => {
+                        const id = change.doc.id
+                        if (change.type == 'removed' && id == state.roomID) {
+                            onBackPress()
+                        }
+                    })
                 }
+            })
+            return () => {
+                unsubscribe();
             }
         }
     }, [state.roomID])
@@ -101,6 +89,7 @@ export default function CallScreen({ route }) {
         setRemoteStream();
         setCachedLocalPC();
         InCallManager.stop();
+        navigation.goBack()
 
         const roomRef = await db.collection('videorooms').doc(state.roomID);
         if (roomRef) {
@@ -118,13 +107,6 @@ export default function CallScreen({ route }) {
             }
 
             roomRef.delete()
-        }
-
-        const parentRoute = navigation.getParent()
-        if (!parentRoute) {
-            navigation.navigate('App')
-        } else {
-            navigation.goBack()
         }
     }
 

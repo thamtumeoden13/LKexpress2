@@ -52,30 +52,18 @@ export default function JoinScreen({ route }) {
     useEffect(() => {
 
         if (!!state.roomID) {
-            const roomRef = db.collection('videorooms').doc(state.roomID);
-            if (roomRef) {
-                const unsubscribeDeletedCallee = roomRef.collection('calleeCandidates').onSnapshot((snapshot) => {
-                    if (snapshot) {
-                        snapshot.docChanges().forEach(change => {
-                            if (change.type == 'removed') {
-                                onBackPress()
-                            }
-                        })
-                    }
-                })
-                const unsubscribeDeletedCaller = roomRef.collection('callerCandidates').onSnapshot((snapshot) => {
-                    if (snapshot) {
-                        snapshot.docChanges().forEach(change => {
-                            if (change.type == 'removed') {
-                                onBackPress()
-                            }
-                        })
-                    }
-                })
-                return () => {
-                    unsubscribeDeletedCallee();
-                    unsubscribeDeletedCaller();
+            const unsubscribe = db.collection('videorooms').onSnapshot((snapshot) => {
+                if (snapshot) {
+                    snapshot.docChanges().forEach(change => {
+                        const id = change.doc.id
+                        if (change.type == 'removed' && id == state.roomID) {
+                            onBackPress()
+                        }
+                    })
                 }
+            })
+            return () => {
+                unsubscribe();
             }
         }
 
@@ -101,6 +89,7 @@ export default function JoinScreen({ route }) {
         setRemoteStream();
         setCachedLocalPC();
         InCallManager.stop();
+        navigation.pop(2)
 
         const roomRef = await db.collection('videorooms').doc(state.roomID);
         if (roomRef) {
@@ -117,14 +106,6 @@ export default function JoinScreen({ route }) {
                 });
             }
             roomRef.delete()
-        }
-        // navigation.goBack()
-
-        const parentRoute = navigation.getParent()
-        if (!parentRoute) {
-            navigation.navigate('App')
-        } else {
-            navigation.goBack()
         }
     }
 

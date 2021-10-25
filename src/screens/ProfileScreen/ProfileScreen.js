@@ -41,8 +41,8 @@ const ProfileScreen = (props) => {
                     handlerSignOut()
                     break;
                 case 'UpdateProfile':
-                    const pushAction = StackActions.push('UpdateProfile')
-                    props.navigation.dispatch(pushAction)
+                    // const pushAction = StackActions.push('UpdateProfile')
+                    props.navigation.navigate('UpdateProfile')
                     break;
 
                 default:

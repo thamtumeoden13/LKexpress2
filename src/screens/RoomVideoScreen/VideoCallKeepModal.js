@@ -27,53 +27,38 @@ const VideoCallKeepModal = () => {
     useEffect(() => {
         const { roomID, displayName } = route.params
         setState({ roomID, displayName })
-        isExistsRoom(roomID)
-    }, [route])
 
-    const isExistsRoom = async (roomID) => {
-        const roomRef = firestore().collection('videorooms').doc(roomID);
-        const roomData = (await roomRef.get()).data()
-        if (roomData) {
-            const unsubscribeDeleted = roomRef.collection('callerCandidates').onSnapshot((snapshot) => {
-                console.log('unsubscribeDeleted', snapshot)
-                if (snapshot) {
-                    snapshot.docChanges().forEach(change => {
-                        console.log('change', change)
-                        if (change.type == 'removed') {
-                            console.log('removed')
-                            onGoBack()
-                        }
-                    })
-                }
-            })
-            return () => {
-                unsubscribeDeleted()
+        const unsubscribe = firestore().collection('videorooms').onSnapshot((snapshot) => {
+            if (snapshot) {
+                snapshot.docChanges().forEach(change => {
+                    const id = change.doc.id
+                    if (change.type == 'removed' && id == roomID) {
+                        onGoBack()
+                    }
+                })
             }
-        } else {
-            onGoBack()
+        })
+        return () => {
+            unsubscribe();
         }
-    }
+    }, [route])
 
     const onGoBack = () => {
         InCallManager.stopRingtone();
-        const parentRoute = navigation.getParent()
-        if (!parentRoute) {
-            navigation.navigate('App')
-        } else {
-            navigation.goBack()
-        }
+        navigation.goBack()
     }
 
     const onDecline = async () => {
         const roomRef = await firestore().collection('videorooms').doc(state.roomID);
-        const callerCandidatesCollection = await roomRef.collection('callerCandidates').get();
-        if (callerCandidatesCollection) {
-            callerCandidatesCollection.forEach(async (candidate) => {
-                await candidate.ref.delete()
-            });
+        if (roomRef) {
+            const callerCandidatesCollection = await roomRef.collection('callerCandidates').get();
+            if (callerCandidatesCollection) {
+                callerCandidatesCollection.forEach(async (candidate) => {
+                    await candidate.ref.delete()
+                });
+            }
+            roomRef.delete()
         }
-        roomRef.delete()
-        onGoBack()
     }
 
     const onAccept = () => {

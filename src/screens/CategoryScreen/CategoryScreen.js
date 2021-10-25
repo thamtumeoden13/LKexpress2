@@ -101,8 +101,8 @@ const CategoryScreen = (props) => {
     }
 
     const showAddCategory = () => {
-        const pushAction = StackActions.push('AddCategory')
-        props.navigation.dispatch(pushAction)
+        // const pushAction = StackActions.push('AddCategory')
+        props.navigation.navigate('AddCategory')
     }
 
     const getRealtimeCollectionCategoriList = async (querySnapshot) => {
@@ -137,13 +137,13 @@ const CategoryScreen = (props) => {
     }
 
     const onHandlerJoinCategory = (categoryID, categoryName) => {
-        const pushAction = StackActions.push('CategoryDetail', { id: categoryID, name: categoryName })
-        props.navigation.dispatch(pushAction)
+        // const pushAction = StackActions.push('CategoryDetail', { id: categoryID, name: categoryName })
+        props.navigation.navigate('CategoryDetail', { id: categoryID, name: categoryName })
     }
 
     const onOpenShoppingCart = () => {
-        const pushAction = StackActions.push('ShoppingCart')
-        props.navigation.dispatch(pushAction)
+        // const pushAction = StackActions.push('ShoppingCart')
+        props.navigation.navigate('ShoppingCart')
     }
 
     const onCloseModalAlert = () => {

@@ -144,10 +144,12 @@ const DiaryScreen = (props) => {
 
     const onPressItem = (item) => {
         console.log('item', item)
-        const pushAction = StackActions.push('DiaryDetail',
+        // const pushAction = StackActions.push('DiaryDetail',
+        //     { dataInfo: item, userID: state.userID, userName: state.userName }
+        // )
+        props.navigation.navigate('DiaryDetail',
             { dataInfo: item, userID: state.userID, userName: state.userName }
         )
-        props.navigation.dispatch(pushAction)
     }
 
     const showAddNewDiary = () => {

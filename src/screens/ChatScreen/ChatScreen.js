@@ -191,13 +191,13 @@ const ChatScreen = (props) => {
     }
 
     const onHandlerJoinRoom = (roomID) => {
-        const pushAction = StackActions.push('RoomChatDetail', { id: roomID })
-        props.navigation.dispatch(pushAction)
+        // const pushAction = StackActions.push('RoomChatDetail', { id: roomID })
+        props.navigation.navigate('RoomChatDetail', { id: roomID })
     }
 
     const onHandlerConnectRoom = (docID) => {
-        const pushAction = StackActions.push('ChatDetail', { id: docID })
-        props.navigation.dispatch(pushAction)
+        // const pushAction = StackActions.push('ChatDetail', { id: docID })
+        props.navigation.navigate('ChatDetail', { id: docID })
     }
 
     const keyExtractor = (item, index) => item.docID.toString()

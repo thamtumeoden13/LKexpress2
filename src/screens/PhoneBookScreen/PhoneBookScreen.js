@@ -157,8 +157,8 @@ const PhoneBook = (props) => {
         let documentRevert = `${state.userID}|${userConnect.id}`
         const existsCollection = await checkExistsCollection(document, documentRevert)
         if (!!existsCollection) {
-            const pushAction = StackActions.push('ChatDetail', { id: existsCollection })
-            props.navigation.dispatch(pushAction)
+            // const pushAction = StackActions.push('ChatDetail', { id: existsCollection })
+            props.navigation.navigate('ChatDetail', { id: existsCollection })
             return
         }
         onCreateNewConnect(state.user, userConnect)

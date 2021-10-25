@@ -93,8 +93,8 @@ const RoomScreen = (props) => {
     }, [state.userID])
 
     const addNewRoom = () => {
-        const pushAction = StackActions.push('AddRoom')
-        props.navigation.dispatch(pushAction)
+        // const pushAction = StackActions.push('AddRoom')
+        props.navigation.navigate('AddRoom')
     }
 
     const onHanderSearchInput = (searchInput) => {
@@ -132,8 +132,8 @@ const RoomScreen = (props) => {
     }
 
     const onHandlerJoinRoom = (roomID) => {
-        const pushAction = StackActions.push('RoomChatDetail', { id: roomID })
-        props.navigation.dispatch(pushAction)
+        // const pushAction = StackActions.push('RoomChatDetail', { id: roomID })
+        props.navigation.navigate('RoomChatDetail', { id: roomID })
     }
 
     const keyExtractor = (item, index) => item.roomRef.toString()

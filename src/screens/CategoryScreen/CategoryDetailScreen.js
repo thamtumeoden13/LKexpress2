@@ -87,8 +87,8 @@ const CategoryDetailScreen = (props) => {
     }
 
     const onOpenShoppingCart = () => {
-        const pushAction = StackActions.push('ShoppingCart')
-        props.navigation.dispatch(pushAction)
+        // const pushAction = StackActions.push('ShoppingCart')
+        props.navigation.navigate('ShoppingCart')
     }
 
     const onPressItem = (item, index) => {
