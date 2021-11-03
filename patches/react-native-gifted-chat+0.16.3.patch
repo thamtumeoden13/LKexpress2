@@ -1,0 +1,411 @@
+diff --git a/node_modules/react-native-gifted-chat/LICENSE b/node_modules/react-native-gifted-chat/LICENSE
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/README.md b/node_modules/react-native-gifted-chat/README.md
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Actions.d.ts b/node_modules/react-native-gifted-chat/lib/Actions.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Actions.js b/node_modules/react-native-gifted-chat/lib/Actions.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Actions.js.flow b/node_modules/react-native-gifted-chat/lib/Actions.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Actions.js.map b/node_modules/react-native-gifted-chat/lib/Actions.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Avatar.d.ts b/node_modules/react-native-gifted-chat/lib/Avatar.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Avatar.js b/node_modules/react-native-gifted-chat/lib/Avatar.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Avatar.js.flow b/node_modules/react-native-gifted-chat/lib/Avatar.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Avatar.js.map b/node_modules/react-native-gifted-chat/lib/Avatar.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Bubble.d.ts b/node_modules/react-native-gifted-chat/lib/Bubble.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Bubble.js b/node_modules/react-native-gifted-chat/lib/Bubble.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Bubble.js.flow b/node_modules/react-native-gifted-chat/lib/Bubble.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Bubble.js.map b/node_modules/react-native-gifted-chat/lib/Bubble.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Color.d.ts b/node_modules/react-native-gifted-chat/lib/Color.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Color.js b/node_modules/react-native-gifted-chat/lib/Color.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Color.js.map b/node_modules/react-native-gifted-chat/lib/Color.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Composer.d.ts b/node_modules/react-native-gifted-chat/lib/Composer.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Composer.js b/node_modules/react-native-gifted-chat/lib/Composer.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Composer.js.flow b/node_modules/react-native-gifted-chat/lib/Composer.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Composer.js.map b/node_modules/react-native-gifted-chat/lib/Composer.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Constant.d.ts b/node_modules/react-native-gifted-chat/lib/Constant.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Constant.js b/node_modules/react-native-gifted-chat/lib/Constant.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Constant.js.map b/node_modules/react-native-gifted-chat/lib/Constant.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Day.d.ts b/node_modules/react-native-gifted-chat/lib/Day.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Day.js b/node_modules/react-native-gifted-chat/lib/Day.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Day.js.flow b/node_modules/react-native-gifted-chat/lib/Day.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Day.js.map b/node_modules/react-native-gifted-chat/lib/Day.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/GiftedAvatar.d.ts b/node_modules/react-native-gifted-chat/lib/GiftedAvatar.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/GiftedAvatar.js b/node_modules/react-native-gifted-chat/lib/GiftedAvatar.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/GiftedAvatar.js.flow b/node_modules/react-native-gifted-chat/lib/GiftedAvatar.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/GiftedAvatar.js.map b/node_modules/react-native-gifted-chat/lib/GiftedAvatar.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/GiftedChat.d.ts b/node_modules/react-native-gifted-chat/lib/GiftedChat.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/GiftedChat.js b/node_modules/react-native-gifted-chat/lib/GiftedChat.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/GiftedChat.js.flow b/node_modules/react-native-gifted-chat/lib/GiftedChat.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/GiftedChat.js.map b/node_modules/react-native-gifted-chat/lib/GiftedChat.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/InputToolbar.d.ts b/node_modules/react-native-gifted-chat/lib/InputToolbar.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/InputToolbar.js b/node_modules/react-native-gifted-chat/lib/InputToolbar.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/InputToolbar.js.flow b/node_modules/react-native-gifted-chat/lib/InputToolbar.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/InputToolbar.js.map b/node_modules/react-native-gifted-chat/lib/InputToolbar.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/LoadEarlier.d.ts b/node_modules/react-native-gifted-chat/lib/LoadEarlier.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/LoadEarlier.js b/node_modules/react-native-gifted-chat/lib/LoadEarlier.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/LoadEarlier.js.flow b/node_modules/react-native-gifted-chat/lib/LoadEarlier.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/LoadEarlier.js.map b/node_modules/react-native-gifted-chat/lib/LoadEarlier.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Message.d.ts b/node_modules/react-native-gifted-chat/lib/Message.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Message.js b/node_modules/react-native-gifted-chat/lib/Message.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Message.js.flow b/node_modules/react-native-gifted-chat/lib/Message.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Message.js.map b/node_modules/react-native-gifted-chat/lib/Message.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageAudio.d.ts b/node_modules/react-native-gifted-chat/lib/MessageAudio.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageAudio.js b/node_modules/react-native-gifted-chat/lib/MessageAudio.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageAudio.js.flow b/node_modules/react-native-gifted-chat/lib/MessageAudio.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageAudio.js.map b/node_modules/react-native-gifted-chat/lib/MessageAudio.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageContainer.d.ts b/node_modules/react-native-gifted-chat/lib/MessageContainer.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageContainer.js b/node_modules/react-native-gifted-chat/lib/MessageContainer.js
+old mode 100644
+new mode 100755
+index 193772a..fc95243
+--- a/node_modules/react-native-gifted-chat/lib/MessageContainer.js
++++ b/node_modules/react-native-gifted-chat/lib/MessageContainer.js
+@@ -55,24 +55,32 @@ export default class MessageContainer extends React.PureComponent {
+         this.attachKeyboardListeners = () => {
+             const { invertibleScrollViewProps: invertibleProps } = this.props;
+             if (invertibleProps) {
+-                Keyboard.addListener('keyboardWillShow', invertibleProps.onKeyboardWillShow);
+-                Keyboard.addListener('keyboardDidShow', invertibleProps.onKeyboardDidShow);
+-                Keyboard.addListener('keyboardWillHide', invertibleProps.onKeyboardWillHide);
+-                Keyboard.addListener('keyboardDidHide', invertibleProps.onKeyboardDidHide);
++                // Keyboard.addListener('keyboardWillShow', invertibleProps.onKeyboardWillShow);
++                // Keyboard.addListener('keyboardDidShow', invertibleProps.onKeyboardDidShow);
++                // Keyboard.addListener('keyboardWillHide', invertibleProps.onKeyboardWillHide);
++                // Keyboard.addListener('keyboardDidHide', invertibleProps.onKeyboardDidHide);
++                this.willShowSub = Keyboard.addListener('keyboardWillShow', invertibleProps.onKeyboardWillShow);
++                this.didShowSub = Keyboard.addListener('keyboardDidShow', invertibleProps.onKeyboardDidShow);
++                this.willHideSub = Keyboard.addListener('keyboardWillHide', invertibleProps.onKeyboardWillHide);
++                this.didHideSub = Keyboard.addListener('keyboardDidHide', invertibleProps.onKeyboardDidHide);
+             }
+         };
+         this.detachKeyboardListeners = () => {
+             const { invertibleScrollViewProps: invertibleProps } = this.props;
+-            Keyboard.removeListener('keyboardWillShow', invertibleProps.onKeyboardWillShow);
+-            Keyboard.removeListener('keyboardDidShow', invertibleProps.onKeyboardDidShow);
+-            Keyboard.removeListener('keyboardWillHide', invertibleProps.onKeyboardWillHide);
+-            Keyboard.removeListener('keyboardDidHide', invertibleProps.onKeyboardDidHide);
++            // Keyboard.removeListener('keyboardWillShow', invertibleProps.onKeyboardWillShow);
++            // Keyboard.removeListener('keyboardDidShow', invertibleProps.onKeyboardDidShow);
++            // Keyboard.removeListener('keyboardWillHide', invertibleProps.onKeyboardWillHide);
++            // Keyboard.removeListener('keyboardDidHide', invertibleProps.onKeyboardDidHide);
++            this.willShowSub?.remove();
++            this.didShowSub?.remove();
++            this.willHideSub?.remove();
++            this.didHideSub?.remove();
+         };
+         this.renderTypingIndicator = () => {
+             if (Platform.OS === 'web') {
+                 return null;
+             }
+-            return <TypingIndicator isTyping={this.props.isTyping || false}/>;
++            return <TypingIndicator isTyping={this.props.isTyping || false} />;
+         };
+         this.renderFooter = () => {
+             if (this.props.renderFooter) {
+@@ -88,7 +96,7 @@ export default class MessageContainer extends React.PureComponent {
+                 if (this.props.renderLoadEarlier) {
+                     return this.props.renderLoadEarlier(loadEarlierProps);
+                 }
+-                return <LoadEarlier {...loadEarlierProps}/>;
++                return <LoadEarlier {...loadEarlierProps} />;
+             }
+             return null;
+         };
+@@ -149,17 +157,17 @@ export default class MessageContainer extends React.PureComponent {
+                 if (this.props.renderMessage) {
+                     return this.props.renderMessage(messageProps);
+                 }
+-                return <Message {...messageProps}/>;
++                return <Message {...messageProps} />;
+             }
+             return null;
+         };
+         this.renderChatEmpty = () => {
+             if (this.props.renderChatEmpty) {
+                 return this.props.inverted ? (this.props.renderChatEmpty()) : (<View style={styles.emptyChatContainer}>
+-          {this.props.renderChatEmpty()}
+-        </View>);
++                    {this.props.renderChatEmpty()}
++                </View>);
+             }
+-            return <View style={styles.container}/>;
++            return <View style={styles.container} />;
+         };
+         this.renderHeaderWrapper = () => (<View style={styles.headerWrapper}>{this.renderLoadEarlier()}</View>);
+         this.onLayoutList = () => {
+@@ -220,19 +228,19 @@ export default class MessageContainer extends React.PureComponent {
+     renderScrollToBottomWrapper() {
+         const propsStyle = this.props.scrollToBottomStyle || {};
+         return (<View style={[styles.scrollToBottomStyle, propsStyle]}>
+-        <TouchableOpacity onPress={() => this.scrollToBottom()} hitSlop={{ top: 5, left: 5, right: 5, bottom: 5 }}>
+-          {this.renderScrollBottomComponent()}
+-        </TouchableOpacity>
+-      </View>);
++            <TouchableOpacity onPress={() => this.scrollToBottom()} hitSlop={{ top: 5, left: 5, right: 5, bottom: 5 }}>
++                {this.renderScrollBottomComponent()}
++            </TouchableOpacity>
++        </View>);
+     }
+     render() {
+         const { inverted } = this.props;
+         return (<View style={this.props.alignTop ? styles.containerAlignTop : styles.container}>
+-        {this.state.showScrollBottom && this.props.scrollToBottom
+-            ? this.renderScrollToBottomWrapper()
+-            : null}
+-        <FlatList ref={this.props.forwardRef} extraData={[this.props.extraData, this.props.isTyping]} keyExtractor={this.keyExtractor} enableEmptySections automaticallyAdjustContentInsets={false} inverted={inverted} data={this.props.messages} style={styles.listStyle} contentContainerStyle={styles.contentContainerStyle} renderItem={this.renderRow} {...this.props.invertibleScrollViewProps} ListEmptyComponent={this.renderChatEmpty} ListFooterComponent={inverted ? this.renderHeaderWrapper : this.renderFooter} ListHeaderComponent={inverted ? this.renderFooter : this.renderHeaderWrapper} onScroll={this.handleOnScroll} scrollEventThrottle={100} onLayout={this.onLayoutList} onEndReached={this.onEndReached} onEndReachedThreshold={0.1} {...this.props.listViewProps}/>
+-      </View>);
++            {this.state.showScrollBottom && this.props.scrollToBottom
++                ? this.renderScrollToBottomWrapper()
++                : null}
++            <FlatList ref={this.props.forwardRef} extraData={[this.props.extraData, this.props.isTyping]} keyExtractor={this.keyExtractor} enableEmptySections automaticallyAdjustContentInsets={false} inverted={inverted} data={this.props.messages} style={styles.listStyle} contentContainerStyle={styles.contentContainerStyle} renderItem={this.renderRow} {...this.props.invertibleScrollViewProps} ListEmptyComponent={this.renderChatEmpty} ListFooterComponent={inverted ? this.renderHeaderWrapper : this.renderFooter} ListHeaderComponent={inverted ? this.renderFooter : this.renderHeaderWrapper} onScroll={this.handleOnScroll} scrollEventThrottle={100} onLayout={this.onLayoutList} onEndReached={this.onEndReached} onEndReachedThreshold={0.1} {...this.props.listViewProps} />
++        </View>);
+     }
+ }
+ MessageContainer.defaultProps = {
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageContainer.js.flow b/node_modules/react-native-gifted-chat/lib/MessageContainer.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageContainer.js.map b/node_modules/react-native-gifted-chat/lib/MessageContainer.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageImage.d.ts b/node_modules/react-native-gifted-chat/lib/MessageImage.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageImage.js b/node_modules/react-native-gifted-chat/lib/MessageImage.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageImage.js.flow b/node_modules/react-native-gifted-chat/lib/MessageImage.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageImage.js.map b/node_modules/react-native-gifted-chat/lib/MessageImage.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageText.d.ts b/node_modules/react-native-gifted-chat/lib/MessageText.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageText.js b/node_modules/react-native-gifted-chat/lib/MessageText.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageText.js.flow b/node_modules/react-native-gifted-chat/lib/MessageText.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageText.js.map b/node_modules/react-native-gifted-chat/lib/MessageText.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageVideo.d.ts b/node_modules/react-native-gifted-chat/lib/MessageVideo.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageVideo.js b/node_modules/react-native-gifted-chat/lib/MessageVideo.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageVideo.js.flow b/node_modules/react-native-gifted-chat/lib/MessageVideo.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/MessageVideo.js.map b/node_modules/react-native-gifted-chat/lib/MessageVideo.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Models.d.ts b/node_modules/react-native-gifted-chat/lib/Models.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Models.js b/node_modules/react-native-gifted-chat/lib/Models.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Models.js.map b/node_modules/react-native-gifted-chat/lib/Models.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/QuickReplies.d.ts b/node_modules/react-native-gifted-chat/lib/QuickReplies.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/QuickReplies.js b/node_modules/react-native-gifted-chat/lib/QuickReplies.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/QuickReplies.js.flow b/node_modules/react-native-gifted-chat/lib/QuickReplies.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/QuickReplies.js.map b/node_modules/react-native-gifted-chat/lib/QuickReplies.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Send.d.ts b/node_modules/react-native-gifted-chat/lib/Send.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Send.js b/node_modules/react-native-gifted-chat/lib/Send.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Send.js.flow b/node_modules/react-native-gifted-chat/lib/Send.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Send.js.map b/node_modules/react-native-gifted-chat/lib/Send.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/SystemMessage.d.ts b/node_modules/react-native-gifted-chat/lib/SystemMessage.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/SystemMessage.js b/node_modules/react-native-gifted-chat/lib/SystemMessage.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/SystemMessage.js.flow b/node_modules/react-native-gifted-chat/lib/SystemMessage.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/SystemMessage.js.map b/node_modules/react-native-gifted-chat/lib/SystemMessage.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Time.d.ts b/node_modules/react-native-gifted-chat/lib/Time.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Time.js b/node_modules/react-native-gifted-chat/lib/Time.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Time.js.flow b/node_modules/react-native-gifted-chat/lib/Time.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/Time.js.map b/node_modules/react-native-gifted-chat/lib/Time.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/TypingIndicator.d.ts b/node_modules/react-native-gifted-chat/lib/TypingIndicator.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/TypingIndicator.js b/node_modules/react-native-gifted-chat/lib/TypingIndicator.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/TypingIndicator.js.map b/node_modules/react-native-gifted-chat/lib/TypingIndicator.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/hooks/useUpdateLayoutEffect.d.ts b/node_modules/react-native-gifted-chat/lib/hooks/useUpdateLayoutEffect.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/hooks/useUpdateLayoutEffect.js b/node_modules/react-native-gifted-chat/lib/hooks/useUpdateLayoutEffect.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/hooks/useUpdateLayoutEffect.js.map b/node_modules/react-native-gifted-chat/lib/hooks/useUpdateLayoutEffect.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/index.d.ts b/node_modules/react-native-gifted-chat/lib/index.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/index.js b/node_modules/react-native-gifted-chat/lib/index.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/index.js.flow b/node_modules/react-native-gifted-chat/lib/index.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/index.js.map b/node_modules/react-native-gifted-chat/lib/index.js.map
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/types.js.flow b/node_modules/react-native-gifted-chat/lib/types.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/utils.d.ts b/node_modules/react-native-gifted-chat/lib/utils.d.ts
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/utils.js b/node_modules/react-native-gifted-chat/lib/utils.js
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/utils.js.flow b/node_modules/react-native-gifted-chat/lib/utils.js.flow
+old mode 100644
+new mode 100755
+diff --git a/node_modules/react-native-gifted-chat/lib/utils.js.map b/node_modules/react-native-gifted-chat/lib/utils.js.map
+old mode 100644
+new mode 100755
