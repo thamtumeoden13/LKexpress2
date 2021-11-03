@@ -15,7 +15,7 @@ import HomeTabs from './BottomTabStack'
 import {
     VideoCallScreen, VideoJoinScreen, VideoCallKeepModal,
     ChatDetailScreen, RoomChatScreen, AddRoomScreen,
-    CategoryDetailScreen, AddCategoryScreen, ShoppingCartScreen,
+    CategoryDetailScreen, AddCategoryScreen, ShoppingCartScreen, CategoryDetailScreen2,
     DiaryDetailScreen, AddDiaryScreen, UpdateProfileScreen
 } from '../screens'
 
@@ -96,6 +96,14 @@ const MainStack = () => {
                     // headerTitle: () => <HeaderTitle title={`Danh Mục`} />,
                     // headerRight: () => <BagIcon navigation={navigation} />,
                     headerShown: true
+                }}
+            />
+            <Stack.Screen name="CategoryDetail2" component={CategoryDetailScreen2}
+                options={{
+                    headerLeft: () => <BackIcon navigation={navigation} />,
+                    // headerTitle: () => <HeaderTitle title={`Danh Mục`} />,
+                    // headerRight: () => <BagIcon navigation={navigation} />,
+                    headerShown: false
                 }}
             />
             <Stack.Screen name="AddCategory" component={AddCategoryScreen}

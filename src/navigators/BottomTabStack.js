@@ -21,7 +21,8 @@ import {
     PhoneBookScreen, ProfileScreen,
     CategoryScreen,
     DiaryScreen,
-    VideoRoomScreen
+    VideoRoomScreen,
+    CategoryScreen2,
 } from '../screens'
 import { useNavigation } from '@react-navigation/native';
 
@@ -141,7 +142,7 @@ const MainStack = () => {
                     tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' }
                 }}
             />
-            <Tab.Screen name="Category" component={CategoryScreen}
+            <Tab.Screen name="Category" component={CategoryScreen2}
                 options={{
                     tabBarLabel: 'Danh mục',
                     tabBarIcon: ({ color, size }) => (

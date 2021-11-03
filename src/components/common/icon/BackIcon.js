@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { View } from 'react-native'
 import { withNavigation } from '@react-navigation/compat'
-import { StackActions } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import TouchableScale from 'react-native-touchable-scale';
 import LottieView from 'lottie-react-native';
 import { moderateScale, scale } from 'utils/scaleSize';
 
-const BackIcon = ({ navigation }) => {
+const BackIcon = () => {
+    const navigation = useNavigation()
     const openDrawer = () => {
         console.log('BackIcon', navigation)
-        navigation.dispatch(StackActions.popToTop());
+        navigation.goBack()
     }
 
     return (

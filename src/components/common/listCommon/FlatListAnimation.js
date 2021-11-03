@@ -4,6 +4,7 @@ import {
 } from 'react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import AntDesignIcons from 'react-native-vector-icons/AntDesign'
+import AnimatedAppearance from '../button/AnimatedAppearance'
 
 const BG_IMG = 'https://images.pexels.com/photos/2033997/pexels-photo-2033997.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
 const SPACING = 20
@@ -91,48 +92,50 @@ const FlatListAnimation = ({ result, onHandlerConnectRoom }) => {
         })
 
         return (
-            <Animated.View style={{
-                flexDirection: 'row', borderRadius: SPACING / 2,
-                padding: SPACING, marginBottom: SPACING,
-                backgroundColor: '#fff9',
-                shadowColor: '#000',
-                shadowOffset: {
-                    width: 0,
-                    height: SPACING / 2
-                },
-                shadowOpacity: .3,
-                shadowRadius: SPACING,
-                transform: [{ scale }],
-                opacity
-            }}>
-                <Image
-                    source={{ uri: item.image }}
-                    style={{
-                        width: AVATAR_SIZE, height: AVATAR_SIZE,
-                        borderRadius: AVATAR_SIZE,
-                        marginRight: SPACING / 2
-                    }}
-                />
-                <View style={{ flex: 1 }}>
-                    {!!item.name && <Text style={{ fontSize: 22, fontWeight: '600', lineHeight: 30 }}>{item.name}</Text>}
-                    {!!item.jobTitle && <Text style={{ fontSize: 18, opacity: 0.7, fontStyle: 'italic', lineHeight: 20 }}>{item.jobTitle}</Text>}
-                    {!!item.email && <Text style={{ fontSize: 14, opacity: 0.8, color: '#00f' }}>{item.email}</Text>}
-                    {!!item.address && <Text style={{ fontSize: 12, opacity: 0.8, color: '#000' }}>{item.address}</Text>}
-                    <View style={{ paddingVertical: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <TouchableOpacity style={{ alignItems: 'flex-start', width: '30%' }} onPress={() => handlerCallPhone(item.phoneNumber)}>
-                            <SimpleLineIcons name='phone' size={20} color={'#000'} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ alignItems: 'flex-start', width: '30%' }} onPress={() => handlerChatWithFriend(item)}>
-                            <AntDesignIcons name='message1' size={20} color={'#000'} />
-                        </TouchableOpacity>
-                        {item.userType == 1 &&
-                            <TouchableOpacity style={{ alignItems: 'flex-start', width: '30%' }} onPress={() => handlerShowLocation(item.currentUpdateLocation)}>
-                                <SimpleLineIcons name='location-pin' size={20} color={'#000'} />
+            <AnimatedAppearance index={index}>
+                <Animated.View style={{
+                    flexDirection: 'row', borderRadius: SPACING / 2,
+                    padding: SPACING, marginBottom: SPACING,
+                    backgroundColor: '#fff9',
+                    shadowColor: '#000',
+                    shadowOffset: {
+                        width: 0,
+                        height: SPACING / 2
+                    },
+                    shadowOpacity: .3,
+                    shadowRadius: SPACING,
+                    transform: [{ scale }],
+                    opacity
+                }}>
+                    <Image
+                        source={{ uri: item.image }}
+                        style={{
+                            width: AVATAR_SIZE, height: AVATAR_SIZE,
+                            borderRadius: AVATAR_SIZE,
+                            marginRight: SPACING / 2
+                        }}
+                    />
+                    <View style={{ flex: 1 }}>
+                        {!!item.name && <Text style={{ fontSize: 22, fontWeight: '600', lineHeight: 30 }}>{item.name}</Text>}
+                        {!!item.jobTitle && <Text style={{ fontSize: 18, opacity: 0.7, fontStyle: 'italic', lineHeight: 20 }}>{item.jobTitle}</Text>}
+                        {!!item.email && <Text style={{ fontSize: 14, opacity: 0.8, color: '#00f' }}>{item.email}</Text>}
+                        {!!item.address && <Text style={{ fontSize: 12, opacity: 0.8, color: '#000' }}>{item.address}</Text>}
+                        <View style={{ paddingVertical: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <TouchableOpacity style={{ alignItems: 'flex-start', width: '30%' }} onPress={() => handlerCallPhone(item.phoneNumber)}>
+                                <SimpleLineIcons name='phone' size={20} color={'#000'} />
                             </TouchableOpacity>
-                        }
+                            <TouchableOpacity style={{ alignItems: 'flex-start', width: '30%' }} onPress={() => handlerChatWithFriend(item)}>
+                                <AntDesignIcons name='message1' size={20} color={'#000'} />
+                            </TouchableOpacity>
+                            {item.userType == 1 &&
+                                <TouchableOpacity style={{ alignItems: 'flex-start', width: '30%' }} onPress={() => handlerShowLocation(item.currentUpdateLocation)}>
+                                    <SimpleLineIcons name='location-pin' size={20} color={'#000'} />
+                                </TouchableOpacity>
+                            }
+                        </View>
                     </View>
-                </View>
-            </Animated.View>
+                </Animated.View>
+            </AnimatedAppearance>
         )
     }
 

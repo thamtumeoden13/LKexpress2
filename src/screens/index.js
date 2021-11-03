@@ -24,6 +24,8 @@ import ChatDetailScreen from './ChatScreen/ChatDetailScreen'
 import PhoneBookScreen from './PhoneBookScreen/PhoneBookScreen'
 
 import CategoryScreen from './CategoryScreen/CategoryScreen'
+import CategoryScreen2 from './CategoryScreen/CategoryScreen2'
+import CategoryDetailScreen2 from './CategoryScreen/CategoryDetailScreen2'
 import CategoryDetailScreen from './CategoryScreen/CategoryDetailScreen'
 import AddCategoryScreen from './CategoryScreen/AddCategoryScreen'
 import ShoppingCartScreen from './CategoryScreen/ShoppingCartScreen'
@@ -42,6 +44,6 @@ export {
     RoomScreen, RoomChatScreen, AddRoomScreen,
     ChatScreen, ChatDetailScreen,
     PhoneBookScreen, ProfileScreen, UpdateProfileScreen,
-    CategoryScreen, CategoryDetailScreen, AddCategoryScreen, ShoppingCartScreen,
+    CategoryScreen, CategoryDetailScreen, AddCategoryScreen, ShoppingCartScreen, CategoryScreen2, CategoryDetailScreen2,
     DiaryScreen, DiaryDetailScreen, AddDiaryScreen
 }

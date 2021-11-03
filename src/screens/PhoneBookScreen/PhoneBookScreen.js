@@ -214,39 +214,6 @@ const PhoneBook = (props) => {
             })
     }
 
-    const keyExtractor = (item, index) => index.toString()
-
-    const renderItemUser = ({ item }) => (
-        <ListItem
-            Component={TouchableScale}
-            friction={90} //
-            tension={100} // These props are passed to the parent component (here TouchableScale)
-            activeScale={0.95} //
-            linearGradientProps={{
-                colors: ['#fff', '#fff'],
-                start: { x: 1, y: 0 },
-                end: { x: 0.2, y: 0 },
-            }}
-            ViewComponent={LinearGradient} // Only if no expo
-            style={{
-                borderTopColor: '#6a6a6a', borderTopWidth: 0.2,
-            }}
-            containerStyle={{ paddingVertical: verticalScale(10) }}
-            onPress={() => onHandlerConnectRoom(item)}
-        >
-            <Avatar rounded source={{ uri: item.avatarURL }} />
-            <ListItem.Content>
-                <ListItem.Title style={{ color: '#0a043c', fontWeight: '300', fontSize: scale(16), lineHeight: scale(22) }}>
-                    {item.email}
-                </ListItem.Title>
-                <ListItem.Subtitle style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>
-                    {`${item.fullName}`}
-                </ListItem.Subtitle>
-            </ListItem.Content>
-            <ListItem.Chevron name="addusergroup" type='antdesign' color="#0a043c" />
-        </ListItem>
-    )
-
     const tabs = Object.keys(images).map((key) => ({
         key: key,
         title: key == 'user' ? 'Danh Bạ' : 'Đối tác / CTV',
@@ -334,84 +301,9 @@ const PhoneBook = (props) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: 'rgb(250,222,249)' }} >
-            <FlatList
-                ref={ref}
-                horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                bounces={false}
-                keyExtractor={({ key }) => key.toString()}
-                onScroll={Animated.event(
-                    [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-                    { useNativeDriver: false }
-                )}
-                contentContainerStyle={{ marginTop: 48 }}
-                data={tabs}
-                renderItem={({ item, index }) => {
-                    return (
-                        <View style={{ width, height }}>
-                            {!!state.isDataFetchedUserList ?
-                                <>
-                                    {item.key == 'user' && !!usersFilter && usersFilter.length > 0 &&
-                                        <FlatListAnimation result={usersFilter} onHandlerConnectRoom={onHandlerConnectRoom} />
-                                    }
-                                    {item.key == 'customer' && !!usersFilterCustomer && usersFilterCustomer.length > 0 &&
-                                        <FlatListAnimation result={usersFilterCustomer} onHandlerConnectRoom={onHandlerConnectRoom} />
-                                    }
-                                </>
-                                :
-                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                    <LottieView
-                                        source={require('@assets/animations/890-loading-animation.json')}
-                                        colorFilters={[{
-                                            keypath: "button",
-                                            color: "#F00000"
-                                        }, {
-                                            keypath: "Sending Loader",
-                                            color: "#F00000"
-                                        }]}
-                                        style={{ width: calcWidth(30), height: calcWidth(30), justifyContent: 'center' }}
-                                        autoPlay
-                                        loop
-                                    />
-                                </View>
-                            }
-                        </View>
-                    )
-                }}
-            />
-            <Tabs data={tabs} scrollX={scrollX} onItemPress={onItemPress} />
-
-            {/* } */}
-            {/* {!!state.isDataFetchedUserList ?
-                <>
-                    {!!usersFilter && usersFilter.length > 0 &&
-                        // <FlatList
-                        //     keyExtractor={keyExtractor}
-                        //     data={usersFilter}
-                        //     extraData={usersFilter}
-                        //     renderItem={renderItemUser}
-                        // />
-                        <FlatListAnimation result={usersFilter} />
-                    }
-                </>
-                :
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <LottieView
-                        source={require('@assets/animations/890-loading-animation.json')}
-                        colorFilters={[{
-                            keypath: "button",
-                            color: "#F00000"
-                        }, {
-                            keypath: "Sending Loader",
-                            color: "#F00000"
-                        }]}
-                        style={{ width: calcWidth(30), height: calcWidth(30), justifyContent: 'center' }}
-                        autoPlay
-                        loop
-                    />
-                </View>
-            } */}
+            <Tabs data={tabs} scrollX={scrollX} onItemPress={onItemPress} /> 
+            <FlatListAnimation result={usersFilter} onHandlerConnectRoom={onHandlerConnectRoom} />
+            {/* <FlatListAnimation result={usersFilterCustomer} onHandlerConnectRoom={onHandlerConnectRoom} /> */}
         </View>
     )
 }

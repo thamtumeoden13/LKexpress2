@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { FlatList, Keyboard, SafeAreaView, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native'
+import { FlatList, Keyboard, SafeAreaView, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
 import { StackActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ListItem, Avatar, Badge } from 'react-native-elements';
-import TouchableScale from 'react-native-touchable-scale';
 import LinearGradient from 'react-native-linear-gradient';
 import LottieView from 'lottie-react-native';
 import format from 'date-fns/format'
@@ -14,8 +13,10 @@ import firestore from '@react-native-firebase/firestore';
 import { calcWidth, moderateScale, scale, verticalScale } from 'utils/scaleSize';
 import HeaderSearchInput from 'components/common/Header/SearchInput'
 import AddIcon from 'components/common/icon/AddIcon'
+import TouchableScale from 'components/common/button/TouchableScale';
 
 import styles from './styles';
+import AnimatedAppearance from 'components/common/button/AnimatedAppearance';
 
 const RoomScreen = (props) => {
     const db = firestore()
@@ -136,44 +137,44 @@ const RoomScreen = (props) => {
         props.navigation.navigate('RoomChatDetail', { id: roomID })
     }
 
-    const keyExtractor = (item, index) => item.roomRef.toString()
+    const keyExtractor = (item, index) => `itemRoomChat${index.toString()}`
 
-    const renderItemRoomChat = ({ item }) => {
+    const renderItemRoomChat = ({ item, index }) => {
+
         return (
-            <ListItem
-                Component={TouchableScale}
-                friction={90} //
-                tension={100} // These props are passed to the parent component (here TouchableScale)
-                activeScale={0.95} //
-                linearGradientProps={{
-                    colors: ['#fff', '#fff'], //007580
-                    start: { x: 1, y: 0 },
-                    end: { x: 0.2, y: 0 },
-                }}
-                ViewComponent={LinearGradient} // Only if no expo
-                style={{
-                    borderTopColor: '#6a6a6a', borderTopWidth: 0.2,
-                    // borderBottomColor: '#007580', borderBottomWidth: 1,
-                }}
-                containerStyle={{ paddingVertical: verticalScale(10) }}
-                onPress={() => onHandlerJoinRoom(item.roomID)}
-            >
-                <Avatar rounded source={{ uri: item.currentAvatar }} />
-                <ListItem.Content>
-                    <ListItem.Title style={{ color: '#000', fontWeight: '300', fontSize: scale(16), lineHeight: scale(22) }}>
-                        {`Nhóm: ${item.roomID}`}
-                    </ListItem.Title>
-                    <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
-                        <ListItem.Subtitle style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>
-                            {`${item.currentMessage}`}
-                        </ListItem.Subtitle>
-                        <ListItem.Subtitle style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(10), lineHeight: scale(16) }}>
-                            {` • ${format(item.currentCreatedAt.toDate(), 'yyyy-MM-dd HH:mm', { locale: vi })}`}
-                        </ListItem.Subtitle>
+            <AnimatedAppearance index={index}>
+                <TouchableScale
+                    onPress={() => onHandlerJoinRoom(item.roomID)}
+                    scaleTo={0.97}
+                >
+                    <View style={{
+                        height: 80,
+                        borderRadius: 12,
+                        flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+                        backgroundColor: '#fff',
+                        marginHorizontal: 16,
+                        marginBottom: 16,
+                        shadowColor: '#000',
+                        shadowOpacity: 0.2,
+                        shadowOffset: { width: 4, height: 4 },
+                        // shadowRadius: 12,
+                        // overflow: 'hidden',
+                    }}>
+                        <Image
+                            source={{ uri: item.currentAvatar }}
+                            resizeMode='cover'
+                            style={{ width: 80, height: 80 }}
+                        />
+                        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+                            <Text style={{ color: '#000', fontWeight: '300', fontSize: scale(16), lineHeight: scale(22) }}>{`Nhóm: ${item.roomID}`}</Text>
+                            <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
+                                <Text style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>{`${item.currentMessage}`}</Text>
+                                <Text style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(10), lineHeight: scale(16) }}>{` • ${format(item.currentCreatedAt.toDate(), 'yyyy-MM-dd HH:mm', { locale: vi })}`}</Text>
+                            </View>
+                        </View>
                     </View>
-                </ListItem.Content>
-                <ListItem.Chevron color="#fff" />
-            </ListItem>
+                </TouchableScale>
+            </AnimatedAppearance>
         )
     }
 

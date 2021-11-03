@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { FlatList, Keyboard, SafeAreaView, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native'
-import { StackActions } from '@react-navigation/native';
+import { FlatList, Keyboard, SafeAreaView, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { ListItem, Avatar, Badge } from 'react-native-elements';
-import TouchableScale from 'react-native-touchable-scale';
 import LinearGradient from 'react-native-linear-gradient';
 import LottieView from 'lottie-react-native';
 import format from 'date-fns/format'
@@ -18,6 +17,8 @@ import { notificationManager } from 'utils/NotificationManager'
 import styles from './styles';
 import AddIcon from 'components/common/icon/AddIcon';
 import BackIcon from 'components/common/icon/BackIcon';
+import TouchableScale from 'components/common/button/TouchableScale';
+import AnimatedAppearance from 'components/common/button/AnimatedAppearance';
 
 const ChatScreen = (props) => {
     const db = firestore()
@@ -58,8 +59,8 @@ const ChatScreen = (props) => {
         }
     }, [])
 
-    useEffect(() => {
-        if (!!state.userID) {
+    useFocusEffect(
+        useCallback(() => {
             const unsubscribeRoomList = entityRef.onSnapshot(getRealtimeCollectionRoomList, err => Alert.alert(error))
             const queryUserList = entityUserRef.where("id", "!=", state.userID)
             const unsubscribeUserList = queryUserList.onSnapshot(getRealtimeCollectionUserList, err => Alert.alert(error))
@@ -67,12 +68,12 @@ const ChatScreen = (props) => {
                 unsubscribeRoomList()
                 unsubscribeUserList()
             }
-        }
-    }, [state.userID])
+        }, [!!state.userID])
+    )
 
     useEffect(() => {
         props.navigation.setOptions({
-                headerTitle: () =>
+            headerTitle: () =>
                 <HeaderSearchInput
                     placeholder={'Tìm tin nhắn, bạn bè'}
                     handerSearchInput={(value) => onHanderSearchInput(value)}
@@ -200,103 +201,63 @@ const ChatScreen = (props) => {
         props.navigation.navigate('ChatDetail', { id: docID })
     }
 
-    const keyExtractor = (item, index) => item.docID.toString()
+    const keyExtractor = (item, index) => `itemChat${index.toString}`
 
-    const renderItemRoomChat = (item) => {
-        return (
-            <ListItem
-                Component={TouchableScale}
-                friction={90} //
-                tension={100} // These props are passed to the parent component (here TouchableScale)
-                activeScale={0.95} //
-                linearGradientProps={{
-                    colors: ['#fff', '#fff'], //007580
-                    start: { x: 1, y: 0 },
-                    end: { x: 0.2, y: 0 },
-                }}
-                ViewComponent={LinearGradient} // Only if no expo
-                style={{ borderTopColor: '#6a6a6a', borderTopWidth: 0.2, }}
-                containerStyle={{ paddingVertical: verticalScale(10) }}
-                onPress={() => onHandlerJoinRoom(item.roomID)}
-            >
-                <Avatar rounded source={{ uri: item.currentAvatar }} />
-                <ListItem.Content>
-                    <ListItem.Title style={{ color: '#000', fontWeight: '300', fontSize: scale(16), lineHeight: scale(22) }}>
-                        {`Nhóm: ${item.roomID}`}
-                    </ListItem.Title>
-                    <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
-                        <ListItem.Subtitle style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>
-                            {`${item.currentMessage}`}
-                        </ListItem.Subtitle>
-                        <ListItem.Subtitle style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(10), lineHeight: scale(16) }}>
-                            {` • ${format(item.currentCreatedAt.toDate(), 'yyyy-MM-dd HH:mm', { locale: vi })}`}
-                        </ListItem.Subtitle>
-                    </View>
-                    {/* <ListItem.Subtitle style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(12) }}>
-                    {`•${formatDistanceToNow(item.currentCreatedAt.toDate(), { locale: vi })}`}
-                </ListItem.Subtitle> */}
-                </ListItem.Content>
-                <ListItem.Chevron color="#fff" />
-            </ListItem>
-        )
-    }
+    const renderItemChat = ({ item, index }) => {
 
-    const renderItemChat = (item) => {
-        return (
-            <ListItem
-                Component={TouchableScale}
-                friction={90} //
-                tension={100} // These props are passed to the parent component (here TouchableScale)
-                activeScale={0.95} //
-                linearGradientProps={{
-                    colors: ['#fff', '#fff'], //0278ae
-                    start: { x: 1, y: 0 },
-                    end: { x: 0.2, y: 0 },
-                }}
-                ViewComponent={LinearGradient} // Only if no expo
-                style={{
-                    // marginTop: verticalScale(5),
-                    borderTopColor: '#000', borderTopWidth: 0.5,
-                    // borderBottomColor: '#0278ae', borderBottomWidth: 1,
-                }}
-                containerStyle={{ paddingVertical: verticalScale(10) }}
-                onPress={() => onHandlerConnectRoom(item.docID)}
-            >
-                <Avatar rounded source={{ uri: item.connectAvatarURL }} />
-                <ListItem.Content>
-                    <ListItem.Title style={{ color: '#000', fontWeight: '300', fontSize: scale(16), lineHeight: scale(22) }}>
-                        {item.currentUser}
-                    </ListItem.Title>
-                    <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
-                        <ListItem.Subtitle style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>
-                            {`${item.currentMessage}`}
-                        </ListItem.Subtitle>
-                        <ListItem.Subtitle style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(10), lineHeight: scale(16) }}>
-                            {` • ${format(item.currentCreatedAt.toDate(), 'yyyy-MM-dd HH:mm', { locale: vi })}`}
-                        </ListItem.Subtitle>
-                    </View>
-                </ListItem.Content>
-                <ListItem.Chevron color="#fff" />
-            </ListItem>
-        )
-    }
-
-    const renderItem = ({ item }) => {
-        let renderItemComponent
-        switch (true) {
-            case item.type == 1:
-                renderItemComponent = renderItemChat(item)
-                break;
-            case item.type == 2:
-                renderItemComponent = renderItemRoomChat(item)
-                break;
+        const id = item.type == 1 ? item.docID : item.roomID
+        const avatarURL = item.type == 1 ? item.connectAvatarURL : item.currentAvatar
+        const title = item.type == 1 ? item.currentUser : `Nhóm: ${item.roomID}`
+        const onhandlePress = () => {
+            if (item.type == 1) {
+                onHandlerConnectRoom(id)
+            } else {
+                onHandlerJoinRoom(id)
+            }
         }
-        return renderItemComponent
+
+        return (
+            <AnimatedAppearance index={index}>
+                <TouchableScale
+                    onPress={onhandlePress}
+                    disabled={false}
+                    scaleTo={0.97}
+                >
+                    <View style={{
+                        height: 80,
+                        borderRadius: 12,
+                        flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+                        backgroundColor: '#fff',
+                        marginHorizontal: 16,
+                        marginBottom: 16,
+                        shadowColor: '#000',
+                        shadowOpacity: 0.2,
+                        shadowOffset: { width: 4, height: 4 },
+                        // shadowRadius: 12,
+                    }}>
+                        <Image
+                            source={{ uri: avatarURL }}
+                            resizeMode='cover'
+                            style={{ width: 80, height: 80 }}
+                        />
+                        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+                            <Text style={{ color: '#000', fontWeight: '300', fontSize: scale(16), lineHeight: scale(22) }}>
+                                {title}
+                            </Text>
+                            <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
+                                <Text style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>{`${item.currentMessage}`}</Text>
+                                <Text style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(10), lineHeight: scale(16) }}>{` • ${format(item.currentCreatedAt.toDate(), 'yyyy-MM-dd HH:mm', { locale: vi })}`}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </TouchableScale>
+            </AnimatedAppearance>
+        )
     }
 
     return (
         <SafeAreaView style={{ flex: 1 }} >
-            {!state.isDataFetchedChatList || !state.isDataFetchedRoomList ?
+            {/* {!state.isDataFetchedChatList || !state.isDataFetchedRoomList ?
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
                     <LottieView
                         source={require('@assets/animations/890-loading-animation.json')}
@@ -313,17 +274,17 @@ const ChatScreen = (props) => {
                     />
                 </View>
                 :
-                <>
-                    {!!allChatsFilter && allChatsFilter.length > 0 &&
-                        <FlatList
-                            keyExtractor={keyExtractor}
-                            data={allChatsFilter}
-                            extraData={allChatsFilter}
-                            renderItem={renderItem}
-                        />
-                    }
-                </>
+                <> */}
+            {!!allChatsFilter && allChatsFilter.length > 0 &&
+                <FlatList
+                    keyExtractor={keyExtractor}
+                    data={allChatsFilter}
+                    // extraData={allChatsFilter}
+                    renderItem={renderItemChat}
+                />
             }
+            {/* </>
+            } */}
         </SafeAreaView>
     )
 }

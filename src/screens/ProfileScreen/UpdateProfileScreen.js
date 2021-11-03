@@ -144,7 +144,7 @@ const UpdateProfileScreen = (props) => {
                 >
                     <Image
                         style={styles.logo}
-                        source={!!user.avatarBase64 ? { uri: `data:image/png;base64,${user.avatarBase64}` } : { uri: user.avatarURL }}
+                        source={{ uri: user.avatarURL }}
                     />
                     <View style={{ position: 'absolute', bottom: 0 }}>
                         <FeatherIcon name='edit' size={20} />
