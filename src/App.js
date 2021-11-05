@@ -464,15 +464,15 @@ const App = (props) => {
     }
 
     const preOpenSettingPermission = () => {
-        setAlert(prev => {
-            return {
-                ...prev,
-                isVisible: true,
-                modalAlert: { type: 'warning' },
-                typeModalInputForm: 1,
-                disabledIcon: true
-            }
-        })
+        // setAlert(prev => {
+        //     return {
+        //         ...prev,
+        //         isVisible: true,
+        //         modalAlert: { type: 'warning' },
+        //         typeModalInputForm: 1,
+        //         disabledIcon: true
+        //     }
+        // })
     }
 
     const openSettingPermission = (status) => {
@@ -673,7 +673,7 @@ const App = (props) => {
         <AuthContext.Provider value={authContext}>
             <AppContainer />
             <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
-            {/* <ModalCenterAlert
+            <ModalCenterAlert
                 isVisible={isVisible}
                 disabledIcon={disabledIcon}
                 typeModal={modalAlert.type}
@@ -681,7 +681,7 @@ const App = (props) => {
                 contentModal={modalAlert.content}
                 childComponent={renderModalInputForm(typeModalInputForm)}
                 onCloseModalAlert={onCloseModalAlert}
-            /> */}
+            />
         </AuthContext.Provider>
     );
 }
