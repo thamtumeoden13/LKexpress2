@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useRef } from 'react';
+import React, { Component, useState, useEffect, useRef, useCallback } from 'react';
 import {
     StyleSheet,
     View,
@@ -26,6 +26,7 @@ import { themeOptions } from 'constants/theme'
 import AnimatedAppearance from 'components/common/button/AnimatedAppearance';
 import { scale } from 'utils/scaleSize';
 import { formatMoney } from 'utils/function';
+import TouchableScale from 'components/common/button/TouchableScale';
 
 const { ITEM_WIDTH, ITEM_HEIGHT, SPACING, RADIUS, FULL_SIZE } = themeOptions
 
@@ -41,7 +42,8 @@ const CategoryScreen = (props) => {
         isLoading: true,
         userID: '',
         level: '',
-        isDataFetched: false
+        isDataFetched: false,
+        currentIndex: 0
     })
 
     const [categories, setCategories] = useState([])
@@ -61,9 +63,18 @@ const CategoryScreen = (props) => {
                 }
             })
         });
+
+        scrollX.addListener(({ value }) => {
+            let index = Math.floor(value / ITEM_WIDTH)
+            if (index <= 0) {
+                index = 0
+            }
+            setState(prev => { return { ...prev, currentIndex: index } })
+        })
         const unsubscribeCategorieList = entityRef.onSnapshot(getRealtimeCollectionCategoriList, err => Alert.alert(error))
         return () => {
             unsubscribeCategorieList()
+            scrollX.removeListener()
         }
     }, [])
 
@@ -82,33 +93,27 @@ const CategoryScreen = (props) => {
     }, [state.level])
 
     useEffect(() => {
-        console.log('scrollX', scrollX)
-        scrollX.addListener(({ value }) => {
-            // console.log('value', value)
-            let index = Math.floor(value / ITEM_WIDTH)
-            console.log('index', index)
-            if (index <= 0) {
-                index = 0
-            }
-            if (!!categoriesFilter && categoriesFilter.length > 0) {
-                if (index > categoriesFilter.length) index = categoriesFilter.length - 1
-                const products = categoriesFilter[index].products
-                setProducts(products)
-            }
-        })
-    }, [scrollX])
+        getNewProducts()
+    }, [state.currentIndex])
 
     const onHanderSearchInput = (searchInput) => {
+        let categoriesNew = []
         if (searchInput) {
             const newData = categories.filter((item) => {
                 const textData = searchInput.toUpperCase()
                 const itemData = `${item.name.toUpperCase()},${item.subCategories.toString().toUpperCase()}`
                 return itemData.indexOf(textData) > -1
             })
-            setCategoriesFilter(newData)
+            categoriesNew = newData
         } else {
-            setCategoriesFilter(categories)
+            categoriesNew = categories
         }
+        setCategoriesFilter(categoriesNew)
+        let products = []
+        if (!!categoriesNew && categoriesNew.length > 0) {
+            products = categoriesNew[0].products
+        }
+        setProducts(products)
     }
 
     const showAddCategory = () => {
@@ -131,7 +136,6 @@ const CategoryScreen = (props) => {
                 const reads = e.productsRef.map(async (f) => {
                     const querySnapshot2 = await entityProductRef.doc(f).get();
                     const data = querySnapshot2.data()
-                    console.log('data', data)
                     return {
                         ...data,
                         id: f,
@@ -147,10 +151,21 @@ const CategoryScreen = (props) => {
             }
         })
         const categoriesPromise = await Promise.all(readsCategories)
-        console.log('categoriesPromise', categoriesPromise)
         setCategories(categoriesPromise)
         setCategoriesFilter(categoriesPromise)
+        const products = categoriesPromise[0].products
+        setProducts(products)
         setState(prev => { return { ...prev, isDataFetched: true } })
+    }
+
+    const getNewProducts = () => {
+        if (!!categoriesFilter && categoriesFilter.length > 0) {
+            if (state.currentIndex > categoriesFilter.length) {
+                state.currentIndex = categoriesFilter.length - 1
+            }
+            const products = categoriesFilter[state.currentIndex].products
+            setProducts(products)
+        }
     }
 
     const onHandlerJoinCategory = (categoryID, categoryName) => {
@@ -164,7 +179,6 @@ const CategoryScreen = (props) => {
     }
 
     const renderChild = ({ item, index }) => {
-
         const inputRange = [(index - 1) * FULL_SIZE, index * FULL_SIZE, (index + 1) * FULL_SIZE]
         const translateX = scrollX.interpolate({
             inputRange: inputRange,
@@ -183,53 +197,62 @@ const CategoryScreen = (props) => {
 
         return (
             <AnimatedAppearance index={index} horizontal={true}>
-                <TouchableOpacity
-                    style={styles.itemContainer}
+                <TouchableScale
+                    scaleTo={0.97}
                     onPress={() => { props.navigation.navigate('CategoryDetail2', { imageUri: item.imageUri }) }}
                 >
-                    <View style={[StyleSheet.absoluteFill, { overflow: 'hidden', borderRadius: RADIUS }]}>
-                        <Animated.Image
-                            source={{ uri: item.imageUri }}
-                            style={[StyleSheet.absoluteFill, { transform: [{ scale }], opacity }]}
-                            resizeMode='cover'
-                        />
+                    <View style={styles.itemContainer}>
+                        <View style={[StyleSheet.absoluteFill, { overflow: 'hidden', borderRadius: RADIUS }]}>
+                            <Animated.Image
+                                source={{ uri: item.imageUri }}
+                                style={[StyleSheet.absoluteFill, { transform: [{ scale }], opacity }]}
+                                resizeMode='cover'
+                            />
+                        </View>
+                        <Animated.View style={[styles.labelContainer, { transform: [{ translateX }] }]}>
+                            <Text style={styles.textName}>{item.name}</Text>
+                        </Animated.View>
+                        <View style={[styles.valueContainer, { backgroundColor: item.bg }]}>
+                            <Text style={[styles.textValue, { color: item.color }]}>{productsLength}</Text>
+                        </View>
                     </View>
-                    <Animated.View style={[styles.labelContainer, { transform: [{ translateX }] }]}>
-                        <Text style={styles.textName}>{item.name}</Text>
-                    </Animated.View>
-                    <View style={[styles.valueContainer, { backgroundColor: item.bg }]}>
-                        <Text style={[styles.textValue, { color: item.color }]}>{productsLength}</Text>
-                    </View>
-                </TouchableOpacity>
+                </TouchableScale>
             </AnimatedAppearance>
         )
     }
 
     const renderBottomChild = ({ item, index }) => {
         return (
-            <View style={{
-                height: 120,
-                borderRadius: 12,
-                flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
-                backgroundColor: '#fff',
-                marginHorizontal: 16,
-                marginVertical: 8,
-            }}>
-                <Image
-                    source={{ uri: item.imageUri }}
-                    resizeMode='cover'
-                    style={{ width: 80, height: 80 }}
-                />
-                <View style={{ flex: 1, paddingHorizontal: 16 }}>
-                    <Text style={{ color: '#000', fontWeight: '300', fontSize: scale(16), lineHeight: scale(22) }}>
-                        {item.heading}
-                    </Text>
-                    <Text style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>{`${item.description}`}</Text>
-                    <Text style={{ color: '#00f', fontWeight: 'bold', fontSize: scale(16), lineHeight: scale(22) }}>
-                        {`$ ${formatMoney(item.price, 0)}`}
-                    </Text>
-                </View>
-            </View>
+            <AnimatedAppearance index={index}>
+                <TouchableScale
+                    scaleTo={0.97}
+                    onPress={() => { onHandlerJoinCategory(item.id, item.name) }}
+                >
+                    <View style={{
+                        height: 120,
+                        borderRadius: 12,
+                        flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+                        backgroundColor: '#fff',
+                        marginHorizontal: 16,
+                        marginVertical: 8,
+                    }}>
+                        <Image
+                            source={{ uri: item.imageUri }}
+                            resizeMode='cover'
+                            style={{ width: 80, height: 80 }}
+                        />
+                        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+                            <Text style={{ color: '#000', fontWeight: '300', fontSize: scale(16), lineHeight: scale(22) }}>
+                                {item.heading}
+                            </Text>
+                            <Text style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>{`${item.description}`}</Text>
+                            <Text style={{ color: '#00f', fontWeight: 'bold', fontSize: scale(16), lineHeight: scale(22) }}>
+                                {`$ ${formatMoney(item.price, 0)}`}
+                            </Text>
+                        </View>
+                    </View>
+                </TouchableScale>
+            </AnimatedAppearance>
         )
     }
 
