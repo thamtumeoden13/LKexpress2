@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, Dimensions, StyleSheet, ScrollView } from 'react-native'
 
-import Animated, { useSharedValue, useAnimatedStyle, interpolate, Extrapolate, exp, useAnimatedScrollHandler } from 'react-native-reanimated'
+import Animated, {
+    useSharedValue, useAnimatedStyle, interpolate, withSpring,
+    useAnimatedGestureHandler, useAnimatedScrollHandler
+} from 'react-native-reanimated'
+
+import { PanGestureHandler } from 'react-native-gesture-handler'
 
 const DATA = ["HELLO", "WORLD", "I'AM", "ROBOT", "XIN", "CHAO", "VIET", "NAME"]
 
@@ -52,7 +57,7 @@ const Page = () => {
             const translateY = interpolate(
                 translateX.value,
                 inputRange,
-                [height / 2, 0, -height/2]
+                [height / 2, 0, -height / 2]
             )
 
             return (
@@ -72,21 +77,58 @@ const Page = () => {
         )
     }
 
-    return (
+    const translateGestureHanlerX = useSharedValue(0)
+    const translateGestureHanlerY = useSharedValue(0)
 
-        <Animated.ScrollView
-            horizontal
-            onScroll={onScrollHandler}
-            scrollEventThrottle={16}
-            snapToInterval={width}
-            decelerationRate={'fast'}
-        >
-            {DATA.map((item, index) => {
-                return (
-                    <ItemComponent key={index.toString()} item={item} index={index} translateX={translateX} />
-                )
-            })}
-        </Animated.ScrollView>
+    const handlerGestureEvent = useAnimatedGestureHandler({
+        onStart: (event, context) => {
+            context.translationX = translateGestureHanlerX.value
+            context.translationY = translateGestureHanlerY.value
+        },
+        onActive: (event, context) => {
+            translateGestureHanlerX.value = event.translationX + context.translationX
+            translateGestureHanlerY.value = event.translationY + context.translationY
+        },
+        onEnd: (event) => {
+            const distance = Math.sqrt(translateGestureHanlerX.value ** 2 + translateGestureHanlerY.value ** 2)
+            if (distance > RADIUS) {
+                translateGestureHanlerX.value = withSpring(0)
+                translateGestureHanlerY.value = withSpring(0)
+            }
+        }
+    })
+
+    const rStyle = useAnimatedStyle(() => {
+
+        return (
+            {
+                transform: [
+                    { translateX: translateGestureHanlerX.value },
+                    { translateY: translateGestureHanlerY.value }
+                ]
+            }
+        )
+    })
+
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Animated.ScrollView
+                horizontal
+                onScroll={onScrollHandler}
+                scrollEventThrottle={16}
+                snapToInterval={width}
+                decelerationRate={'fast'}
+            >
+                {DATA.map((item, index) => {
+                    return (
+                        <ItemComponent key={index.toString()} item={item} index={index} translateX={translateX} />
+                    )
+                })}
+            </Animated.ScrollView>
+            <PanGestureHandler onGestureEvent={handlerGestureEvent}>
+                <Animated.View style={[styles.square, rStyle]} />
+            </PanGestureHandler>
+        </View>
     )
 }
 
@@ -110,5 +152,12 @@ const styles = StyleSheet.create({
         fontSize: 40,
         fontWeight: 'bold',
         color: '#fff',
+    },
+    square: {
+        width: ITEM_WIDTH * 0.8,
+        height: ITEM_WIDTH * 0.3,
+        borderRadius: 20,
+        backgroundColor: `rgba(0,0,256,0.2)`,
+        position: 'absolute',
     }
 })

@@ -30,6 +30,26 @@ import Page from 'screens/Page';
 
 const Tab = createBottomTabNavigator();
 
+const IconBottomTab = ({ name, size, focused }) => {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <LottieView
+                source={name}
+                colorFilters={[{
+                    keypath: "button",
+                    color: "#F00000"
+                }, {
+                    keypath: "Sending Loader",
+                    color: "#F00000"
+                }]}
+                style={{ width: scale(size), height: scale(size), justifyContent: 'center' }}
+                autoPlay={focused}
+                loop
+            />
+        </View>
+    )
+}
+
 const MainStack = () => {
 
     const navigation = useNavigation()
@@ -49,21 +69,7 @@ const MainStack = () => {
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size, focused }) => (
                         // <MaterialCommunityIcons name="home" color={color} size={size} />
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <LottieView
-                                source={require('@assets/animations/home-boiler-care.json')}
-                                colorFilters={[{
-                                    keypath: "button",
-                                    color: "#F00000"
-                                }, {
-                                    keypath: "Sending Loader",
-                                    color: "#F00000"
-                                }]}
-                                style={{ width: scale(20), height: scale(20), justifyContent: 'center' }}
-                                autoPlay={focused}
-                                loop
-                            />
-                        </View>
+                        <IconBottomTab name={require(`@assets/animations/home-boiler-care.json`)} size={20} focused={focused} />
                     )
                 }}
             /> */}
@@ -72,21 +78,7 @@ const MainStack = () => {
                     tabBarLabel: 'Tin nhắn',
                     tabBarIcon: ({ color, size, focused }) => (
                         // <MaterialCommunityIcons name="battlenet" color={color} size={size} />
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <LottieView
-                                source={require('@assets/animations/chat.json')}
-                                colorFilters={[{
-                                    keypath: "button",
-                                    color: "#F00000"
-                                }, {
-                                    keypath: "Sending Loader",
-                                    color: "#F00000"
-                                }]}
-                                style={{ width: scale(30), height: scale(30), justifyContent: 'center' }}
-                                autoPlay={focused}
-                                loop
-                            />
-                        </View>
+                        <IconBottomTab name={require(`@assets/animations/chat.json`)} size={30} focused={focused} />
                     ),
                     // tabBarBadge: 3,
                     tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' },
@@ -98,21 +90,7 @@ const MainStack = () => {
                     tabBarLabel: 'Nhóm',
                     tabBarIcon: ({ color, size, focused }) => (
                         // <MaterialCommunityIcons name="battlenet" color={color} size={size} />
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <LottieView
-                                source={require('@assets/animations/video-conference-icon.json')}
-                                colorFilters={[{
-                                    keypath: "button",
-                                    color: "#F00000"
-                                }, {
-                                    keypath: "Sending Loader",
-                                    color: "#F00000"
-                                }]}
-                                style={{ width: scale(28), height: scale(28), justifyContent: 'center' }}
-                                autoPlay={focused}
-                                loop
-                            />
-                        </View>
+                        <IconBottomTab name={require(`@assets/animations/video-conference-icon.json`)} size={28} focused={focused} />
                     ),
                     // tabBarBadge: 3,
                     tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' }
@@ -123,21 +101,7 @@ const MainStack = () => {
                     tabBarLabel: 'Danh bạ',
                     tabBarIcon: ({ color, size, focused }) => (
                         // <MaterialCommunityIcons name="battlenet" color={color} size={size} />
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <LottieView
-                                source={require('@assets/animations/meta.json')}
-                                colorFilters={[{
-                                    keypath: "button",
-                                    color: "#F00000"
-                                }, {
-                                    keypath: "Sending Loader",
-                                    color: "#F00000"
-                                }]}
-                                style={{ width: scale(30), height: scale(30), justifyContent: 'center' }}
-                                autoPlay={focused}
-                                loop
-                            />
-                        </View>
+                        <IconBottomTab name={require(`@assets/animations/meta.json`)} size={30} focused={focused} />
                     ),
                     // tabBarBadge: 3,
                     tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' }
@@ -148,21 +112,7 @@ const MainStack = () => {
                     tabBarLabel: 'Danh mục',
                     tabBarIcon: ({ color, size, focused }) => (
                         // <MaterialCommunityIcons name="cart-outline" color={color} size={size} />
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <LottieView
-                                source={require('@assets/animations/shopping-cart.json')}
-                                colorFilters={[{
-                                    keypath: "button",
-                                    color: "#F00000"
-                                }, {
-                                    keypath: "Sending Loader",
-                                    color: "#F00000"
-                                }]}
-                                style={{ width: scale(30), height: scale(30), justifyContent: 'center' }}
-                                autoPlay={focused}
-                                loop
-                            />
-                        </View>
+                        <IconBottomTab name={require(`@assets/animations/shopping-cart.json`)} size={30} focused={focused} />
                     ),
                     // tabBarBadge: 5,
                     tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' },
@@ -173,21 +123,7 @@ const MainStack = () => {
                 options={{
                     tabBarLabel: 'Nhật ký',
                     tabBarIcon: ({ color, size, focused }) => (
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <LottieView
-                                source={require('@assets/animations/effective-timeline.json')}
-                                colorFilters={[{
-                                    keypath: "button",
-                                    color: "#F00000"
-                                }, {
-                                    keypath: "Sending Loader",
-                                    color: "#F00000"
-                                }]}
-                                style={{ width: scale(26), height: scale(26), justifyContent: 'center' }}
-                                autoPlay={focused}
-                                loop
-                            />
-                        </View>
+                        <IconBottomTab name={require(`@assets/animations/effective-timeline.json`)} size={26} focused={focused} />
                     ),
                     tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' },
                     headerTitle: () => <HeaderTitle title={`Nhật Ký`} />,
@@ -198,21 +134,7 @@ const MainStack = () => {
                     tabBarLabel: 'Cá nhân',
                     tabBarIcon: ({ color, size, focused }) => (
                         // <MaterialCommunityIcons name="account-settings-outline" color={color} size={size} />
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <LottieView
-                                source={require('@assets/animations/profile-loader-setting.json')}
-                                colorFilters={[{
-                                    keypath: "button",
-                                    color: "#F00000"
-                                }, {
-                                    keypath: "Sending Loader",
-                                    color: "#F00000"
-                                }]}
-                                style={{ width: scale(20), height: scale(20), justifyContent: 'center' }}
-                                autoPlay={focused}
-                                loop
-                            />
-                        </View>
+                        <IconBottomTab name={require(`@assets/animations/profile-loader-setting.json`)} size={20} focused={focused} />
                     ),
                     headerTitle: () => <HeaderTitle title={`Thông Tin Cá Nhân`} />,
                 }}
