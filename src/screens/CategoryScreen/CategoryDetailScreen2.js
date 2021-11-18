@@ -2,26 +2,21 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
     StyleSheet,
     View,
-    Alert,
+    Text,
     FlatList,
-    Animated
+    Animated,
+    Image
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ListItem, Avatar, Badge } from 'react-native-elements';
-import TouchableScale from 'react-native-touchable-scale';
-import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 
-import { calcWidth, moderateScale, scale, verticalScale } from 'utils/scaleSize';
-import ShoppingCartIcon from 'components/common/icon/ShoppingCartIcon'
-import AddIcon from 'components/common/icon/AddIcon'
-import { ModalCenterAlert } from "components/common/modal/ModalCenterAlert";
-import { AddCategory } from 'components/category/modalInputForm'
-import HeaderSearchInput from 'components/common/Header/SearchInput'
-import AccordionMenu from 'components/common/listCommon/AccordionMenu'
 import BackIcon from 'components/common/icon/BackIcon';
 import { themeOptions } from 'constants/theme'
 import { AuthContext } from '../../utils'
+import AnimatedAppearance from 'components/common/button/AnimatedAppearance';
+import TouchableScale from 'components/common/button/TouchableScale';
+import { scale } from 'utils/scaleSize';
+import { formatMoney } from 'utils/function';
 
 const { ITEM_WIDTH, ITEM_HEIGHT, SPACING, RADIUS, FULL_SIZE } = themeOptions
 
@@ -34,29 +29,64 @@ const CategoryDetailScreen = (props) => {
     const [state, setState] = useState({
         isLoading: true,
         imageUri: '',
+        products: []
     })
     const [categories, setCategories] = useState([])
 
-    const { addShoppingCart } = useContext(AuthContext)
-
     useEffect(() => {
-        const imageUri = props.route.params.imageUri
+        const { imageUri, products } = props.route.params.item
         setState(prev => {
             return {
                 ...prev,
                 imageUri,
+                products
             }
         })
     }, [])
 
+    const handlerCategoryDetail = (item) => {
+        props.navigation.navigate('CategoryDetail', { item})
+    }
 
-    const keyExtractor = (item, index) => index.toString()
+    const renderBottomChild = ({ item, index }) => {
+        return (
+            <AnimatedAppearance index={index}>
+                <TouchableScale
+                    scaleTo={0.97}
+                    onPress={() => { handlerCategoryDetail(item) }}
+                >
+                    <View style={{
+                        height: 120,
+                        borderRadius: 12,
+                        flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+                        backgroundColor: 'rgba(256,256,256,0.6)',
+                        marginHorizontal: 16,
+                        marginVertical: 8,
+                    }}>
+                        <Image
+                            source={{ uri: item.imageUri }}
+                            resizeMode='cover'
+                            style={{ width: 80, height: 80 }}
+                        />
+                        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+                            <Text style={{ color: '#000', fontWeight: '300', fontSize: scale(16), lineHeight: scale(22) }}>
+                                {item.heading}
+                            </Text>
+                            <Text style={{ color: '#6a6a6a', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>{`${item.description}`}</Text>
+                            <Text style={{ color: '#00f', fontWeight: 'bold', fontSize: scale(16), lineHeight: scale(22) }}>
+                                {`$ ${formatMoney(item.price, 0)}`}
+                            </Text>
+                        </View>
+                    </View>
+                </TouchableScale>
+            </AnimatedAppearance>
+        )
+    }
+
     return (
         <SafeAreaView style={styles.safeAreaContainer}>
-            {/* <AccordionMenu result={categoriesFilter} onPressItem={onHandlerJoinCategory} /> */}
             <View style={StyleSheet.absoluteFill, {
                 paddingHorizontal: SPACING,
-                // top: 50,
                 left: SPACING, zIndex: 2
             }}>
                 <BackIcon />
@@ -68,6 +98,16 @@ const CategoryDetailScreen = (props) => {
                     resizeMode='cover'
                 />
             </View>
+            {!!state.products && state.products.length > 0 &&
+                <View style={{ flex: 1 }}>
+                    <FlatList
+                        data={state.products}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={renderBottomChild}
+                        style={{ flexGrow: 0, }}
+                    />
+                </View>
+            }
         </SafeAreaView >
     );
 }

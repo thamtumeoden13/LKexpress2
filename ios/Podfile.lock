@@ -974,12 +974,11 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNNotifee (3.0.1):
+  - RNNotifee (3.0.4):
     - React-Core
-    - RNNotifeeCore
-  - RNNotifeeCore (3.0.1):
-    - RNNotifeeCore/NotifeeCore (= 3.0.1)
-  - RNNotifeeCore/NotifeeCore (3.0.1)
+    - RNNotifee/NotifeeCore (= 3.0.4)
+  - RNNotifee/NotifeeCore (3.0.4):
+    - React-Core
   - RNPermissions (3.0.5):
     - React-Core
   - RNReanimated (2.3.0-beta.2):
@@ -1014,6 +1013,8 @@ PODS:
   - RNScreens (3.8.0):
     - React-Core
     - React-RCTImage
+  - RNSharedElement (0.8.3):
+    - React-Core
   - RNVectorIcons (8.1.0):
     - React-Core
   - RNVoipPushNotification (3.3.0):
@@ -1128,10 +1129,10 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
-  - "RNNotifeeCore (from `../node_modules/@notifee/react-native/RNNotifeeCore.podspec`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSharedElement (from `../node_modules/react-native-shared-element`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNVoipPushNotification (from `../node_modules/react-native-voip-push-notification`)
   - "toolbar-android (from `../node_modules/@react-native-community/toolbar-android`)"
@@ -1337,14 +1338,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-crop-picker"
   RNNotifee:
     :path: "../node_modules/@notifee/react-native"
-  RNNotifeeCore:
-    :path: "../node_modules/@notifee/react-native/RNNotifeeCore.podspec"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSharedElement:
+    :path: "../node_modules/react-native-shared-element"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   RNVoipPushNotification:
@@ -1469,11 +1470,11 @@ SPEC CHECKSUMS:
   RNFBStorage: 7c916ae95017ea260791f9e84b5aa0cc6686c741
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 73891a709e6fd8a47d32104d942757971f220aee
-  RNNotifee: 75a313b59cea403d2a25a880ac992357053cbda6
-  RNNotifeeCore: bd34951e85e6b6935b52610d4701d4019b070ab8
+  RNNotifee: c1d164933c68654e1fb2c843118506751ad4578c
   RNPermissions: 7043bacbf928eae25808275cfe73799b8f618911
   RNReanimated: 0a220d11e97e5de1c552e943a9a3f89b06c2cbf2
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
+  RNSharedElement: 381b5e33366513cc3f449f2dc3a42c5df0f54021
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   RNVoipPushNotification: 14bb5a389588ea1cbee4706a55df99950687fd6d
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
@@ -1482,6 +1483,6 @@ SPEC CHECKSUMS:
   Yoga: c11abbf5809216c91fcd62f5571078b83d9b6720
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 24e165a1e4c8df393e3ef79686bb267c6fab68b4
+PODFILE CHECKSUM: acb60a1e6fba37fbea3dc930d6585ac5d646064a
 
 COCOAPODS: 1.11.0

@@ -36,13 +36,12 @@ const CategoryDetailScreen = (props) => {
     const { addShoppingCart } = useContext(AuthContext)
 
     useEffect(() => {
-        const categoryID = props.route.params.id
-        const categoryName = props.route.params.name
+        const { id, name } = props.route.params.item
         setState(prev => {
             return {
                 ...prev,
-                categoryID,
-                categoryName
+                categoryID: id,
+                categoryName: name,
             }
         })
     }, [])
@@ -72,12 +71,10 @@ const CategoryDetailScreen = (props) => {
             })
         }
         const categories = !!variants && variants.length > 0 ? variants : [querySnapshot.data()]
-        console.log('categories', categories)
         setCategories(categories)
     }
 
     const onAddShoppingCart = (item) => {
-        console.log('onAddShoppingCart', item)
         if (item.quantity > 0) {
             addShoppingCart(item)
         }
@@ -89,10 +86,6 @@ const CategoryDetailScreen = (props) => {
     const onOpenShoppingCart = () => {
         // const pushAction = StackActions.push('ShoppingCart')
         props.navigation.navigate('ShoppingCart')
-    }
-
-    const onPressItem = (item, index) => {
-        Alert.alert('CarouselMainLayout', `You've clicked ${item.title}`);
     }
 
     return (
