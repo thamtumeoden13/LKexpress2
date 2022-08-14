@@ -2,4 +2,5 @@
     <string name="app_name">LKexpress</string>
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+    <string name="facebook_app_id">737727280791612</string><string name="facebook_client_token">fd1f453311291d15e27dc584c980b265</string>
 </resources>

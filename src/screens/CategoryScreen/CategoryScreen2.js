@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
         margin: SPACING,
     },
     labelContainer: {
-        backgroundColor: 'tranparent',
+        backgroundColor: 'transparent',
         width: ITEM_WIDTH * 0.8,
         position: 'absolute',
         top: SPACING,

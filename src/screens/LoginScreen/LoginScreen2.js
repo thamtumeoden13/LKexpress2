@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import LottieView from 'lottie-react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { LoginManager, LoginButton, AccessToken, Profile, GraphRequest, GraphRequestManager } from 'react-native-fbsdk-next';
 
 import { AuthContext } from '../../utils'
 
@@ -20,6 +21,10 @@ const entityUserRef = db.collection('users')
 const LoginScreen = (props) => {
     const [user, setUser] = useState({})
     const [phone, setPhone] = useState('')
+
+    const [pictureURL, setPictureURL] = useState(null);
+    const [pictureURLByID, setPictureURLByID] = useState(null);
+
 
     const { appContext } = useContext(AuthContext);
 
@@ -53,11 +58,79 @@ const LoginScreen = (props) => {
             throw new Error();
         } catch (error) {
             console.log(error.code, error);
-            Alert.alert('Đăng nhập thất bại');
+            Alert.alert('Đăng nhập thất bại', error.message);
             // dispatch(actions.loading(false));
         }
     }
 
+    const onFacebookButtonPress = async () => {
+        // Attempt login with permissions
+        const result = await LoginManager.logInWithPermissions(['email']);
+
+        if (result.isCancelled) {
+            throw 'User cancelled the login process';
+        }
+
+        // Once signed in, get the users AccesToken
+        const data = await AccessToken.getCurrentAccessToken();
+        console.log('[data]', data)
+        if (!data) {
+            throw 'Something went wrong obtaining access token';
+        }
+        // const tokenObj = await AccessToken.getCurrentAccessToken();
+        const infoRequest = new GraphRequest(
+            '/me',
+            {
+                accessToken: data.accessToken,
+                parameters: {
+                    fields: {
+                        string: 'email,name,first_name,middle_name,last_name,gender,address,picture.type(large)',
+                    },
+                },
+            },
+            infoResponseCallback,
+        );
+        new GraphRequestManager().addRequest(infoRequest).start()
+
+        // const currentProfile = await Profile.getCurrentProfile()
+        //     .then((currentProfile) => {
+        //         if (currentProfile) {
+        //             console.log("The current logged user is: " +
+        //                 currentProfile.name
+        //                 + ". His profile id is: " +
+        //                 currentProfile.userID
+        //             );
+        //         }
+        //         return currentProfile
+        //     }
+        //     );
+        // console.log('[currentProfile]', currentProfile)
+        // setUser(currentProfile)
+
+        // const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+        // console.log('[facebookCredential]', facebookCredential)
+        // // Sign-in the user with the credential
+        // const aaaa = await auth().signInWithCredential(facebookCredential)
+        // console.log('auth().signInWithCredential(facebookCredential)', aaaa);
+    }
+
+    const infoResponseCallback = (error, success) => {
+        if (error) {
+            console.log("eeeeeeeeeee", error)
+            setUser({})
+        } else {
+            console.log(success)
+            setUser(success)
+            console.log(JSON.stringify(success, null, 2));
+
+            setPictureURL(success.picture.data.url);
+            setPictureURLByID(
+                `https://graph.facebook.com/${success.id}/picture`,
+            );
+        }
+    }
+
+    console.log({ pictureURL, pictureURLByID })
     return (
         <SafeAreaView style={styles.container}>
             <Modal
@@ -92,10 +165,14 @@ const LoginScreen = (props) => {
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 keyboardVerticalOffset={100}
             >
-                <Image
-                    style={styles.logo}
-                    source={require('@assets/bootsplash_logo.png')}
-                />
+                <View style={{ flex: 1, alignItems: 'center' }}>
+                    <Image
+                        style={styles.image}
+                        source={pictureURL ? { uri: pictureURL } : require('@assets/bootsplash_logo.png')}
+                    />
+                    {user.name && <Text>{user.name}</Text>}
+                    {user.email && <Text>{user.email}</Text>}
+                </View>
                 {/* <TextInput
                     style={styles.input}
                     placeholder='E-mail'
@@ -135,6 +212,13 @@ const LoginScreen = (props) => {
                     onPress={() => onLoginPress()}
                 >
                     <Text style={styles.buttonTitle}>Log in</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={onFacebookButtonPress}
+                >
+                    <Text style={styles.buttonTitle}>FaceBook</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
