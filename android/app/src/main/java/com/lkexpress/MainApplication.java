@@ -8,6 +8,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.facebook.react.bridge.JSIModulePackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -15,8 +16,6 @@ import com.microsoft.codepush.react.CodePush;
 import com.airbnb.android.react.lottie.LottiePackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.zxcpoiu.incallmanager.InCallManagerPackage;
-import com.facebook.react.bridge.JSIModulePackage;
-import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -40,11 +39,6 @@ public class MainApplication extends Application implements ReactApplication {
         @Override
         protected String getJSMainModuleName() {
           return "index";
-        }
-        
-        @Override
-        protected JSIModulePackage getJSIModulePackage() {
-          return new ReanimatedJSIModulePackage(); // <- add
         }
 
         // bundle location from on each app start

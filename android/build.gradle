@@ -2,15 +2,17 @@
 
 buildscript {
     ext {
-        buildToolsVersion = '29.0.3'
+        buildToolsVersion = "30.0.2"
         minSdkVersion = 21
-        compileSdkVersion = 29
-        targetSdkVersion = 29
+        compileSdkVersion = 33
+        targetSdkVersion = 33
         ndkVersion = '20.1.5948944'
         supportLibVersion = '28.0.0'
         googlePlayServicesVersion = '15.0.1'
         androidMapsUtilsVersion = '0.5+'
+        kotlinVersion = '1.6.0'
     }
+
     repositories {
         google()
         mavenCentral()
@@ -19,15 +21,36 @@ buildscript {
         maven { url 'https://www.jitpack.io' }
     }
     dependencies {
-        classpath('com.android.tools.build:gradle:4.2.2')
-        classpath ('com.google.gms:google-services:4.2.0')
+        classpath('com.android.tools.build:gradle:7.3.1')
+        classpath ('com.google.gms:google-services:4.3.14')
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
     }
 }
+def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim())
 
 allprojects {
+    configurations.all {
+        resolutionStrategy {
+            // Remove this override in 0.65+, as a proper fix is included in react-native itself.
+            force "com.facebook.react:react-native:" + REACT_NATIVE_VERSION
+        }
+    }
     repositories {
+        exclusiveContent {
+            // We get React Native's Android binaries exclusively through npm,
+            // from a local Maven repo inside node_modules/react-native/.
+            // (The use of exclusiveContent prevents looking elsewhere like Maven Central
+            // and potentially getting a wrong version.)
+            filter {
+                includeGroup "com.facebook.react"
+            }
+            forRepository {
+                maven {
+                    url "$rootDir/../node_modules/react-native/android"
+                }
+            }
+        }
         mavenCentral()
         mavenLocal()
         maven {
@@ -46,4 +69,10 @@ allprojects {
             url "$rootDir/../node_modules/@notifee/react-native/android/libs"
         }
     }
+}
+
+subprojects { subproject ->
+  if(project['name'] == 'react-native-reanimated'){
+    project.configurations { compile { } }
+  }
 }

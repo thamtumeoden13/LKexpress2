@@ -415,10 +415,10 @@ PODS:
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
-  - FirebaseCoreDiagnostics (8.8.0):
-    - GoogleDataTransport (~> 9.0)
-    - GoogleUtilities/Environment (~> 7.4)
-    - GoogleUtilities/Logger (~> 7.4)
+  - FirebaseCoreDiagnostics (8.15.0):
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Logger (~> 7.7)
     - nanopb (~> 2.30908.0)
   - FirebaseDatabase (8.8.0):
     - FirebaseCore (~> 8.0)
@@ -439,10 +439,10 @@ PODS:
   - FirebaseFunctions (8.8.0):
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
-  - FirebaseInstallations (8.8.0):
+  - FirebaseInstallations (8.15.0):
     - FirebaseCore (~> 8.0)
-    - GoogleUtilities/Environment (~> 7.4)
-    - GoogleUtilities/UserDefaults (~> 7.4)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/UserDefaults (~> 7.7)
     - PromisesObjC (< 3.0, >= 1.2)
   - FirebaseMessaging (8.8.0):
     - FirebaseCore (~> 8.0)
@@ -538,28 +538,28 @@ PODS:
     - GoogleUtilities/Network (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - GoogleDataTransport (9.1.0):
-    - GoogleUtilities/Environment (~> 7.2)
-    - nanopb (~> 2.30908.0)
+  - GoogleDataTransport (9.2.3):
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.5.2):
+  - GoogleUtilities/AppDelegateSwizzler (7.11.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.5.2):
+  - GoogleUtilities/Environment (7.11.1):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.5.2):
+  - GoogleUtilities/Logger (7.11.1):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.5.2):
+  - GoogleUtilities/MethodSwizzler (7.11.1):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.5.2):
+  - GoogleUtilities/Network (7.11.1):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.5.2)"
-  - GoogleUtilities/Reachability (7.5.2):
+  - "GoogleUtilities/NSData+zlib (7.11.1)"
+  - GoogleUtilities/Reachability (7.11.1):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.5.2):
+  - GoogleUtilities/UserDefaults (7.11.1):
     - GoogleUtilities/Logger
   - "gRPC-C++ (1.28.2)":
     - "gRPC-C++/Implementation (= 1.28.2)"
@@ -585,10 +585,10 @@ PODS:
     - BoringSSL-GRPC (= 0.0.7)
     - gRPC-Core/Interface (= 1.28.2)
   - gRPC-Core/Interface (1.28.2)
-  - GTMSessionFetcher/Core (1.7.0)
+  - GTMSessionFetcher/Core (1.7.2)
   - JWT (3.0.0-beta.14):
     - Base64 (~> 1.1.2)
-  - leveldb-library (1.22.1)
+  - leveldb-library (1.22.2)
   - libevent (2.1.12)
   - lottie-ios (3.2.3)
   - lottie-react-native (4.1.3):
@@ -638,7 +638,7 @@ PODS:
     - RNPermissions
   - Permission-StoreKit (3.0.5):
     - RNPermissions
-  - PromisesObjC (2.0.0)
+  - PromisesObjC (2.2.0)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -843,15 +843,13 @@ PODS:
     - React
   - react-native-image-base64 (0.1.4):
     - React
-  - react-native-image-picker (4.1.1):
-    - React-Core
   - react-native-image-resizer (1.4.5):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
-  - react-native-splash-screen (3.2.0):
-    - React
-  - react-native-webrtc (1.92.2):
+  - react-native-splash-screen (3.3.0):
+    - React-Core
+  - react-native-webrtc (1.89.1):
     - React-Core
   - React-perflogger (0.66.0)
   - React-RCTActionSheet (0.66.0):
@@ -920,7 +918,7 @@ PODS:
     - React-perflogger (= 0.66.0)
   - ReactNativeIncallManager (3.3.0):
     - React
-  - RNCallKeep (4.2.0):
+  - RNCallKeep (4.3.8):
     - React
   - RNCAsyncStorage (1.12.1):
     - React-Core
@@ -928,7 +926,7 @@ PODS:
     - React
   - RNCPushNotificationIOS (1.10.1):
     - React-Core
-  - RNDeviceInfo (8.4.0):
+  - RNDeviceInfo (8.7.1):
     - React-Core
   - RNExitApp (1.1.0):
     - React
@@ -943,11 +941,11 @@ PODS:
     - Firebase/Auth (= 8.8.0)
     - React-Core
     - RNFBApp
-  - RNFBDatabase (12.9.0):
+  - RNFBDatabase (12.9.3):
     - Firebase/Database (= 8.8.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (12.9.0):
+  - RNFBFirestore (12.9.3):
     - Firebase/Firestore (= 8.8.0)
     - React-Core
     - RNFBApp
@@ -974,15 +972,14 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNNotifee (3.0.1):
+  - RNNotifee (3.0.4):
     - React-Core
-    - RNNotifeeCore
-  - RNNotifeeCore (3.0.1):
-    - RNNotifeeCore/NotifeeCore (= 3.0.1)
-  - RNNotifeeCore/NotifeeCore (3.0.1)
+    - RNNotifee/NotifeeCore (= 3.0.4)
+  - RNNotifee/NotifeeCore (3.0.4):
+    - React-Core
   - RNPermissions (3.0.5):
     - React-Core
-  - RNReanimated (2.3.0-beta.2):
+  - RNReanimated (2.14.2):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -990,7 +987,6 @@ PODS:
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
-    - React
     - React-callinvoker
     - React-Core
     - React-Core/DevSupport
@@ -1008,18 +1004,19 @@ PODS:
     - React-RCTNetwork
     - React-RCTSettings
     - React-RCTText
-    - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.8.0):
+  - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
+  - RNSharedElement (0.8.8):
+    - React-Core
   - RNVectorIcons (8.1.0):
     - React-Core
-  - RNVoipPushNotification (3.3.0):
+  - RNVoipPushNotification (3.3.1):
     - React-Core
   - SSZipArchive (2.2.3)
-  - TOCropViewController (2.6.0)
+  - TOCropViewController (2.6.1)
   - toolbar-android (0.2.1):
     - React
   - Yoga (1.14.0)
@@ -1093,7 +1090,6 @@ DEPENDENCIES:
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-image-base64 (from `../node_modules/react-native-image-base64`)
-  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-image-resizer (from `../node_modules/react-native-image-resizer`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -1128,10 +1124,10 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
-  - "RNNotifeeCore (from `../node_modules/@notifee/react-native/RNNotifeeCore.podspec`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSharedElement (from `../node_modules/react-native-shared-element`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNVoipPushNotification (from `../node_modules/react-native-voip-push-notification`)
   - "toolbar-android (from `../node_modules/@react-native-community/toolbar-android`)"
@@ -1267,8 +1263,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-geolocation-service"
   react-native-image-base64:
     :path: "../node_modules/react-native-image-base64"
-  react-native-image-picker:
-    :path: "../node_modules/react-native-image-picker"
   react-native-image-resizer:
     :path: "../node_modules/react-native-image-resizer"
   react-native-safe-area-context:
@@ -1337,14 +1331,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-crop-picker"
   RNNotifee:
     :path: "../node_modules/@notifee/react-native"
-  RNNotifeeCore:
-    :path: "../node_modules/@notifee/react-native/RNNotifeeCore.podspec"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSharedElement:
+    :path: "../node_modules/react-native-shared-element"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   RNVoipPushNotification:
@@ -1369,11 +1363,11 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: 5506ea8b867d8423485a84b4cd612d279f7b0b8a
   FirebaseAuth: bcf0adeff88bda5dcb3beeabe5760f1226ab7b2f
   FirebaseCore: 98b29e3828f0a53651c363937a7f7d92a19f1ba2
-  FirebaseCoreDiagnostics: fe77f42da6329d6d83d21fd9d621a6b704413bfc
+  FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
   FirebaseDatabase: bc4610ff3a816dcc680c1dbccf7f9f4bd94ac07d
   FirebaseFirestore: 29baf05d5e7e0d5003eb34e5805d92b9858b36d4
   FirebaseFunctions: 747034115d113cf600c4995ff7e4d384697e7c49
-  FirebaseInstallations: 2563cb18a723ef9c6ef18318a49519b75dce613c
+  FirebaseInstallations: 40bd9054049b2eae9a2c38ef1c3dd213df3605cd
   FirebaseMessaging: 419b5c9d84f294a753c6501d8cfb9ced1ce37304
   FirebaseStorage: 54ff752ecbd27f1c354c3f5e8c55f6ad5783699b
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
@@ -1388,13 +1382,13 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   GoogleAppMeasurement: 5ba1164e3c844ba84272555e916d0a6d3d977e91
-  GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
-  GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
+  GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
+  GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
-  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
-  leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
+  leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   lottie-react-native: b561920bba7ec727ec94a473b683cffba00faece
@@ -1419,7 +1413,7 @@ SPEC CHECKSUMS:
   Permission-Siri: 01083b1ef6964b961e74e6693a727f1c37a42272
   Permission-SpeechRecognition: fb67f19ecfd3de245833d2c1fc0ba00278f90cac
   Permission-StoreKit: cf0ca74fec91ecf132cfb92257e06371160cb464
-  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
   RCTRequired: e4a18a90004e0ed97bba9081099104fd0f658dc9
   RCTTypeSafety: 8a3c31d38de58e1a6a7df6e4e643644a60b00e22
@@ -1435,11 +1429,10 @@ SPEC CHECKSUMS:
   react-native-background-timer: 17ea5e06803401a379ebf1f20505b793ac44d0fe
   react-native-geolocation-service: 141e33bdb179bcba10b216ee13962611e21f2be4
   react-native-image-base64: 2ff9ac788639c87a91361ab6652cc95e871b1e54
-  react-native-image-picker: 92f51a85a62c2d829dcbd0dda5af99e6f988a113
   react-native-image-resizer: d9fb629a867335bdc13230ac2a58702bb8c8828f
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
-  react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-webrtc: 41526e4060dac373c18676f866962d4180ee47b9
+  react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
+  react-native-webrtc: ccb0c21eb4fb04326648fbdb4a5d49977e2cf274
   React-perflogger: 1f554c2b684e2f484f9edcdfdaeedab039fbaca8
   React-RCTActionSheet: 610d5a5d71ab4808734782c8bca6a12ec3563672
   React-RCTAnimation: ec6ed97370ace32724c253f29f0586cafcab8126
@@ -1453,35 +1446,35 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 4bb657a97aa74568d9ed634c8bd478299bb8a3a6
   ReactCommon: eb059748e842a1a86025ebbd4ac9d99e74492f88
   ReactNativeIncallManager: a840ef75640518065742a893e6c6ff98ee820039
-  RNCallKeep: 8cbaafb72c4a1738f4a6e70fdaf041a14083ce5b
+  RNCallKeep: bf4040e9e5785469cd581d95c386fd2ca7e0507f
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
-  RNDeviceInfo: 8a06046616c6b5c03787b04f265fa3b52b37c80b
+  RNDeviceInfo: aad3c663b25752a52bf8fce93f2354001dd185aa
   RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
   RNFBAnalytics: 3529535d627b4a9b481dac75f2a0c43ede3ae1c0
   RNFBApp: d11e8ae04b9b6230f3a28b70761f2edd185deaa8
   RNFBAuth: 5398407c7991175f0f3a8d0a9581ab6d326d3762
-  RNFBDatabase: d264c5ea020a2783e66424431dc36662d9640133
-  RNFBFirestore: 8891f315a65da5ace3c5a70a6f1b33cdc8dac5bd
+  RNFBDatabase: 1e8e42f296c43f812ac91fe078ceedbf02c77a23
+  RNFBFirestore: eef5fd4cfbe35316af559631db06a34b8391628a
   RNFBFunctions: 827ff2d405ff36dd53edbe789c4ebff66834b2ce
   RNFBMessaging: dd0bd7d837b7b6b8e881248a2639af5dc36b28ef
   RNFBStorage: 7c916ae95017ea260791f9e84b5aa0cc6686c741
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 73891a709e6fd8a47d32104d942757971f220aee
-  RNNotifee: 75a313b59cea403d2a25a880ac992357053cbda6
-  RNNotifeeCore: bd34951e85e6b6935b52610d4701d4019b070ab8
+  RNNotifee: c1d164933c68654e1fb2c843118506751ad4578c
   RNPermissions: 7043bacbf928eae25808275cfe73799b8f618911
-  RNReanimated: 0a220d11e97e5de1c552e943a9a3f89b06c2cbf2
-  RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
+  RNReanimated: a7c3695910b8735905fca8dac8ca7143024e1740
+  RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
+  RNSharedElement: 504fa28a235b12505b6daedbb452a9ec96809bd0
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
-  RNVoipPushNotification: 14bb5a389588ea1cbee4706a55df99950687fd6d
+  RNVoipPushNotification: 1617f5a07be24066830213ae9252cb790b53886f
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
-  TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
+  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   toolbar-android: 2a73856e98b750d7e71ce4644d3f41cc98211719
   Yoga: c11abbf5809216c91fcd62f5571078b83d9b6720
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 24e165a1e4c8df393e3ef79686bb267c6fab68b4
+PODFILE CHECKSUM: fcb308524f4794fe0ecc95254166a16b323c038c
 
-COCOAPODS: 1.11.0
+COCOAPODS: 1.11.3
