@@ -1,13 +1,19 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, SafeAreaView, Keyboard, Alert } from 'react-native'
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, SafeAreaView, Keyboard, Alert, FlatList } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
-import TouchableScale from 'react-native-touchable-scale';
+// import TouchableScale from 'react-native-touchable-scale';
 import LottieView from 'lottie-react-native';
 import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign'
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import EntypoIcon from 'react-native-vector-icons/Entypo'
+
+import TouchableScale from 'components/common/button/TouchableScale';
+import AnimatedAppearance from 'components/common/button/AnimatedAppearance';
 
 import { AuthContext } from '../../utils'
 import { notificationManager } from '../../utils/NotificationManager'
@@ -35,15 +41,15 @@ const HomeScreen = (props) => {
 
     useEffect(() => {
         setTimeout(async () => {
-            const userToken = await AsyncStorage.getItem('User');
+            const userToken = await AsyncStorage.getItem('SocialUser');
             const user = JSON.parse(userToken)
+            console.log('[user]', user)
             setState(prev => {
                 return {
                     ...prev,
                     userID: user.id,
-                    userName: user.fullName,
-                    avatarURL: user.avatarURL,
-                    level: user.level,
+                    userName: user.name,
+                    avatarURL: user.picture.data.url,
                     email: user.email,
                     user: user
                 }
@@ -51,272 +57,141 @@ const HomeScreen = (props) => {
         })
     }, [])
 
-    const onHandlerInput = (name, value) => {
-        setState(prev => { return { ...prev, [name]: value } })
-    }
-
-    const handlerContinue = async (typeRoomName) => {
-        if (typeRoomName == 'roomID') {
-            if (!state.roomID || state.roomID.length <= 0) {
-                Alert.alert('Vui lòng nhập tên phòng')
-                return
-            }
-            if (state.level == 1) {
-                onCreateNewGoup()
-                props.navigation.navigate(`RoomChat`, { page: 0 })
-                return
-            }
-            props.navigation.navigate(`RoomChat`, { page: 0 })
-            return
-        }
-
-        if (!state.connectUser || state.connectUser.length <= 0) {
-            Alert.alert('Vui lòng nhập tên tài khoản')
-            return
-        }
-        const usersConnect = await getUsersInfo(state.connectUser)
-        const userConnect = !!usersConnect ? usersConnect[0] : {}
-        setState(prev => { return { ...prev, usersConnect } })
-        if (!!userConnect && Object.keys(userConnect).length > 0) {
-            let document = `${userConnect.id}|${state.userID}`
-            let documentRevert = `${state.userID}|${userConnect.id}`
-            const isExistsCollection = await checkExistsCollection(document, documentRevert)
-            if (!isExistsCollection) {
-                onCreateNewConnect(state.user, userConnect)
-                return
-            }
-            props.navigation.navigate(`RoomChat`, { page: 1 })
-            return
-        }
-        Alert.alert(`Không tồn tại ${state.connectUser}`)
-    }
-
-    const checkExistsCollection = async (document, documentRevert) => {
-        // const reads = [document, documentRevert].map(doc => entityChatRef.doc(doc).collection('messages').get())
-        // let result = await Promise.all(reads)
-
-        const isExistsCollection = await entityChatRef.doc(document).collection('messages').get()
-        const isExistsCollectionRevert = await entityChatRef.doc(documentRevert).collection('messages').get()
-        if (isExistsCollection.docs.length > 0) return document
-        if (isExistsCollectionRevert.docs.length > 0) return documentRevert
-
-        return ''
-    }
-
-    const getUsersInfo = async () => {
-        const querySnapshot = await entityUserRef.where("email", "==", state.connectUser).get()
-        let users = querySnapshot.docs.map((doc) => {
-            const user = doc.data()
-            return { ...user, doc: doc.id }
-        })
-        return users
-    }
-
-    const onCreateNewGoup = () => {
-        const _id = 1
-        const currentValue = {
-            roomID: state.roomID,
-            currentUser: state.userName,
-            currentAvatar: state.avatarURL,
-            currentMessage: 'Hello, World!',
-            currentMessageID: _id,
-            currentCreatedAt: new Date()
-        }
-        entityRef.doc(`${state.roomID}`).set(currentValue)
-            .then(_doc => {
-                Keyboard.dismiss()
-            })
-            .catch((error) => {
-                alert(error)
-            })
-
-        entityRef.doc(`${state.roomID}`).collection('users')
-            .doc().set(state.user)
-            .then(_doc => {
-                Keyboard.dismiss()
-            })
-            .catch((error) => {
-                alert(error)
-            })
-
-        const data = {
-            _id: _id,
-            authorID: state.userID,
-            createdAt: new Date(),
-            text: 'Hello, World!',
-            user: {
-                _id: state.userID,
-                name: state.userName,
-                avatar: state.avatarURL
-            },
-        }
-
-        entityRef.doc(`${state.roomID}`).collection('messages')
-            .doc().set(data)
-            .then((doc) => {
-                Keyboard.dismiss()
-                props.navigation.navigate(`RoomChat`, { page: 0 })
-            })
-            .catch((error) => {
-                alert(error)
-            })
-    }
-
-    const onCreateNewConnect = (user, userConnect) => {
-        const _id = 1
-        const currentValue = {
-            currentID: user.id,
-            currentUser: user.email,
-            currentAvatar: user.avatarURL,
-            currentMessage: 'Hello, World!',
-            currentMessageID: _id,
-            currentCreatedAt: new Date()
-        }
-        const document = `${user.id}|${userConnect.id}`
-        entityChatRef.doc(document).set(currentValue)
-            .then(_doc => {
-                Keyboard.dismiss()
-            })
-            .catch((error) => {
-                alert(error)
-            })
-
-        entityChatRef.doc(document).collection('users')
-            .doc().set(user)
-            .then(_doc => {
-                Keyboard.dismiss()
-            })
-            .catch((error) => {
-                alert(error)
-            })
-
-        entityChatRef.doc(document).collection('users')
-            .doc().set(userConnect)
-            .then(_doc => {
-                Keyboard.dismiss()
-            })
-            .catch((error) => {
-                alert(error)
-            })
-
-        const data = {
-            _id: _id,
-            authorID: state.userID,
-            createdAt: new Date(),
-            text: 'Hello, World!',
-            user: {
-                _id: state.userID,
-                name: state.userName,
-                avatar: state.avatarURL
-            },
-        }
-
-        entityChatRef.doc(document).collection('messages')
-            .doc().set(data)
-            .then((doc) => {
-                Keyboard.dismiss()
-                props.navigation.navigate(`RoomChat`, { page: 1 })
-            })
-            .catch((error) => {
-                alert(error)
-            })
-    }
-
+    const DATA = [1, 2, 3, 4, 5, 6]
     return (
         <SafeAreaView style={styles.container}>
-            <KeyboardAwareScrollView
-                style={{ flex: 1, width: '100%' }}
-            // keyboardShouldPersistTaps="always"
-            >
-                <View style={styles.cirle} />
-                <View style={{ margintop: verticalScale(64), paddingVertical: verticalScale(20) }}>
-                    <Image
-                        source={!!state.avatarURL ? { uri: state.avatarURL } : require('@assets/bootsplash_logo.png')}
-                        style={{ width: moderateScale(100), height: moderateScale(100), alignSelf: 'center' }}
-                    />
-                    <Text style={{ alignSelf: 'center' }}>{state.email}</Text>
-                </View>
-                {state.level == 1 &&
-                    <View style={{ marginHorizontal: moderateScale(32) }}>
-                        <Text style={styles.header}>{state.level == 1 ? `Tạo phòng` : `Vào phòng`}</Text>
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            paddingVertical: verticalScale(10)
-                        }} >
-                            <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: moderateScale(10) }}>
-                                <TextInput
-                                    style={styles.input}
-                                    onChangeText={roomID => onHandlerInput('roomID', roomID)}
-                                    placeholder={'Nhập ID phòng'}
-                                    autoCapitalize='none'
-                                >
-                                    {state.roomID}
-                                </TextInput>
-                            </View>
+            {/* <View style={{ flexDirection: 'column' }}   > */}
+            <View style={styles.cirle} />
+            <View style={{ margintop: verticalScale(64), paddingVertical: verticalScale(20) }}>
+                <Image
+                    source={!!state.avatarURL ? { uri: state.avatarURL } : require('@assets/bootsplash_logo.png')}
+                    style={{
+                        width: moderateScale(100), height: moderateScale(100),
+                        borderRadius: moderateScale(50), alignSelf: 'center'
+                    }}
+                />
+                <Text style={{ alignSelf: 'center' }}>{state.email}</Text>
+                <Text style={{ alignSelf: 'center' }}>{state.userName}</Text>
+            </View>
+            <View style={{
+                flexDirection: 'row', alignItems: 'center',
+                height: verticalScale(48), paddingHorizontal: moderateScale(8)
+            }}>
+                <Text style={{ flex: 1, fontSize: scale(18), fontWeight: 'bold' }}>
+                    {`Campaigns`}
+                </Text>
+                <TouchableOpacity style={{
+                    width: moderateScale(40), height: moderateScale(40),
+                    borderRadius: moderateScale(20), marginRight: moderateScale(8),
+                    backgroundColor: '#f1f2f3',
+                    justifyContent: 'center', alignItems: 'center'
+                }}>
+                    <AntDesignIcon name='areachart' size={scale(18)} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{
+                    width: moderateScale(40), height: moderateScale(40),
+                    borderRadius: moderateScale(20), marginRight: moderateScale(8),
+                    backgroundColor: '#f1f2f3',
+                    justifyContent: 'center', alignItems: 'center'
+                }}>
+                    <AntDesignIcon name='areachart' size={scale(18)} />
+                </TouchableOpacity>
+            </View>
+            <View style={{
+                flexDirection: 'row', alignItems: 'center',
+                height: verticalScale(48), paddingHorizontal: moderateScale(8)
+            }}>
+                <TouchableOpacity style={{
+                    width: moderateScale(120), height: moderateScale(40),
+                    borderRadius: moderateScale(8), marginRight: moderateScale(8),
+                    backgroundColor: '#f1f2f3',
+                    justifyContent: 'center', alignItems: 'center'
+                }}>
+                    <Text style={{ fontSize: scale(14), fontWeight: '500' }}>{'Last 7 Days'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{
+                    width: moderateScale(96), height: moderateScale(40),
+                    borderRadius: moderateScale(8), marginRight: moderateScale(8),
+                    backgroundColor: '#f1f2f3',
+                    flexDirection: 'row', justifyContent: 'center', alignItems: 'center'
+                }}>
+                    <AntDesignIcon name='areachart' size={scale(18)} />
+                    <Text style={{ marginLeft: moderateScale(8), fontSize: scale(14), fontWeight: '500' }}>{'Filter'}</Text>
+                </TouchableOpacity>
+            </View>
+            {/* </View> */}
+            <FlatList
+                data={DATA}
+                keyExtractor={(item, index) => index.toString()}
+                contentContainerStyle={{ flexGrow: 1, marginTop: verticalScale(8) }}
+                renderItem={({ item, index }) => {
+                    return (
+                        <AnimatedAppearance index={index}>
                             <TouchableScale
-                                // style={{ backgroundColor: 'red', width: calcWidth(15), height: calcWidth(15),}}
-                                onPress={() => handlerContinue('roomID')}
-                                activeScale={1.5}
+                                // onPress={onhandlePress}
+                                disabled={false}
+                                scaleTo={0.97}
                             >
-                                <LottieView
-                                    source={require('@assets/animations/plus.json')}
-                                    colorFilters={[{
-                                        keypath: "button",
-                                        color: "#F00000"
-                                    }, {
-                                        keypath: "Sending Loader",
-                                        color: "#F00000"
-                                    }]}
-                                    style={{ width: calcWidth(15), height: calcWidth(15), justifyContent: 'center' }}
-                                    autoPlay
-                                    loop
-                                />
+                                <View style={{
+                                    height: verticalScale(160),
+                                    borderRadius: scale(16),
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    backgroundColor: '#fff',
+                                    marginHorizontal: scale(16),
+                                    marginVertical: verticalScale(8),
+                                    shadowColor: '#000',
+                                    shadowOpacity: 0.2,
+                                    shadowOffset: { width: 4, height: 4 },
+                                    padding: moderateScale(8)
+                                }}>
+                                    <View style={{ flexDirection: 'row', width: '100%', height: verticalScale(24), justifyContent: 'space-between' }}>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <EntypoIcon name='dot-single' size={scale(14)} color={'green'} />
+                                            <Text style={{ fontSize: scale(10) }}>{`Active`}</Text>
+                                        </View>
+                                        <MaterialCommunityIcon name='dots-vertical' size={scale(14)} />
+                                    </View>
+                                    <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center' }}>
+                                        <Image
+                                            source={{ uri: state.avatarURL }}
+                                            resizeMode='cover'
+                                            style={{ width: scale(48), height: scale(48), borderRadius: scale(8) }}
+                                        />
+                                        <Text style={{ marginLeft: moderateScale(8), fontWeight: '500', fontSize: scale(14) }}>{`Conversions for flash sale`}</Text>
+                                    </View>
+                                    <View style={{
+                                        flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around',
+                                        marginTop: verticalScale(8)
+                                    }}>
+                                        <View style={{
+                                            flex: 1, flexDirection: 'column', justifyContent: 'center',
+                                            height: verticalScale(48), paddingRight: moderateScale(4)
+                                        }}>
+                                            <Text style={{ fontSize: scale(14), fontWeight: '500' }}>{`261`}</Text>
+                                            <Text style={{ fontSize: scale(12), fontWeight: '300' }}>{`Website purchases`}</Text>
+                                        </View>
+                                        <View style={{
+                                            flex: 1, flexDirection: 'column', justifyContent: 'center',
+                                            height: verticalScale(48), paddingRight: moderateScale(4)
+                                        }}>
+                                            <Text style={{ fontSize: scale(14), fontWeight: '500' }}>{`$0.02`}</Text>
+                                            <Text style={{ fontSize: scale(12), fontWeight: '300' }}>{`cost per post`}</Text>
+                                        </View>
+                                        <View style={{
+                                            flex: 1, flexDirection: 'column', justifyContent: 'center',
+                                            height: verticalScale(48), paddingRight: moderateScale(4)
+                                        }}>
+                                            <Text style={{ fontSize: scale(14), fontWeight: '500' }}>{`$62.40`}</Text>
+                                            <Text style={{ fontSize: scale(12), fontWeight: '300' }}>{`Spent`}</Text>
+                                        </View>
+                                    </View>
+                                </View>
                             </TouchableScale>
-                        </View>
-                    </View>
-                }
-                <View style={{ marginHorizontal: moderateScale(32) }}>
-                    <Text style={styles.header}>{`Kết nối`}</Text>
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        paddingVertical: verticalScale(10)
-                    }} >
-                        <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: moderateScale(10) }}>
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={connectUser => onHandlerInput('connectUser', connectUser)}
-                                placeholder={'Nhập tên bạn bè'}
-                                autoCapitalize='none'
-                            >
-                                {state.connectUser}
-                            </TextInput>
-                        </View>
-                        <TouchableScale
-                            // style={style.button}
-                            onPress={() => handlerContinue('connectUser')}
-                            activeScale={1.5}
-                        >
-                            <LottieView
-                                source={require('@assets/animations/add-user.json')}
-                                colorFilters={[{
-                                    keypath: "button",
-                                    color: "#F00000"
-                                }, {
-                                    keypath: "Sending Loader",
-                                    color: "#F00000"
-                                }]}
-                                style={{ width: calcWidth(15), height: calcWidth(15), justifyContent: 'center' }}
-                                autoPlay
-                                loop
-                            />
-                        </TouchableScale>
-                    </View>
-                </View>
-            </KeyboardAwareScrollView>
+                        </AnimatedAppearance>
+                    )
+                }}
+            />
         </SafeAreaView>
     )
 }

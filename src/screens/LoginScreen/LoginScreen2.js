@@ -14,6 +14,7 @@ import { AuthContext } from '../../utils'
 import styles from './styles';
 import { calcWidth } from 'utils/scaleSize';
 import { validatePhoneNumber } from 'utils/function'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const db = firestore()
 const entityUserRef = db.collection('users')
@@ -121,6 +122,8 @@ const LoginScreen = (props) => {
         } else {
             console.log(success)
             setUser(success)
+            AsyncStorage.setItem('SocialUser', JSON.stringify(success))
+
             console.log(JSON.stringify(success, null, 2));
 
             setPictureURL(success.picture.data.url);

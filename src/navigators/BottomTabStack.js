@@ -24,6 +24,7 @@ import {
     DiaryScreen,
     VideoRoomScreen,
     CategoryScreen2,
+    HomeScreen,
 } from '../screens'
 
 import Page from 'screens/Page';
@@ -64,7 +65,7 @@ const MainStack = () => {
                 // tabBarLabelPosition: 'beside-icon'
             }}
         >
-            {/* <Tab.Screen name="Home" component={Page}
+            <Tab.Screen name="Home" component={HomeScreen}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size, focused }) => (
@@ -72,8 +73,8 @@ const MainStack = () => {
                         <IconBottomTab name={require(`@assets/animations/home-boiler-care.json`)} size={20} focused={focused} />
                     )
                 }}
-            /> */}
-            <Tab.Screen name="Chat" component={ChatScreen}
+            />
+            {/* <Tab.Screen name="Chat" component={ChatScreen}
                 options={{
                     tabBarLabel: 'Tin nhắn',
                     tabBarIcon: ({ color, size, focused }) => (
@@ -84,7 +85,7 @@ const MainStack = () => {
                     tabBarBadgeStyle: { backgroundColor: 'tomato', color: '#fff' },
                     // headerLeft: () => <BackIcon navigation={navigation} />,
                 }}
-            />
+            /> */}
             <Tab.Screen name="RoomChat" component={RoomScreen}
                 options={{
                     tabBarLabel: 'Nhóm',
