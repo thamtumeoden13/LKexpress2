@@ -64,17 +64,17 @@ const CategoryScreen = (props) => {
             })
         });
 
-        // scrollX.addListener(({ value }) => {
-        //     let index = Math.floor(value / ITEM_WIDTH)
-        //     if (index <= 0) {
-        //         index = 0
-        //     }
-        //     setState(prev => { return { ...prev, currentIndex: index } })
-        // })
+        scrollX.addListener(({ value }) => {
+            let index = Math.floor(value / ITEM_WIDTH)
+            if (index <= 0) {
+                index = 0
+            }
+            setState(prev => { return { ...prev, currentIndex: index } })
+        })
         const unsubscribeCategorieList = entityRef.onSnapshot(getRealtimeCollectionCategoriList, err => Alert.alert(error))
         return () => {
             unsubscribeCategorieList()
-            // scrollX.removeListener()
+            scrollX.removeListener()
         }
     }, [])
 
@@ -92,9 +92,9 @@ const CategoryScreen = (props) => {
         }
     }, [state.level])
 
-    // useEffect(() => {
-    //     getNewProducts()
-    // }, [state.currentIndex])
+    useEffect(() => {
+        getNewProducts()
+    }, [state.currentIndex])
 
     const onHanderSearchInput = (searchInput) => {
         let categoriesNew = []
@@ -167,13 +167,15 @@ const CategoryScreen = (props) => {
             setProducts(products)
         }
     }
+
+    const onHandlerJoinCategory = (categoryID, categoryName) => {
+        // const pushAction = StackActions.push('CategoryDetail', { id: categoryID, name: categoryName })
+        props.navigation.navigate('CategoryDetail', { id: categoryID, name: categoryName })
+    }
+
     const onOpenShoppingCart = () => {
         // const pushAction = StackActions.push('ShoppingCart')
         props.navigation.navigate('ShoppingCart')
-    }
-
-    const handlerCategoryDetail = (item) => {
-        props.navigation.navigate('CategoryDetail', { item })
     }
 
     const renderChild = ({ item, index }) => {
@@ -197,7 +199,7 @@ const CategoryScreen = (props) => {
             <AnimatedAppearance index={index} horizontal={true}>
                 <TouchableScale
                     scaleTo={0.97}
-                    onPress={() => { props.navigation.navigate('CategoryDetail2', { item }) }}
+                    onPress={() => { props.navigation.navigate('CategoryDetail2', { imageUri: item.imageUri }) }}
                 >
                     <View style={styles.itemContainer}>
                         <View style={[StyleSheet.absoluteFill, { overflow: 'hidden', borderRadius: RADIUS }]}>
@@ -219,61 +221,18 @@ const CategoryScreen = (props) => {
         )
     }
 
-    const Item = ({ item, index, scrollX }) => {
-        const inputRange = [(index - 1) * FULL_SIZE, index * FULL_SIZE, (index + 1) * FULL_SIZE]
-        const translateX = scrollX.interpolate({
-            inputRange: inputRange,
-            outputRange: [ITEM_WIDTH, 0, -ITEM_WIDTH]
-        })
-        const scale = scrollX.interpolate({
-            inputRange,
-            outputRange: [1, 1.1, 1]
-        })
-        const opacity = scrollX.interpolate({
-            inputRange,
-            outputRange: [1, 1, 0.8]
-        })
-
-        const productsLength = item.products?.length
-
-        return (
-            <AnimatedAppearance index={index} horizontal={true}>
-                <TouchableScale
-                    scaleTo={0.97}
-                    onPress={() => { props.navigation.navigate('CategoryDetail2', { item }) }}
-                >
-                    <View style={styles.itemContainer}>
-                        <View style={[StyleSheet.absoluteFill, { overflow: 'hidden', borderRadius: RADIUS }]}>
-                            <Animated.Image
-                                source={{ uri: item.imageUri }}
-                                style={[StyleSheet.absoluteFill, { transform: [{ scale }], opacity }]}
-                                resizeMode={'cover'}
-                            />
-                        </View>
-                        <Animated.View style={[styles.labelContainer, { transform: [{ translateX }] }]}>
-                            <Text style={styles.textName}>{item.name}</Text>
-                        </Animated.View>
-                        <View style={[styles.valueContainer, { backgroundColor: item.bg }]}>
-                            <Text style={[styles.textValue, { color: item.color }]}>{productsLength}</Text>
-                        </View>
-                    </View>
-                </TouchableScale>
-            </AnimatedAppearance>
-        )
-    }
-
     const renderBottomChild = ({ item, index }) => {
         return (
             <AnimatedAppearance index={index}>
                 <TouchableScale
                     scaleTo={0.97}
-                    onPress={() => { handlerCategoryDetail(item) }}
+                    onPress={() => { onHandlerJoinCategory(item.id, item.name) }}
                 >
                     <View style={{
                         height: 120,
                         borderRadius: 12,
                         flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
-                        backgroundColor: 'rgba(256,256,256,0.6)',
+                        backgroundColor: '#fff',
                         marginHorizontal: 16,
                         marginVertical: 8,
                     }}>
@@ -286,7 +245,7 @@ const CategoryScreen = (props) => {
                             <Text style={{ color: '#000', fontWeight: '300', fontSize: scale(16), lineHeight: scale(22) }}>
                                 {item.heading}
                             </Text>
-                            <Text style={{ color: '#6a6a6a', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>{`${item.description}`}</Text>
+                            <Text style={{ color: '#999999', fontStyle: 'italic', fontSize: scale(12), lineHeight: scale(16) }}>{`${item.description}`}</Text>
                             <Text style={{ color: '#00f', fontWeight: 'bold', fontSize: scale(16), lineHeight: scale(22) }}>
                                 {`$ ${formatMoney(item.price, 0)}`}
                             </Text>
@@ -301,9 +260,7 @@ const CategoryScreen = (props) => {
         <View style={styles.safeAreaContainer}>
             <Animated.FlatList
                 data={categoriesFilter}
-                extraData={categoriesFilter}
                 keyExtractor={(item, index) => item.doc.toString()}
-                renderItem={({ item, index }) => <Item item={item} index={index} scrollX={scrollX} />}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 snapToInterval={FULL_SIZE}
@@ -314,10 +271,11 @@ const CategoryScreen = (props) => {
                         { useNativeDriver: true }
                     )
                 }
+                renderItem={renderChild}
                 contentContainerStyle={{ alignItems: 'center' }}
                 style={{ flexGrow: 0, }}
             />
-            {/* {!!products && products.length > 0 &&
+            {!!products && products.length > 0 &&
                 <View style={{ flex: 1 }}>
                     <FlatList
                         data={products}
@@ -326,7 +284,7 @@ const CategoryScreen = (props) => {
                         style={{ flexGrow: 0, }}
                     />
                 </View>
-            } */}
+            }
         </View >
     );
 }
